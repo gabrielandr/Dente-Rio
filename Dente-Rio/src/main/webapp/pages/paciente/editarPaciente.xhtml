@@ -1,0 +1,41 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+
+	<f:metadata>
+		<f:viewAction
+			action="#{procedimentoBean.carregarListaProcedimentosTratamentos(param['tratamento_id'])}" />
+	</f:metadata>
+	
+	<ui:define name="corpo">
+	<h:head>
+			<script type="text/javascript">
+			$(document).ready(function() {
+				
+			});
+			</script>
+		</h:head>
+		<h:body>
+				<h:form id="formTratamento">
+				<p:growl id="growl" showDetail="true" autoUpdate="true" />
+				<p:tabView id="cadastroTabView" activeIndex="#{sessionScope['ABA_ATIVA']}">
+				<p:ajax event="tabChange" listener="#{tabbedView.onTabChange}" update=":formTratamento:growl"/>
+					<p:tab id="abaDadosPaciente" title="Dados do Paciente" >
+						<ui:include src="/pages/paciente/abaPaciente.xhtml" />
+					</p:tab>
+					<p:tab id="abaAnamnese" title="Anamnese">
+						<ui:include src="/pages/paciente/abaAnamnese.xhtml" />
+					</p:tab>
+					<p:tab id="abaTratamento" title="Tratamento">
+						<ui:include src="/pages/paciente/abaTratamento.xhtml" />
+					</p:tab>
+				</p:tabView>
+				<p:commandButton type="button" value="Voltar"
+					onclick="window.history.back();" icon="ui-icon-arrowreturn-1-w" />
+				<p:commandButton id="addPaciente" value="Salvar" icon="ui-icon-disk"
+					action="#{pacienteBean.salvarPaciente}" ajax="true" />
+			</h:form>
+		</h:body>
+	</ui:define>
+</ui:composition>

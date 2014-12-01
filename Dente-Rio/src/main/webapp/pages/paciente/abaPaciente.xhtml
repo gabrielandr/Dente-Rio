@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+<table id="tableDadosPaciente">
+<p:focus for="nome" />
+					
+	<tr>
+		<td class="labelInput">
+			<p:outputLabel value="" />
+		</td>
+		<td colspan="3">
+			<p:outputLabel styleClass="ui-outputlabel-rfi" value="* campos obrigatórios" />
+		</td>
+	</tr>
+	<tr>
+		<td class="labelInput">
+			<p:outputLabel for="nome" value="Nome:" />
+		</td>
+		<td colspan="3">
+			<p:inputText id="nome" label="Nome do Paciente" style="width: 99%"
+				required="true" value="#{pacienteBean.paciente.nomePessoa}">
+			</p:inputText>
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="labelInput">
+			<p:outputLabel for="dataNascimento" value="Data de Nascimento:" />
+		</td>
+		<td>
+			<p:calendar id="dataNascimento" label="Data" mask="true" pattern="dd/MM/yyyy" navigator="true" locale="pt_BR"
+				yearRange="c-100:c+1" value="#{pacienteBean.paciente.dataNascimento}"
+				showOn="button" required="true" />
+		</td>
+	</tr>
+	<tr>
+		<td class="labelInput">
+			<p:outputLabel for="rg" value="RG:" />
+		</td>
+		<td>
+			<p:inputMask id="rg" label="RG" value="#{pacienteBean.paciente.rg}"
+				maxlength="9" mask="999999999" required="true">
+			</p:inputMask>
+		</td>
+		<td class="labelInput">
+			<p:outputLabel for="cpf" value="CPF:" />
+		</td>
+		<td>
+			<p:inputMask id="cpf" label="CPF" value="#{pacienteBean.paciente.cpf}"
+				maxlength="11" mask="99999999999" required="true">
+			</p:inputMask>
+		</td>
+	</tr>
+	<tr>
+		<td class="labelInput">
+			<p:outputLabel for="profissao" value="Profissão:" />
+		</td>
+		<td>
+			<p:inputText id="profissao" label="Profissão" style="width: 99%"
+				value="#{pacienteBean.paciente.profissao}">
+			</p:inputText>
+		</td>
+	</tr>
+	<tr>
+		<td class="labelInput">
+			<p:outputLabel for="endereco" value="Endereço:" />
+		</td>
+		<td colspan="3">
+			<p:inputText id="endereco" label="Endereço" style="width: 99%"
+				value="#{pacienteBean.paciente.endereco}">
+			</p:inputText>
+		</td>
+	</tr>
+	<tr>
+		<td class="labelInput">
+			<p:outputLabel for="telefone" value="Telefone:" />
+		</td>
+		<td>
+			<p:inputMask id="telefone" label="Telefone" mask="(99) 9999-9999"
+				value="#{pacienteBean.paciente.telefone}">
+			</p:inputMask>
+		</td>
+		<td class="labelInput">
+			<p:outputLabel for="celular" value="Celular:" />
+		</td>
+		<td>
+			<p:inputMask id="celular" label="Celular"
+				value="#{pacienteBean.paciente.celular}" mask="(99) 99999-9999">
+			</p:inputMask>
+		</td>
+	</tr>
+</table>
+</html>

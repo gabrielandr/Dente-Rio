@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+<h:form>
+	
+		<div style="width: 100%;">
+			<div class="tituloPagina">
+				<h3 class="tree">Pagamentos</h3>
+			</div>
+		</div>
+		<p:toolbar styleClass="barraBotoes">
+			<f:facet name="left">
+				<p:commandButton value="Novo" icon="ui-icon-document"
+					onclick="PF('pagamentoDialog').show();">
+					<p:ajax event="click" listener="#{pagamentoBean.limpar}" />
+				</p:commandButton>
+				<p:dialog header="Cadastro de Pagamento" widgetVar="pagamentoDialog"
+					modal="true" height="150">
+					<ui:include src="/pages/pagamento/formPagamento.xhtml" />
+				</p:dialog>
+			</f:facet>
+		</p:toolbar>
+
+		<p:dataTable id="pagamentosTableTratamento" var="pagamento"
+			value="#{tratamentoBean.tratamento.pagamentos}" 
+			emptyMessage="Nenhum pagamento cadastrado para este tratamento." rowStyleClass="#{pagamento.valor gt 100 ? 'pgmt_cartao' : 'pgmt_dinheiro'}" >
+
+			<p:growl id="growl" showDetail="true" autoUpdate="true" />
+
+			<p:column headerText="Id">
+				<h:outputText value="#{pagamento.id}" />
+			</p:column>
+			<p:column headerText="Tratamento">
+				<h:outputText value="#{pagamento.tratamento.id}" />
+			</p:column>
+
+			<p:column headerText="Valor">
+				<h:outputText value="#{pagamento.valor}">
+					<f:convertNumber type="currency" currencySymbol="R$" />
+				</h:outputText>
+			</p:column>
+		</p:dataTable>
+		</h:form>
+</html>

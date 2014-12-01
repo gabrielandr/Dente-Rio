@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+	
+<h:form styleClass="formulatio">
+	<p:panel>
+		<div style="width: 100%;">
+			<div class="tituloPagina">
+				<h3 class="tree">Tratamentos</h3>
+			</div>
+		</div>
+		
+		<p:outputLabel value="Paciente: #{pacienteBean.paciente.nomePessoa}" />
+		<br />
+		<p:toolbar styleClass="barraBotoes">
+			<f:facet name="left">
+				<p:commandButton value="Novo" icon="ui-icon-document"
+					onclick="PF('tratamentoDialog').show();">
+						<p:ajax event="click" listener="#{tratamentoBean.limpar}"/>
+				</p:commandButton>
+				<p:dialog header="Cadastro de Tratamento" widgetVar="tratamentoDialog" modal="true">
+					<ui:include src="/pages/tratamento/formTratamento.xhtml" />
+				</p:dialog>
+			</f:facet>
+		</p:toolbar>
+		
+		<p:dataTable id="tratamentosTable" var="tratamento"
+			value="#{pacienteBean.paciente.tratamentos}" emptyMessage="Nenhum tratamento cadastrado para este paciente."
+			rows="10" paginatorPosition="bottom">
+			
+			<p:growl id="growl" showDetail="true" autoUpdate="true" />
+    	    
+			<p:column headerText="Id">
+				<h:outputText value="#{tratamento.id}" />
+			</p:column>
+			<p:column headerText="Paciente">
+				<h:outputText value="#{tratamento.paciente.nomePessoa}" />
+			</p:column>
+			<p:column headerText="Data de criação">
+				<h:outputText value="#{tratamento.createdAt}">
+					<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+				</h:outputText>
+			</p:column>
+			<p:column headerText="Status">
+				<h:outputText value="#{tratamentoBean.retornaStatusTratamento(tratamento)}" />
+			</p:column>
+			<p:column headerText="Valor">
+				<h:outputText value="#{tratamento.valorTotal}">
+					<f:convertNumber type="currency" currencySymbol="R$" />
+				</h:outputText>
+			</p:column>
+			
+			<p:column headerText="Acão" style="width:32px;text-align: center">
+			
+					
+			
+             <p:commandButton icon="ui-icon-pencil" title="Editar"
+                action="#{tratamentoBean.mostrarDadosTratamento}" >
+                <f:setPropertyActionListener value="#{tratamento}" target="#{tratamentoBean.tratamentoSelecionado}" />
+            </p:commandButton>
+        </p:column>
+		</p:dataTable>
+	</p:panel>
+</h:form>
+</html>

@@ -1,0 +1,72 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+	
+<!-- 	<f:metadata> -->
+<!-- 		<f:viewParam name="menuAtivo" value="asdf"/> -->
+<!-- 		<f:viewAction action="#{tabbedView.iniciar}" /> -->
+<!-- 	</f:metadata> -->
+	
+	<ui:define name="corpo">
+		<h:head>
+			<script type="text/javascript">
+			</script>
+		</h:head>
+		<h:body>
+			<h:form>
+				<p:panel header="Sugestão" id="cadastroPanel">
+					<p:messages autoUpdate="true" />
+					<table>
+						<tr>
+							<td class="labelInput">
+								<p:outputLabel value="" />
+							</td>
+							<td colspan="3">
+								<p:outputLabel styleClass="ui-outputlabel-rfi"
+									value="* campos obrigatórios" />
+									<p:outputLabel value="#{view.viewId}" />
+							</td>
+						</tr>
+						<tr>
+							<td class="labelInput">
+								<p:outputLabel for="autor" value="Autor da Sugestão:" />
+							</td>
+							<td colspan="3">
+								<p:inputText id="autor" label="Autor" style="width: 450px;"
+									value="#{sugestaoBean.sugestao.autor}" required="true">
+									<f:validateLength />
+								</p:inputText>
+							</td>
+						</tr>
+						<tr>
+							<td class="labelInput">
+								<p:outputLabel for="titulo" value="Título:" />
+							</td>
+							<td colspan="3">
+								<p:inputText id="titulo" label="Título" style="width: 450px;"
+									value="#{sugestaoBean.sugestao.titulo}" required="true">
+									<f:validateLength  />
+								</p:inputText>
+							</td>
+						</tr>
+						<tr>
+							<td class="labelInput">
+								<p:outputLabel for="sugestao" value="Sugestão:" />
+							</td>
+							<td colspan="3">
+								<p:inputTextarea styleClass="sugestao" id="sugestao" label="Sugestao"
+									style="width: 450px;" value="#{sugestaoBean.sugestao.sugestao}" required="true">
+								</p:inputTextarea>
+							</td>
+						</tr>
+					</table>
+					<p:commandButton type="button" value="Voltar"
+						onclick="window.history.back();" icon="ui-icon-arrowreturn-1-w" />
+					<p:commandButton id="salvar" value="Salvar" icon="ui-icon-disk"
+						action="#{sugestaoBean.salvarSugestao}" ajax="false" />
+				</p:panel>
+			</h:form>
+		</h:body>
+	</ui:define>
+</ui:composition>

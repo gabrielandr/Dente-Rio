@@ -1,0 +1,61 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+
+	<f:metadata>
+		<f:viewAction action="#{tabbedView.onMenuSelect('linkAreaEspecializada')}" />
+	</f:metadata>
+
+	<ui:define name="corpo">
+		<h:body>
+			<h:form styleClass="formulatio">
+				<p:panel>
+				
+				<div style="width: 100%;">
+						<div class="tituloPagina">
+							<h3 class="tree">Lista de Áreas Especializadas</h3>
+						</div>
+					</div>
+					<p:toolbar styleClass="barraBotoes">
+						<f:facet name="left">
+							<p:commandButton value="Novo" icon="ui-icon-document" id="botaoNovo"
+								action="#{areaEspecializadaBean.novaAreaEspecializada()}">
+							</p:commandButton>
+						</f:facet>
+					</p:toolbar>
+				
+					<p:dataTable id="areasTable"
+						emptyMessage="Nenhum registro foi encontrado."
+						value="#{areaEspecializadaBean.listaAreasEspecializadas}" var="area" paginator="true"
+						rows="10" paginatorPosition="bottom">
+						
+						<p:column style="text-align:center;" headerText="Área Especializada">
+							<h:outputText value="#{area.nomeAreaEspecializada}" />
+						</p:column>
+						
+						<p:column style="text-align: center; width: 80px;">
+							<p:commandButton icon="ui-icon-pencil" title="Editar" style="float:left;"
+								process="@this"
+								action="#{areaEspecializadaBean.editarAreaEspecializada(area.id)}">
+							</p:commandButton>
+							<p:commandButton icon="ui-icon-trash" style="float:right;"
+								title="Excluir" process="@this" update="areasTable growl"
+								action="#{areaEspecializadaBean.deletarAreaEspecializada(area.id)}">
+								<p:confirm header="Confirmação"
+									message="Você tem certeza que dezeja excluir?" icon="ui-icon-alert" />
+							</p:commandButton>
+							<p:confirmDialog global="true">
+								<p:commandButton value="Sim" type="button"
+									styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+								<p:commandButton value="Não" type="button"
+									styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+							</p:confirmDialog>
+							<p:growl id="growl" showDetail="true" globalOnly="true" life="40000" />
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+			</h:form>
+		</h:body>
+	</ui:define>
+</ui:composition>

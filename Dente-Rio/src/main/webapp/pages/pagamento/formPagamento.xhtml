@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('.valorPagamento').val(" ");
+		});
+
+		$(function() {
+			$('.valorPagamento').maskMoney({
+				prefix : 'R$ ',
+				// 						affixesStay:false,
+				thousands : '.',
+				decimal : ',',
+				allowZero : true,
+				precision : 2,
+			});
+		})
+
+		function limpaValor() {
+			if ($('.valorPagamento').val() == 'R$ 0,00') {
+				$('.valorPagamento').val(" ");
+			}
+		}
+
+		function preencheValorTotal() {
+			$('.valorPagamento').val('R$ 250,00')
+		}
+	</script>
+</h:head>
+<h:body>
+	<p:panel id="cadastroPanel">
+		<table>
+			<tr>
+				<td class="labelInput">
+					<p:outputLabel value="" />
+				</td>
+				<td>
+					<p:outputLabel styleClass="ui-outputlabel-rfi"
+						value="* campos obrigatórios" />
+				</td>
+			</tr>
+			<tr>
+				<td class="labelInput">
+					<p:outputLabel for="valorPagamento" value="Valor:" />
+				</td>
+				<td>
+					<p:inputText styleClass="valorPagamento" id="valorPagamento" label="Valor"
+						value="#{pagamentoBean.pagamento.valor}" onblur="limpaValor();">
+						<f:converter converterId="javax.faces.BigDecimal" />
+						<f:convertNumber type="currency" currencySymbol="R$" />
+					</p:inputText>
+				</td>
+				<td>
+					<p:commandButton value="Restante" onclick="preencheValorTotal();" />
+				</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td>
+					<p:commandButton type="button" value="Voltar"
+						onclick="window.history.back();" icon="ui-icon-arrowreturn-1-w" />
+					<p:commandButton icon="ui-icon-disk" title="Salvar" value="Salvar"
+						action="#{pagamentoBean.salvarPagamento}"
+						oncomplete="PF('pagamentoDialog').hide();" process="@all" update="@all">
+						<f:param name="tratamentoId" value="#{param['tratamento_id']}" />
+					</p:commandButton>
+				</td>
+			</tr>
+		</table>
+	</p:panel>
+</h:body>
+</html>

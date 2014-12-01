@@ -1,0 +1,52 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+
+	<f:metadata>
+		<f:viewAction
+			action="#{tratamentoBean.buscarTatamento(param['tratamento_id'])}" />
+		<f:viewAction
+			action="#{procedimentoBean.carregarListaProcedimentosTratamentos(param['tratamento_id'])}" />
+	</f:metadata>
+
+	<ui:define name="corpo">
+		<h:head>
+			<script type="text/javascript">
+				$(function() {
+					$('.valorReal').maskMoney({
+						prefix : 'R$ ',
+						thousands : '.',
+						decimal : ',',
+						allowZero : true,
+						allowNegative : true,
+						precision : 2,
+					});
+				})
+
+				function limpaValor() {
+					if ($('.valorReal').val() == 'R$ 0.00') {
+						$('.valorReal').val(" ");
+					}
+				}
+			</script>
+		</h:head>
+		<h:body>
+			<h:form id="formulario" styleClass="formulario">
+				<p:panel>
+					<p:growl id="growl" showDetail="true" autoUpdate="true" />
+					<p:outputLabel value="Paciente: #{pacienteBean.paciente.nomePessoa}" />
+					<p:outputLabel
+						value="Dentista Responsável:  #{tratamentoBean.tratamento.funcionario.nomePessoa} " />
+					Data da criação do tratamento : 
+					<h:outputText value="#{tratamentoBean.tratamento.dataInicio}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+					<ui:include src="/pages/procedimento/aba_procedimentos.xhtml" />
+					<p:separator />
+					<ui:include src="/pages/pagamento/aba_pagamentos.xhtml" />
+				</p:panel>
+			</h:form>
+		</h:body>
+	</ui:define>
+</ui:composition>

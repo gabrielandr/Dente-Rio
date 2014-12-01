@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14128144140380" configfile="/Dent-Rio/src/main/webapp/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="*" id="pf14128148114137" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf14128148114138" path="/*"/>
+  <nodes xsi:type="pageflow:PFPage" name="error.xhtml" id="pf14128148114139" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf14128148114138" path="/error.xhtml"/>
+  <links id="pf14128148114138" target="pf14128148114139" source="pf14128148114137" outcome="error"/>
+</pageflow:Pageflow>

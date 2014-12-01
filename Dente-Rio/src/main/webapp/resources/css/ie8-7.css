@@ -1,0 +1,16 @@
+/* Since the CSS Media Queries are not supporting for ie7 and ie8, this peice of code will make static layout */
+.container { width: 960px; margin: 0 auto; }
+
+/* IE7 Height problem on li with dropdown classes */
+li.dropdown { height:40px; }
+.dropdown-menu a:hover { padding-left: 15px; }
+
+/* Other ie7-ie8 issues fixed using the codes below */
+header .span6 { margin-left: 0 !important; }
+iframe { margin-bottom: 0; }
+.breadcrumb li { min-width: 80px; }
+.gallery li { margin: 0 13px 20px 0 !important; }
+.doctors .span3 { margin: 0 15px 0 0 !important; }
+.page input[type="text"], .page input[type="email"], .page textarea { min-height: 15px; }
+form { overflow: hidden }
+

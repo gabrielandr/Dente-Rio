@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title><ui:insert name="titulo">DentRio</ui:insert></title>
+	<link type="text/css" rel="stylesheet"
+		href="http://fonts.googleapis.com/css?family=PT+Sans+Narrow|Yanone+Kaffeesatz:400,300,700" />
+	<h:outputStylesheet library="css" name="bootstrap.min.css" />
+	<h:outputStylesheet library="css" name="bootstrap-responsive.min.css" />
+	<h:outputStylesheet library="css" name="bootstrap-overrides.css" />
+	<h:outputStylesheet library="css" name="style.css" />
+	<h:outputScript library="js" name="jquery.maskMoney.js"></h:outputScript>
+<!-- 	<h:outputScript library="js" name="jquery-2.1.1.min.js"></h:outputScript> -->
+</h:head>
+<h:body>
+	<header>
+		<div class="container">
+			<div class="row-fluid">
+				<!-- logo -->
+				<div class="span6 logo">
+					<h:link outcome="/home">
+						<h:graphicImage library="imagens" name="dentriologo2.png" style="max-height: 93px;" />
+					</h:link>
+				</div>
+				<!-- End Logo -->
+				<!-- Social menu -->
+				<div class="span6" id="social">
+					<ul class="social">
+						<li class="twitter"><a target="_blank" href="#"></a></li>
+						<li class="facebook"><a target="_blank" href="#"></a></li>
+					</ul>
+				</div>
+				<!-- End Social Menu -->
+			</div>
+			<!--/.row-fluid -->
+		</div>
+		<!--/.container -->
+	</header>
+	<!-- End Header -->
+	<section id="top">
+		<div class="container">
+			<ui:include src="/WEB-INF/template/menuTopo.xhtml" />
+			<!-- Aqui abaixo vai o conteudo de cada pagina criada xhtml -->
+			<ui:insert name="corpo" />
+			<!-- ##### -->
+			<!-- 			</div> -->
+		</div>
+	</section>
+	<!-- 	<p:separator style="margin-top: 20px" /> -->
+	<footer>
+		DentRio - - <a href="http://www.puc-rio.br/index.html" target="_blank">PUC
+			132</a>
+	</footer>
+</h:body>
+</html>

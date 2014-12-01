@@ -1,0 +1,171 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+	<ui:define name="corpo">
+		<h:head>
+			<script type="text/javascript">
+				$(document).ready(function() {
+					trataCampoSocio();
+				});
+				function trataCampoSocio() {
+					if ($('.tiposFuncionario option:selected').val() == 'DENTISTA') {
+						$('.trDentista').show();
+					} else {
+						$('.trDentista').hide();
+					}
+				}
+			</script>
+		</h:head>
+		<h:body>
+			<h:form>
+				<p:panel header="Dados do Funcionário" id="cadastroPanel">
+					<p:messages autoUpdate="true" />
+					<table>
+						<p:focus for="nome" />
+						<tr>
+							<td class="labelInput">
+								<p:outputLabel value="" />
+							</td>
+							<td colspan="3">
+								<p:outputLabel styleClass="ui-outputlabel-rfi"
+									value="* campos obrigatórios" />
+							</td>
+						</tr>
+						<tr>
+							<td class="labelInput">
+								<p:outputLabel for="nome" value="Nome:" />
+							</td>
+							<td colspan="3">
+								<p:inputText id="nome" label="Nome" style="width: 99%"
+									value="#{funcionarioBean.funcionario.nomePessoa}" required="true">
+									<f:validateLength />
+								</p:inputText>
+							</td>
+						</tr>
+						<tr>
+							<td class="labelInput">
+								<p:outputLabel for="rg" value="RG:" />
+							</td>
+							<td>
+								<p:inputMask id="rg" label="RG"
+									value="#{funcionarioBean.funcionario.rg}" maxlength="9"
+									mask="999999999" required="true">
+								</p:inputMask>
+							</td>
+							<td class="labelInput">
+								<p:outputLabel for="cpf" value="CPF:" />
+							</td>
+							<td>
+								<p:inputMask id="cpf" label="CPF"
+									value="#{funcionarioBean.funcionario.cpf}" maxlength="11"
+									mask="99999999999" required="true">
+								</p:inputMask>
+							</td>
+						</tr>
+						<tr>
+							<td class="labelInput">
+								<p:outputLabel for="dataNascimento" value="Data de Nascimento:" />
+							</td>
+							<td>
+								<p:calendar id="dataNascimento" label="Data de Nascimento" mask="true"
+									pattern="dd/MM/yyyy" navigator="true" locale="pt_BR"
+									yearRange="c-100:c+1"
+									value="#{funcionarioBean.funcionario.dataNascimento}" showOn="button"
+									required="true" />
+							</td>
+						</tr>
+						<tr>
+							<td class="labelInput">
+								<p:outputLabel for="endereco" value="Endereço:" />
+							</td>
+							<td colspan="3">
+								<p:inputText id="endereco" label="Endereço" style="width: 99%"
+									value="#{funcionarioBean.funcionario.endereco}">
+								</p:inputText>
+							</td>
+						</tr>
+						<tr>
+							<td class="labelInput">
+								<p:outputLabel for="telefone" value="Telefone:" />
+							</td>
+							<td>
+								<p:inputMask id="telefone" label="Telefone" mask="(99) 9999-9999"
+									value="#{funcionarioBean.funcionario.telefone}">
+								</p:inputMask>
+							</td>
+							<td class="labelInput">
+								<p:outputLabel for="celular" value="Celular:" />
+							</td>
+							<td>
+								<p:inputMask id="celular" label="Celular"
+									value="#{funcionarioBean.funcionario.celular}" mask="(99) 99999-9999">
+								</p:inputMask>
+							</td>
+						</tr>
+						<tr>
+							<td class="labelInput">
+								<p:outputLabel for="tiposFuncionario" value="Tipo:" />
+							</td>
+							<td>
+								<p:selectOneMenu id="tiposFuncionario" styleClass="tiposFuncionario"
+									binding="#{tipoFuncionarioBind}" label="Tipos"
+									value="#{funcionarioBean.funcionario.tipoFuncionario}" required="true"
+									converter="omnifaces.SelectItemsConverter">
+									<f:selectItem itemLabel="Selecione" itemValue=""
+										noSelectionOption="true" />
+									<f:selectItems value="#{funcionarioBean.listaTiposFuncionario}"
+										var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
+									<p:ajax event="change" ignoreAutoUpdate="true"
+										update="cro labelCro labelAreaEspecializada"
+										onstart="trataCampoSocio()" />
+								</p:selectOneMenu>
+							</td>
+						</tr>
+						<tr class="trDentista">
+							<td class="labelInput">
+								<p:outputLabel id="labelCro" for="cro" value="CRO:" />
+							</td>
+							<td>
+								<p:inputMask styleClass="inputCro" id="cro" label="CRO"
+									required="#{tipoFuncionarioBind.value == 'DENTISTA'}"
+									disabled="#{tipoFuncionarioBind.value != 'DENTISTA'}"
+									value="#{funcionarioBean.funcionario.cro}" mask="99999">
+								</p:inputMask>
+							</td>
+							<td class="labelInput">
+								<p:outputLabel for="socio" value="Sócio:" />
+							</td>
+							<td>
+								<p:selectBooleanCheckbox id="socio" label="Sócio"
+									value="#{funcionarioBean.funcionario.socio}" />
+							</td>
+						</tr>
+						<tr class="trDentista">
+							<td class="labelInput">
+								<p:outputLabel id="labelAreaEspecializada" for="areasEspecializadas"
+									value="Área Especializada:" />
+							</td>
+							<td>
+								<p:selectOneMenu id="areasEspecializadas" label="Áreas Especializadas"
+									value="#{funcionarioBean.funcionario.areaEspecializada}"
+									required="#{tipoFuncionarioBind.value == 'DENTISTA'}"
+									converter="omnifaces.SelectItemsConverter">
+									<f:selectItem itemLabel="Selecione" itemValue=""
+										noSelectionOption="true" />
+									<f:selectItems value="#{funcionarioBean.listaAreasEspecializadas}"
+										var="area" itemLabel="#{area.nomeAreaEspecializada}"
+										itemValue="#{area}" />
+								</p:selectOneMenu>
+							</td>
+						</tr>
+					</table>
+					<p:commandButton type="button" value="Voltar"
+						onclick="window.history.back();" icon="ui-icon-arrowreturn-1-w" />
+					<p:commandButton id="salvar" value="Salvar" icon="ui-icon-disk"
+						action="#{funcionarioBean.salvarFuncionario}" ajax="false" />
+				</p:panel>
+			</h:form>
+		</h:body>
+	</ui:define>
+</ui:composition>

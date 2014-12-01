@@ -1,0 +1,92 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+
+	<f:metadata>
+		<f:viewAction action="#{tabbedView.onMenuSelect('linkPaciente')}" />
+	</f:metadata>
+
+	<ui:define name="corpo">
+		<h:body>
+			<h:form styleClass="formulario">
+				<p:panel>
+					<div style="width: 100%;">
+						<div class="tituloPagina">
+							<h3 class="tree">Lista de Pacientes</h3>
+						</div>
+					</div>
+					<p:toolbar styleClass="barraBotoes">
+						<f:facet name="left">
+							<p:commandButton value="Novo" icon="ui-icon-document" id="botaoNovo"
+								action="#{pacienteBean.novoPaciente()}">
+							</p:commandButton>
+						</f:facet>
+					</p:toolbar>
+			
+					<p:dataTable id="pacientesTable"
+						emptyMessage="Nenhum registro foi encontrado."
+						value="#{pacienteBean.listaPacientes}" var="paciente">
+<!-- 						<f:facet name="header"> -->
+<!-- 				            <p:outputPanel> -->
+<!-- 				                <h:outputText value="Filtrar por qualquer campo:" /> -->
+<!-- 				                <p:inputText id="globalFilter" onkeyup="PF('pacientesTable').filter()" style="width:150px" placeholder="Enter keyword"/> -->
+<!-- 				            </p:outputPanel> -->
+<!-- 						</f:facet> -->
+						<p:column filterBy="#{paciente.nomePessoa}" headerText="Paciente" filterMatchMode="contains">
+							<h:outputText value="#{paciente.nomePessoa}" />
+						</p:column>
+						<p:column headerText="Data de Nascimento">
+							<h:outputText  value="#{paciente.dataNascimento}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p:column>
+						<p:column filterBy="#{paciente.rg}" headerText="RG" filterMatchMode="contains">
+							<h:outputText value="#{paciente.rg}">
+							</h:outputText>
+						</p:column>
+						<p:column filterBy="#{paciente.cpf}" headerText="CPF" filterMatchMode="contains">
+							<h:outputText value="#{paciente.cpf}">
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Celular">
+							<h:outputText value="#{paciente.celular}">
+								<f:convertNumber type="number" pattern="(99) 99999-9999"/>
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Ações" style="text-align: center; width: 80px;">
+						
+							<p:commandButton icon="ui-icon-pencil" title="Editar" style="float:left;"
+								process="@this" action="#{pacienteBean.editarPaciente(paciente.id)}">
+							</p:commandButton>
+						
+							<p:commandButton icon="ui-icon-trash" style="float:right;"
+								title="Excluir" process="@this" update="pacientesTable growl"
+								action="#{pacienteBean.deletarPaciente(paciente.id)}">
+								<p:confirm header="Confirmação"
+									message="Você tem certeza que dezeja excluir?" icon="ui-icon-alert" />
+							</p:commandButton>
+							
+							<h:link outcome="/pages/consulta/formConsulta">Consulta</h:link>
+							
+							<p:confirmDialog global="true">
+								<p:commandButton value="Sim" type="button"
+									styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+								<p:commandButton value="Não" type="button"
+									styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+							</p:confirmDialog>
+							
+							<p:growl id="growl" showDetail="true" globalOnly="true" life="6000" />
+						
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+				<h:commandLink>
+					<h:graphicImage name="/imagens/play.png" />
+					<p:dataExporter type="pdf" target="pacientesTable" fileName="pacientes"
+						pageOnly="true" />
+				</h:commandLink>
+			</h:form>
+		</h:body>
+	</ui:define>
+</ui:composition>

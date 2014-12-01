@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+<div class="navbar">
+	<div class="navbar-inner">
+		<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+			Main Menu </a>
+		<div class="nav-collapse">
+			<ul class="nav" style="float: left;">
+				<li class="#{sessionScope['MENU_ATIVO'] == 'menuHome' ? 'active' : ''}">
+					<h:link outcome="/home">Home</h:link>
+				</li>
+				<li class="#{sessionScope['MENU_ATIVO'] == 'menuPaciente' ? 'active' : ''}">
+					<h:link outcome="/pages/paciente/listarPacientes">Paciente</h:link>
+				</li>
+				<li class="#{(sessionScope['MENU_ATIVO'] == 'menuCadastros') ? 'dropdown active' : 'dropdown'}">
+					<a class="dropdown-toggle" data-toggle="dropdown" href="#">Cadastros</a>
+					<ul class="dropdown-menu">
+						<li>
+							<h:link outcome="/pages/funcionario/listarFuncionarios">Funcionário</h:link>
+						</li>
+						<li>
+							<h:link outcome="/pages/despesa/listarDespesas">Despesa</h:link>
+						</li>
+						<li>
+							<h:link outcome="/pages/areaEspecializada/listarAreasEspecializadas">Area Especializada</h:link>
+						</li>
+						<li>
+							<h:link outcome="/pages/procedimento/listarProcedimentos">Procedimento</h:link>
+						</li>
+						<li>
+							<!-- 							<h:link outcome="/pages/unidade/listarUnidades">Unidade</h:link> -->
+						</li>
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a class="dropdown-toggle" data-toggle="dropdown" href="#">Relatórios</a>
+					<ul class="dropdown-menu">
+						<li>
+							<!-- 							<h:link outcome="#">Relatorio</h:link> -->
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="http://byrushan.com/projects/medical-pro/contact-us.html">Contato</a>
+				</li>
+				<li class="#{(sessionScope['MENU_ATIVO'] == 'menuSugestao') ? 'dropdown active' : 'dropdown'}">
+					<h:link outcome="/pages/sugestao/listarSugestoes">Sugestão</h:link>
+				</li>
+			</ul>
+		</div>
+		<!--/.nav-collapse -->
+	</div>
+	<!--/.navbar-inner -->
+</div>
+<!--/.navbar -->
+</html>

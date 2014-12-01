@@ -1,0 +1,75 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+	<ui:define name="corpo">
+		<h:head>
+			<script type="text/javascript">
+				$(function() {
+					$('.valorDespesa').maskMoney({
+						prefix : 'R$ ',
+						// 						affixesStay:false,
+						thousands : '.',
+						decimal : ',',
+						allowZero : true,
+						allowNegative : true,
+						precision : 2,
+					});
+				})
+
+				function limpaValor() {
+					if ($('.valorDespesa').val() == 'R$ 0,00') {
+						$('.valorDespesa').val(" ");
+					}
+				}
+			</script>
+		</h:head>
+		<h:body>
+			<h:form>
+				<p:panel header="Dados da Despesa" id="cadastroPanel">
+					<p:messages autoUpdate="true" />
+					<table>
+						<p:focus for="descricao" />
+						<tr>
+							<td class="labelInput">
+								<p:outputLabel value="" />
+							</td>
+							<td colspan="3">
+								<p:outputLabel styleClass="ui-outputlabel-rfi"
+									value="* campos obrigatórios" />
+							</td>
+						</tr>
+						<tr>
+							<td class="labelInput">
+								<p:outputLabel for="descricao" value="Descrição:" />
+							</td>
+							<td colspan="3">
+								<p:inputText id="descricao" label="Descrição" style="width: 99%"
+									value="#{despesaBean.despesa.descricaoDespesa}" required="true">
+									<f:validateLength />
+								</p:inputText>
+							</td>
+						</tr>
+						<tr>
+							<td class="labelInput">
+								<p:outputLabel for="valorDespesa" value="Valor:" />
+							</td>
+							<td colspan="3">
+								<p:inputText styleClass="valorDespesa" id="valorDespesa" label="Valor"
+									style="width: 99%" value="#{despesaBean.despesa.valor}" required="true"
+									onblur="limpaValor();">
+									<f:converter converterId="javax.faces.BigDecimal" />
+									<f:convertNumber type="currency" currencySymbol="R$" />
+								</p:inputText>
+							</td>
+						</tr>
+					</table>
+					<p:commandButton type="button" value="Voltar"
+						onclick="window.history.back();" icon="ui-icon-arrowreturn-1-w" />
+					<p:commandButton id="salvar" value="Salvar" icon="ui-icon-disk"
+						action="#{despesaBean.salvarDespesa}" ajax="false" />
+				</p:panel>
+			</h:form>
+		</h:body>
+	</ui:define>
+</ui:composition>

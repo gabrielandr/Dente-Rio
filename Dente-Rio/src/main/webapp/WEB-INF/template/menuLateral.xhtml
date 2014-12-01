@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<div class="menuLateral">
+	<h:form>
+
+		<p:panelMenu style="width:170px">
+			<p:submenu label="Home">
+				<p:menuitem value="Home" url="../Home.xhtml" />
+			</p:submenu>
+			<p:submenu label="funcionario">
+				<p:menuitem value="Listar funcionarios"
+					url="pages/funcionario/listarfuncionarios.xhtml" />
+				<p:menuitem value="Cadastrar funcionarios"
+					url="pages/funcionario/cadastrarfuncionario.xhtml" />
+
+			</p:submenu>
+		</p:panelMenu>
+	</h:form>
+</div>
+</html>

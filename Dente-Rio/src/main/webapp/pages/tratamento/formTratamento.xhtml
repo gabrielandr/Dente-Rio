@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+	
+<f:view>
+	<f:metadata>
+		<f:event type="preRenderView" listener="#{tratamentoBean.limpar}" />
+	</f:metadata>
+</f:view>
+
+<h:form>
+	<p:panel header="Dados do Tratamento" id="cadastroPanel" >
+	<p:messages autoUpdate="true" />
+		<table>
+			<tr>
+				<td class="labelInput">
+					<p:outputLabel for="funcionarios" value="Dentista Responsável:" />
+				</td>
+				<td>
+					<p:selectOneMenu id="funcionarios" label="Funcionário"
+						value="#{tratamentoBean.func_id}"
+						converter="omnifaces.SelectItemsConverter">
+						<f:selectItem itemLabel="Selecione" itemValue="" />
+						<f:selectItems value="#{tratamentoBean.listaFuncionarios}" var="func"
+							itemLabel="#{func.nomePessoa}" itemValue="#{func.id}" />
+					</p:selectOneMenu>
+				</td>
+				<td class="labelInput">
+					<p:outputLabel for="dataInicio" value="Data do Orçamento:" />
+				</td>
+				<td>
+					<p:calendar id="dataInicio" styleClass="dataInicio" label="Data"
+						mask="true" pattern="dd/MM/yyyy" navigator="true" locale="pt_BR"
+						yearRange="c-100:c+1" value="#{tratamentoBean.tratamento.dataInicio}"
+						showOn="button" />
+				</td>
+			</tr>
+			<tr>
+				<td colspan="4">
+					<ui:include src="/pages/procedimento/selecionarProcedimentos.xhtml" >
+						<ui:param name="telaTratamento" value="true" />
+					</ui:include>
+				</td>
+			</tr>
+		</table>
+		<p:commandButton id="salvar" value="Salvar" icon="ui-icon-disk"
+			action="#{tratamentoBean.salvarTratamento(pacienteBean.paciente)}"
+			oncomplete="PF('tratamentoDialog').hide();" update="@form"
+			onsuccess="#{pacienteBean.editarPaciente(pacienteBean.paciente.id)}" />
+		<p:commandButton type="button" value="Cancelar"
+			onclick="PF('tratamentoDialog').hide();" icon="ui-icon-closethick" />
+	</p:panel>
+</h:form>
+</html>

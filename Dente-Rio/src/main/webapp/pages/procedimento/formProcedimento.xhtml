@@ -1,0 +1,83 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+	<ui:define name="corpo">
+		<h:head>
+			<script type="text/javascript">
+				$(function() {
+					$('.valorProcedimento').maskMoney({
+						prefix : 'R$ ',
+						// 						affixesStay:false,
+						thousands : '.',
+						decimal : ',',
+						allowZero : true,
+						precision : 2,
+					});
+				})
+
+				function limpaValor() {
+					if ($('.valorProcedimento').val() == 'R$ 0,00') {
+						$('.valorProcedimento').val(" ");
+					}
+				}
+			</script>
+		</h:head>
+		<h:body>
+			<h:form>
+				<p:panel header="Dados da Procedimento" id="cadastroPanel">
+					<p:messages autoUpdate="true" />
+					<table>
+						<tr>
+							<td class="labelInput">
+								<p:outputLabel value="" />
+							</td>
+							<td colspan="3">
+								<p:outputLabel styleClass="ui-outputlabel-rfi"
+									value="* campos obrigatórios" />
+							</td>
+						</tr>
+						<tr>
+							<td class="labelInput">
+								<p:outputLabel for="nome" value="Código:" />
+							</td>
+							<td colspan="3">
+								<p:inputText id="codigo" label="Código" style="width: 99%"
+									value="#{procedimentoBean.procedimento.codigoProcedimento}" required="true">
+								</p:inputText>
+							</td>
+						</tr>
+						<tr>
+							<td class="labelInput">
+								<p:outputLabel for="nome" value="Procedimento:" />
+							</td>
+							<td colspan="3">
+								<p:inputText id="nome" label="Nome" style="width: 99%"
+									value="#{procedimentoBean.procedimento.nomeProcedimento}" required="true">
+									<f:validateLength  />
+								</p:inputText>
+							</td>
+						</tr>
+						<tr>
+							<td class="labelInput">
+								<p:outputLabel for="valorProcedimento" value="Valor:" />
+							</td>
+							<td colspan="3">
+								<p:inputText styleClass="valorProcedimento" id="valorProcedimento" label="Valor"
+									style="width: 99%" value="#{procedimentoBean.procedimento.valorProcedimento}" required="true"
+									onblur="limpaValor();">
+									<f:converter converterId="javax.faces.BigDecimal" />
+									<f:convertNumber type="currency" currencySymbol="R$" />
+								</p:inputText>
+							</td>
+						</tr>
+					</table>
+					<p:commandButton type="button" value="Voltar"
+						onclick="window.history.back();" icon="ui-icon-arrowreturn-1-w" />
+					<p:commandButton id="salvar" value="Salvar" icon="ui-icon-disk"
+						action="#{procedimentoBean.salvarProcedimento}" ajax="false" />
+				</p:panel>
+			</h:form>
+		</h:body>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+
+	<div style="width: 100%;">
+		<div class="tituloPagina">
+			<h3 class="tree">Procedimentos</h3>
+		</div>
+	</div>
+
+	<p:toolbar styleClass="barraBotoes">
+		<f:facet name="left">
+			<p:commandButton value="Novo" icon="ui-icon-document"
+				onclick="PF('procedimentoDialog').show();" />
+			<span class="ui-separator"> <span
+				class="ui-icon ui-icon-grip-dotted-vertical" />
+			</span>
+			<p:commandButton type="button" value="Voltar"
+				onclick="window.history.back();" icon="ui-icon-arrowreturn-1-w" />
+			<p:dialog header="Selecione um procedimento" widgetVar="procedimentoDialog"
+				modal="true">
+				<ui:include src="/pages/procedimento/selecionarProcedimentos.xhtml" />
+			</p:dialog>
+		</f:facet>
+	</p:toolbar>
+
+	<p:dataTable id="procedimentosCadastradosTable" editable="true" editMode="cell"
+		widgetVar="cellProcedimento"
+		emptyMessage="Nenhum procedimento cadastrado para este tratamento."
+		value="#{tratamentoBean.tratamento.procedimentoTratamentos}"
+		var="procedimentoTratamento" paginator="true" rows="10"
+		paginatorPosition="bottom">
+		
+		<p:ajax event="cellEdit" listener="#{tratamentoBean.onCellEdit}"
+			 process="@this" update="@all" />
+		
+		<p:column headerText="# Procedimento" style="text-align:center;">
+			<h:outputText
+				value="#{procedimentoTratamento.procedimento.codigoProcedimento}" />
+		</p:column>
+		<p:column headerText="Descricao do Procedimento" style="text-align:center;">
+			<h:outputText value="#{procedimentoTratamento.procedimento.nomeProcedimento}" />
+		</p:column>
+		<p:column headerText="Valor" style="text-align:center;">
+			<p:cellEditor>
+				<f:facet name="output">
+					<h:outputText value="#{procedimentoTratamento.valorReal}" style="text-align:center;">
+						<f:convertNumber type="currency" currencySymbol="R$" />
+					</h:outputText>
+				</f:facet>
+				<f:facet name="input">
+					<p:inputText styleClass="valorReal" id="valorReal" label="Valor Real"
+						style="width: 99%;text-align:center;" value="#{procedimentoTratamento.valorReal}"
+						required="true" onblur="limpaValor();">
+						<f:converter converterId="javax.faces.BigDecimal" />
+						<f:convertNumber type="currency" currencySymbol="R$" />
+					</p:inputText>
+				</f:facet>
+			</p:cellEditor>
+			
+		</p:column>
+		<p:columnGroup type="footer" id="footerTotal">
+            <p:row>
+                <p:column colspan="2" style="text-align:right" footerText="Total:" />
+                <p:column footerText="R$#{tratamentoBean.tratamento.valorTotal}" ></p:column>
+            </p:row>
+        </p:columnGroup> 
+		<p:growl id="growl" showDetail="true" autoUpdate="true" />
+				
+	</p:dataTable>
+</html>

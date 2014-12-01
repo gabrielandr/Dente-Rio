@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+<table>
+	
+	<tr>
+		<td class="labelInput">
+			<p:outputLabel for="hemorragia" value="Hemorragia" />
+		</td>
+		<td>
+			<p:selectBooleanCheckbox id="hemorragia" label="Hemorragia" value="#{pacienteBean.paciente.hemorragia}" />
+		</td>
+	
+		<td class="labelInput">
+			<p:outputLabel for="pressao" value="Pressão" />
+		</td>
+		<td>
+			<p:selectBooleanCheckbox id="pressao" label="Pressão" value="#{pacienteBean.paciente.pressao}" />
+		</td>
+	
+		<td class="labelInput">
+			<p:outputLabel for="cardiaco" value="Cardíaco" />
+		</td>
+		<td>
+			<p:selectBooleanCheckbox id="cardiaco" label="Cardíaco" value="#{pacienteBean.paciente.cardiaco}" />
+		</td>
+		<td class="labelInput">
+			<p:outputLabel for="alergia" value="Alergia" />
+		</td>
+		<td>
+			<p:selectBooleanCheckbox id="alergia" label="Alergia" value="#{pacienteBean.paciente.alergia}" />
+		</td>
+	</tr>
+	
+	<tr>
+		
+		<td class="labelInput">
+			<p:outputLabel for="diabetes" value="Diabetes" />
+		</td>
+		<td>
+			<p:selectBooleanCheckbox id="diabetes" label="Diabetes" value="#{pacienteBean.paciente.diabetes}" />
+		</td>
+		<td class="labelInput">
+			<p:outputLabel for="gestante" value="Gestante" />
+		</td>
+		<td>
+			<p:selectBooleanCheckbox id="gestante" label="Gestante" value="#{pacienteBean.paciente.gestante}" />
+		</td>
+		<td class="labelInput">
+			<p:outputLabel for="medico" value="Médico" />
+		</td>
+		<td>
+			<p:selectBooleanCheckbox id="medico" label="Médico" value="#{pacienteBean.paciente.medico}" />
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="labelInput" style="vertical-align: top;">
+			<p:outputLabel for="obs" value="Observações:" />
+		</td>
+		<td colspan="7">
+			<p:inputTextarea style="width: 537px; height:auto" id="obs" label="Observações" value="#{pacienteBean.paciente.obsAnamnese}" rows="2" cols="80" />
+		</td>
+	</tr>
+	
+</table>
+</html>
