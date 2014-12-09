@@ -11,7 +11,6 @@
 		<h:body>
 			<h:form>
 				<p:messages autoUpdate="true" />
-<!-- 				<p:panel id="panelDadosPaciente"> -->
 					<p:tabView id="cadastroTabView">
 						<p:tab title="Dados do Paciente">
 							<ui:include src="/pages/paciente/abaPaciente.xhtml" />
@@ -24,7 +23,6 @@
 						onclick="window.history.back();" icon="ui-icon-arrowreturn-1-w" />
 					<p:commandButton id="addPaciente" value="Salvar" icon="ui-icon-disk"
 						action="#{pacienteBean.salvarPaciente}" ajax="true" />
-<!-- 				</p:panel> -->
 			</h:form>
 		</h:body>
 	</ui:define>
