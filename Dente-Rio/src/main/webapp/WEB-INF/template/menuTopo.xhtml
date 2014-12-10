@@ -12,8 +12,24 @@
 				<li class="#{sessionScope['MENU_ATIVO'] == 'menuHome' ? 'active' : ''}">
 					<h:link outcome="/home">Home</h:link>
 				</li>
-				<li class="#{sessionScope['MENU_ATIVO'] == 'menuPaciente' ? 'active' : ''}">
-					<h:link outcome="/pages/paciente/listarPacientes">Paciente</h:link>
+				<li class="#{(sessionScope['MENU_ATIVO'] == 'menuPaciente') ? 'dropdown active' : 'dropdown'}">
+					<a class="dropdown-toggle" data-toggle="dropdown" href="#">Paciente</a>
+					<ul class="dropdown-menu">
+						<li>
+							<h:link outcome="/pages/paciente/listarPacientes">Ficha</h:link>
+						</li>
+						<li>
+							<h:link outcome="/pages/consulta/formConsulta">Consulta</h:link>
+						</li>
+					</ul>
+				</li>
+				<li class="#{(sessionScope['MENU_ATIVO'] == 'menuMovimento') ? 'dropdown active' : 'dropdown'}">
+					<a class="dropdown-toggle" data-toggle="dropdown" href="#">Movimento</a>
+					<ul class="dropdown-menu">
+						<li>
+							<h:link outcome="/pages/despesa/listarDespesas">Despesa</h:link>
+						</li>
+					</ul>
 				</li>
 				<li class="#{(sessionScope['MENU_ATIVO'] == 'menuCadastros') ? 'dropdown active' : 'dropdown'}">
 					<a class="dropdown-toggle" data-toggle="dropdown" href="#">Cadastros</a>

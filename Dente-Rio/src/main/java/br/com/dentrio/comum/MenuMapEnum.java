@@ -5,16 +5,24 @@ import java.util.List;
 
 public enum MenuMapEnum {
 
-	linkHome("linkHome", "menuHome", "/Home.xhtml"),
-	linkPaciente("linkPaciente", "menuPaciente", "../funcionario/listarFuncionarios.xhtml"),
-	/* Menu de Cadastros */
-	linkFuncionario("linkFuncionario", "menuCadastros", "../funcionario/listarFuncionarios.xhtml"),
-	linkDespesa("linkDespesa", "menuCadastros", "../despesa/listarDespesas.xhtml"),
-	linkAreaEspecializada("linkAreaEspecializada", "menuCadastros", "../areaEspecializada/listarAreasEspecializadas.xhtml"),
-	linkProcedimento("linkProcedimento", "menuCadastros", "../procedimento/listarProcedimentos.xhtml"),
-	/* Fim Menu de Cadastros */
-	linkSugestao("linkSugestao", "menuSugestao", "../sugestao/listarSugestoes.xhtml");
-	
+	LINK_HOME("linkHome", "menuHome", "/Home.xhtml"),
+	/* Menu Paciente */
+	LINK_PACIENTE("linkPaciente", "menuPaciente", "../funcionario/listarFuncionarios.xhtml"),
+	LINK_AGENDAMENTO("linkAgendamento", "menuPaciente", "../consulta/formConsulta.xhtml"),
+	/* Fim Menu Paciente */
+	/* Menu de Movimento */
+	// LINK_CAIXA("linkCaixa", "menuMovimento", "../caixa/montarCaixa.xhtml"),
+	LINK_DESPESA("linkDespesa", "menuMovimento", "../despesa/listarDespesas.xhtml"),
+	// LINK_PAGAMENTO("linkPagamento", "menuMovimento",
+	// "../pagamento/listarDespesas.xhtml"),
+	/* Fim Movimento */
+	LINK_FUNCIONARIO("linkFuncionario", "menuCadastros", "../funcionario/listarFuncionarios.xhtml"),
+	LINK_AREA_ESPECIALIZADA("linkAreaEspecializada", "menuCadastros",
+			"../areaEspecializada/listarAreasEspecializadas.xhtml"),
+			LINK_PROCEDIMENTO("linkProcedimento", "menuCadastros", "../procedimento/listarProcedimentos.xhtml"),
+			/* Fim Menu de Cadastros */
+			LINK_SUGESTAO("linkSugestao", "menuSugestao", "../sugestao/listarSugestoes.xhtml");
+
 	private String link;
 	private String nomeMenuAtivo;
 	private String outcome;
