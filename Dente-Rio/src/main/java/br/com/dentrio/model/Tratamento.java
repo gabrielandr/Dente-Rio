@@ -9,6 +9,8 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,6 +25,8 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.cache.annotation.Cacheable;
+
+import br.com.dentrio.comum.TiposOrcamentoEnum;
 
 @Entity
 @Table(name = "tratamento")
@@ -48,7 +52,11 @@ public class Tratamento extends Timestampable implements Serializable {
 
 	@Column(name = "valor_total")
 	private BigDecimal valorTotal;
-	private String status;
+
+	@Column(name = "status_tratamento")
+	@Enumerated(EnumType.STRING)
+	private TiposOrcamentoEnum statusTratamento;
+
 	@Column(name = "obs_alta")
 	private String obsAlta;
 
@@ -66,25 +74,25 @@ public class Tratamento extends Timestampable implements Serializable {
 	public Tratamento() {
 	}
 
-	public Tratamento(Funcionario funcionario, Date dataInicio, Date dataAlta, BigDecimal valorTotal, String status,
-			String obsAlta, Paciente paciente) {
+	public Tratamento(Funcionario funcionario, Date dataInicio, Date dataAlta, BigDecimal valorTotal,
+			TiposOrcamentoEnum statusTratamento, String obsAlta, Paciente paciente) {
 		this.funcionario = funcionario;
 		this.dataInicio = dataInicio;
 		this.dataAlta = dataAlta;
 		this.valorTotal = valorTotal;
-		this.status = status;
+		this.statusTratamento = statusTratamento;
 		this.obsAlta = obsAlta;
 		this.paciente = paciente;
 	}
 
-	public Tratamento(Funcionario funcionario, Date dataInicio, Date dataAlta, BigDecimal valorTotal, String status,
-			String obsAlta, Set<Pagamento> pagamentos, Set<ProcedimentoTratamento> procedimentoTratamentos,
-			Paciente paciente) {
+	public Tratamento(Funcionario funcionario, Date dataInicio, Date dataAlta, BigDecimal valorTotal,
+			TiposOrcamentoEnum statusTratamento, String obsAlta, Set<Pagamento> pagamentos,
+			Set<ProcedimentoTratamento> procedimentoTratamentos, Paciente paciente) {
 		this.funcionario = funcionario;
 		this.dataInicio = dataInicio;
 		this.dataAlta = dataAlta;
 		this.valorTotal = valorTotal;
-		this.status = status;
+		this.statusTratamento = statusTratamento;
 		this.obsAlta = obsAlta;
 		this.pagamentos = pagamentos;
 		this.procedimentoTratamentos = procedimentoTratamentos;
@@ -134,21 +142,6 @@ public class Tratamento extends Timestampable implements Serializable {
 	 */
 	public void setValorTotal(BigDecimal valorTotal) {
 		this.valorTotal = valorTotal;
-	}
-
-	/**
-	 * @return the status
-	 */
-	public String getStatus() {
-		return status;
-	}
-
-	/**
-	 * @param status
-	 *            the status to set
-	 */
-	public void setStatus(String status) {
-		this.status = status;
 	}
 
 	/**
@@ -253,7 +246,7 @@ public class Tratamento extends Timestampable implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + (id == null ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -282,6 +275,21 @@ public class Tratamento extends Timestampable implements Serializable {
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * @return the statusTratamento
+	 */
+	public TiposOrcamentoEnum getStatusTratamento() {
+		return statusTratamento;
+	}
+
+	/**
+	 * @param statusTratamento
+	 *            the statusTratamento to set
+	 */
+	public void setStatusTratamento(TiposOrcamentoEnum statusTratamento) {
+		this.statusTratamento = statusTratamento;
 	}
 
 }

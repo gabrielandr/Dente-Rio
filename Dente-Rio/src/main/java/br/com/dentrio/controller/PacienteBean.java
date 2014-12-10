@@ -15,7 +15,6 @@ import br.com.dentrio.comum.Constantes;
 import br.com.dentrio.funcionario.service.FuncionarioService;
 import br.com.dentrio.model.Funcionario;
 import br.com.dentrio.model.Paciente;
-import br.com.dentrio.model.Tratamento;
 import br.com.dentrio.paciente.service.PacienteService;
 import br.com.dentrio.tratamento.service.TratamentoService;
 import br.com.dentrio.util.jsf.FacesUtil;
@@ -63,22 +62,6 @@ public class PacienteBean implements Serializable {
 
 		} catch (DataAccessException e) {
 			FacesUtil.addErrorMessage(Constantes.ERRO, "Erro ao tentar salvar o registro!");
-			return null;
-		}
-	}
-
-	private String relacionarTratamento() {
-		try {
-			Paciente pac = pacienteService.getLastInsertedRecord();
-			if (pac.getTratamentos().isEmpty()) {
-				Tratamento tratamento = new Tratamento();
-				tratamento.setPaciente(pac);
-				tratamentoService.salvarTratamento(tratamento);
-				FacesUtil.addSuccessMessage(Constantes.SUCESSO, "Um tratamento foi associado ao paciente criado!");
-			}
-			return null;
-		} catch (DataAccessException e) {
-			FacesUtil.addErrorMessage(Constantes.ERRO, "Erro ao tentar associar o novo paciente a um tratamento!");
 			return null;
 		}
 	}

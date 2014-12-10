@@ -2,38 +2,38 @@
 	xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
-
 	<f:metadata>
 		<f:viewAction
 			action="#{procedimentoBean.carregarListaProcedimentosTratamentos(param['tratamento_id'])}" />
 	</f:metadata>
-	
 	<ui:define name="corpo">
-	<h:head>
+		<h:head>
 			<script type="text/javascript">
-			$(document).ready(function() {
-				
-			});
+				$(document).ready(function() {
+
+				});
 			</script>
 		</h:head>
 		<h:body>
-				<h:form id="formTratamento">
+			<h:form id="formTratamento">
 				<p:growl id="growl" showDetail="true" autoUpdate="true" />
 				<p:tabView id="cadastroTabView" activeIndex="#{sessionScope['ABA_ATIVA']}">
-				<p:ajax event="tabChange" listener="#{tabbedView.onTabChange}" update=":formTratamento:growl"/>
-					<p:tab id="abaDadosPaciente" title="Dados do Paciente" >
+					<p:ajax event="tabChange" listener="#{tabbedView.onTabChange}"
+						update=":formTratamento:growl" />
+					<p:tab id="abaDadosPaciente" title="Dados do Paciente">
 						<ui:include src="/pages/paciente/abaPaciente.xhtml" />
 					</p:tab>
 					<p:tab id="abaAnamnese" title="Anamnese">
 						<ui:include src="/pages/paciente/abaAnamnese.xhtml" />
 					</p:tab>
-					<p:tab id="abaTratamento" title="Tratamento">
+					<p:tab id="abaTratamento" title="Tratamento/Pagamento">
 						<ui:include src="/pages/paciente/abaTratamento.xhtml" />
 					</p:tab>
 				</p:tabView>
-				<p:commandButton type="button" value="Voltar"
+				
+				<p:commandButton id="botaoBack" type="button" value="Voltar" rendered="#{sessionScope['NOME_ABA_ATIVA'] != 'abaTratamento'}"
 					onclick="window.history.back();" icon="ui-icon-arrowreturn-1-w" />
-				<p:commandButton id="addPaciente" value="Salvar" icon="ui-icon-disk"
+				<p:commandButton id="botaoSalvar" value="Salvar" icon="ui-icon-disk" rendered="#{sessionScope['NOME_ABA_ATIVA'] != 'abaTratamento'}"
 					action="#{pacienteBean.salvarPaciente}" ajax="true" />
 			</h:form>
 		</h:body>

@@ -5,46 +5,39 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
+
+import br.com.dentrio.comum.TipoDespesaEnum;
 
 @Entity
 @Table(name = "movimento")
 @DiscriminatorValue("D")
 public class Despesa extends Movimento implements Serializable {
-
 	private static final long serialVersionUID = -5988625296699742692L;
-
 	@Column(name = "descricao_despesa")
 	private String descricaoDespesa;
+	@Column(name = "tipo_despesa")
+	@Enumerated(EnumType.STRING)
+	private TipoDespesaEnum tipoDespesa;
 
-	/**
-	 * @return the descricaoDespesa
-	 */
 	public String getDescricaoDespesa() {
-		return descricaoDespesa;
+		return this.descricaoDespesa;
 	}
 
-	/**
-	 * @param descricaoDespesa the descricaoDespesa to set
-	 */
 	public void setDescricaoDespesa(String descricaoDespesa) {
 		this.descricaoDespesa = descricaoDespesa;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
 	@Override
 	public int hashCode() {
-		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((descricaoDespesa == null) ? 0 : descricaoDespesa.hashCode());
+		result = 31 * result + (this.descricaoDespesa == null ? 0 : this.descricaoDespesa.hashCode());
+		result = 31 * result + (this.tipoDespesa == null ? 0 : this.tipoDespesa.hashCode());
 		return result;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -57,14 +50,24 @@ public class Despesa extends Movimento implements Serializable {
 			return false;
 		}
 		Despesa other = (Despesa) obj;
-		if (descricaoDespesa == null) {
+		if (this.descricaoDespesa == null) {
 			if (other.descricaoDespesa != null) {
 				return false;
 			}
-		} else if (!descricaoDespesa.equals(other.descricaoDespesa)) {
+		} else if (!this.descricaoDespesa.equals(other.descricaoDespesa)) {
+			return false;
+		}
+		if (this.tipoDespesa != other.tipoDespesa) {
 			return false;
 		}
 		return true;
 	}
 
+	public TipoDespesaEnum getTipoDespesa() {
+		return this.tipoDespesa;
+	}
+
+	public void setTipoDespesa(TipoDespesaEnum tipoDespesa) {
+		this.tipoDespesa = tipoDespesa;
+	}
 }

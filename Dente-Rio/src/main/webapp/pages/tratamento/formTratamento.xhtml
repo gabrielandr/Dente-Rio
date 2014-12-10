@@ -2,16 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
-	
 <f:view>
 	<f:metadata>
 		<f:event type="preRenderView" listener="#{tratamentoBean.limpar}" />
 	</f:metadata>
 </f:view>
-
 <h:form>
-	<p:panel header="Dados do Tratamento" id="cadastroPanel" >
-	<p:messages autoUpdate="true" />
+	<p:panel header="Dados do Tratamento" id="cadastroPanel">
+		<p:messages autoUpdate="true" />
 		<table>
 			<tr>
 				<td class="labelInput">
@@ -38,9 +36,67 @@
 			</tr>
 			<tr>
 				<td colspan="4">
-					<ui:include src="/pages/procedimento/selecionarProcedimentos.xhtml" >
-						<ui:param name="telaTratamento" value="true" />
-					</ui:include>
+					<!-- Form procedimento tratamento -->
+					<p:panel style="max-width: 1000px;">
+						
+						<p:dataTable id="dataTable" styleClass="procedimentosTratamentoTable"
+							var="procedimentoTratamento"
+							value="#{procedimentoBean.listaProcedimentosTratamentos}" rows="5"
+							paginator="true" style="margin-bottom:0; height: auto !important;"
+							selection="#{tratamentoBean.procedimentosSelecionados}"
+							rowKey="#{procedimentoTratamento.procedimento.id}"
+							emptyMessage="Nenhum procedimento foi encontrado.">
+							
+							<p:ajax event="rowSelectCheckbox"
+								update=":cadastroTabView:formAbaTratamento:dataTable:validatorInput" />
+							
+							<p:column selectionMode="multiple" style="width:16px;text-align:center" />
+							
+							<p:column headerText="Posicao Dente"
+								style="text-align: center; width: 100px !important;">
+								<p:selectOneMenu style="width: 100px !important;" id="posicao"
+									value="#{procedimentoTratamento.posicaoDente}"
+									converter="omnifaces.SelectItemsConverter" filter="true"
+									filterMatchMode="startsWith">
+									<f:selectItem itemLabel="" itemValue="-1" />
+									<f:selectItems value="#{procedimentoBean.posicaoDentes}" var="posicao"
+										itemLabel="#{posicao.codigo}" itemValue="#{posicao.codigo}" />
+								</p:selectOneMenu>
+							</p:column>
+							
+							<p:column
+								filterBy="#{procedimentoTratamento.procedimento.codigoProcedimento}"
+								filterMatchMode="contains" headerText="Código"
+								style="text-align: center;">
+								<h:outputText
+									value="#{procedimentoTratamento.procedimento.codigoProcedimento}" />
+							</p:column>
+							
+							<p:column
+								filterBy="#{procedimentoTratamento.procedimento.nomeProcedimento}"
+								filterMatchMode="contains" headerText="Procedimento">
+								<h:outputText
+									value="#{procedimentoTratamento.procedimento.nomeProcedimento}" />
+							</p:column>
+							
+							<p:column headerText="Valor">
+								<h:outputText
+									value="#{procedimentoTratamento.procedimento.valorProcedimento}">
+									<f:convertNumber type="currency" currencySymbol="R$" />
+								</h:outputText>
+							</p:column>
+							
+							<p:growl id="growl" showDetail="true" globalOnly="true" life="6000"
+								autoUpdate="true" />
+						</p:dataTable>
+				
+						<h:inputHidden id="validatorInput"
+							value="#{tratamentoBean.numeroProcedimentosSelecionados}"
+							validator="#{tratamentoBean.validarProcedimentosSelecionados}" />
+					</p:panel>
+					
+					<!-- Fim Form procedimento tratamento -->
+				
 				</td>
 			</tr>
 		</table>

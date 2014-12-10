@@ -24,7 +24,6 @@ import br.com.dentrio.util.jsf.FacesUtil;
 public class FuncionarioBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private static final String ERROR = "error";
 
 	@Autowired
 	FuncionarioService funcionarioService;

@@ -35,7 +35,7 @@
 		<p:ajax event="cellEdit" listener="#{tratamentoBean.onCellEdit}"
 			 process="@this" update="@all" />
 		
-		<p:column headerText="# Procedimento" style="text-align:center;">
+		<p:column headerText="# Procedimento" style="text-align:center;" >
 			<h:outputText
 				value="#{procedimentoTratamento.procedimento.codigoProcedimento}" />
 		</p:column>

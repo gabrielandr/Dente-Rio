@@ -8,38 +8,30 @@
 			$('.valorPagamento').val(" ");
 		});
 
-		$(function() {
-			$('.valorPagamento').maskMoney({
-				prefix : 'R$ ',
-				// 						affixesStay:false,
-				thousands : '.',
-				decimal : ',',
-				allowZero : true,
-				precision : 2,
-			});
-		})
-
-		function limpaValor() {
-			if ($('.valorPagamento').val() == 'R$ 0,00') {
-				$('.valorPagamento').val(" ");
-			}
-		}
-
-		function preencheValorTotal() {
-			$('.valorPagamento').val('R$ 250,00')
-		}
 	</script>
 </h:head>
 <h:body>
-	<p:panel id="cadastroPanel">
+	<p:panel id="panelFormPagamento">
+	<h:inputHidden id="hiddenValorRestante" value="#{tratamentoBean.valorRestanteTratamento}" />
 		<table>
 			<tr>
 				<td class="labelInput">
-					<p:outputLabel value="" />
+					<p:outputLabel value="Valor Total:" />
 				</td>
 				<td>
-					<p:outputLabel styleClass="ui-outputlabel-rfi"
-						value="* campos obrigatórios" />
+					<h:outputText value="#{tratamentoBean.valorTotalTrat}">
+						<f:convertNumber type="currency" currencySymbol="R$" />
+					</h:outputText>
+				</td>
+			</tr>
+			<tr>
+				<td class="labelInput">
+					<p:outputLabel value="Valor Restante à pagar:" />
+				</td>
+				<td>
+					<h:outputText value="#{tratamentoBean.valorRestanteTratamento}">
+						<f:convertNumber type="currency" currencySymbol="R$" />
+					</h:outputText>
 				</td>
 			</tr>
 			<tr>
@@ -61,10 +53,10 @@
 				<td></td>
 				<td>
 					<p:commandButton type="button" value="Voltar"
-						onclick="window.history.back();" icon="ui-icon-arrowreturn-1-w" />
+						onclick="PF('pagamentoDialog').hide();" icon="ui-icon-arrowreturn-1-w" />
 					<p:commandButton icon="ui-icon-disk" title="Salvar" value="Salvar"
 						action="#{pagamentoBean.salvarPagamento}"
-						oncomplete="PF('pagamentoDialog').hide();" process="@all" update="@all">
+						oncomplete="PF('pagamentoDialog').hide();">
 						<f:param name="tratamentoId" value="#{param['tratamento_id']}" />
 					</p:commandButton>
 				</td>

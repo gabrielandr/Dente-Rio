@@ -6,6 +6,8 @@ import java.util.Map;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.context.RequestContext;
+
 import br.com.dentrio.comum.Constantes;
 
 public class FacesUtil {
@@ -21,6 +23,12 @@ public class FacesUtil {
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.addMessage(null, new FacesMessage(Constantes.SEVERIDADE_ERROR, summary, detail));
 		context.getExternalContext().getFlash().setKeepMessages(true);
+	}
+
+	public static void throwErroValidacao(String mensagem) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro!", mensagem));
+		context.validationFailed();
 	}
 
 	/**
@@ -49,4 +57,18 @@ public class FacesUtil {
 		FacesContext context = FacesContext.getCurrentInstance();
 		return (T) context.getApplication().evaluateExpressionGet(context, "#{" + beanName + "}", Object.class);
 	}
+
+	public static void callJavaScript(String metodo, String str) {
+		RequestContext context = RequestContext.getCurrentInstance();
+		if (str == null) {
+			context.execute(metodo + "()");
+		} else {
+			context.execute(metodo + "('" + str + "');");
+		}
+	}
+
+	public static void resetForm(String tagId) {
+		RequestContext.getCurrentInstance().reset(tagId);
+	}
+
 }

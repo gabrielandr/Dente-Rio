@@ -24,7 +24,7 @@ import br.com.dentrio.comum.StatusProcedimentoEnum;
 @AssociationOverrides({
 		@AssociationOverride(name = "pk.tratamento", joinColumns = @JoinColumn(name = "tratamento_id")),
 		@AssociationOverride(name = "pk.procedimento", joinColumns = @JoinColumn(name = "procedimento_id")) })
-public class ProcedimentoTratamento extends Timestampable implements Serializable {
+public class ProcedimentoTratamento extends Timestampable implements Serializable, Comparable<ProcedimentoTratamento> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -189,6 +189,34 @@ public class ProcedimentoTratamento extends Timestampable implements Serializabl
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public int compareTo(ProcedimentoTratamento compararProcTrat) {
+
+		int comparaCodigoProcedimento = compararProcTrat.getProcedimento().getCodigoProcedimento();
+
+		// ascending order
+		return this.getProcedimento().getCodigoProcedimento() - comparaCodigoProcedimento;
+
+		// descending order
+		// return compareQuantity - this.quantity;
+
+	}
+
+	/**
+	 * @return the statusProcedimento
+	 */
+	public StatusProcedimentoEnum getStatusProcedimento() {
+		return statusProcedimento;
+	}
+
+	/**
+	 * @param statusProcedimento
+	 *            the statusProcedimento to set
+	 */
+	public void setStatusProcedimento(StatusProcedimentoEnum statusProcedimento) {
+		this.statusProcedimento = statusProcedimento;
 	}
 
 }

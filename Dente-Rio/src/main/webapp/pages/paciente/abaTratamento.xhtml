@@ -1,36 +1,81 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:o="http://omnifaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
-	
-<h:form styleClass="formulatio">
-	<p:panel>
-		<div style="width: 100%;">
-			<div class="tituloPagina">
-				<h3 class="tree">Tratamentos</h3>
-			</div>
+<p:panel id="abaTratamentoPanel">
+	<div style="width: 100%;">
+		<div class="tituloPagina">
+			<h3 class="tree">Tratamentos</h3>
 		</div>
-		
-		<p:outputLabel value="Paciente: #{pacienteBean.paciente.nomePessoa}" />
-		<br />
-		<p:toolbar styleClass="barraBotoes">
-			<f:facet name="left">
-				<p:commandButton value="Novo" icon="ui-icon-document"
-					onclick="PF('tratamentoDialog').show();">
-						<p:ajax event="click" listener="#{tratamentoBean.limpar}"/>
-				</p:commandButton>
-				<p:dialog header="Cadastro de Tratamento" widgetVar="tratamentoDialog" modal="true">
-					<ui:include src="/pages/tratamento/formTratamento.xhtml" />
-				</p:dialog>
-			</f:facet>
-		</p:toolbar>
-		
+	</div>
+	<p:outputLabel value="Paciente: #{pacienteBean.paciente.nomePessoa}" />
+	<br />
+	<p:toolbar styleClass="barraBotoes">
+		<f:facet name="left">
+			<p:commandButton value="Novo" icon="ui-icon-document" type="button"
+				onclick="PF('tratamentoDialog').show();">
+				<p:ajax event="click" listener="#{tratamentoBean.reset}" process="@this"
+					update="cadastroPanel" />
+			</p:commandButton>
+			<p:dialog header="Cadastro de Tratamento" widgetVar="tratamentoDialog"
+				style="position: absolute;" modal="true">
+				<!-- Form Tratamento -->
+				<p:panel header="Dados do Tratamento" id="cadastroPanel">
+					<table>
+						<tr>
+							<td class="labelInput">
+								<p:outputLabel for="funcionarios" value="Dentista Responsável:" />
+							</td>
+							<td>
+								<p:selectOneMenu id="funcionarios" label="Funcionário" 
+									value="#{tratamentoBean.func_id}" styleClass="comboFuncionarios"
+									converter="omnifaces.SelectItemsConverter">
+									<f:selectItem itemLabel="Selecione" itemValue="" />
+									<f:selectItems value="#{tratamentoBean.listaFuncionarios}" var="func"
+										itemLabel="#{func.nomePessoa}" itemValue="#{func.id}" />
+								</p:selectOneMenu>
+							</td>
+							<td class="labelInput">
+								<p:outputLabel for="dataInicio" value="Data do Orçamento:" />
+							</td>
+							<td>
+								<p:calendar id="dataInicio" widgetVar="dataInicio" label="Data" 
+									mask="true" pattern="dd/MM/yyyy" navigator="true" locale="pt_BR"
+									yearRange="c-100:c+1" value="#{tratamentoBean.tratamento.dataInicio}"
+									showOn="button" />
+							</td>
+						</tr>
+						<tr>
+							<td colspan="4">
+							<!-- Form Procedimentos -->
+							<ui:include src="/pages/procedimento/selecionarProcedimentos.xhtml" />
+							<!-- Fim Form Procedimentos -->
+							</td>
+						</tr>
+					</table>
+					<p:commandButton id="salvar" type="button" value="Salvar" icon="ui-icon-disk"
+						onclick="validarFormTratamento()" />
+					<p:commandButton type="button" value="Cancelar"
+						onclick="PF('tratamentoDialog').hide();" icon="ui-icon-closethick" />
+						
+					<p:commandButton id="botaoSalvar" style="display: none;"
+						action="#{tratamentoBean.salvarTratamento(pacienteBean.paciente)}" />
+						
+					<o:commandScript name="comboFuncionariosButton" action="#{tratamentoBean.setarFacesMessageComboFuncionario}" />
+					<o:commandScript name="campoDatainicio" action="#{tratamentoBean.setarFacesMessageDataInicio}" />
+					<o:commandScript name="campoProcedimentos" action="#{tratamentoBean.setarFacesMessageProcedimentosSelecionados}" />
+				</p:panel>
+				<!-- FIM Form Tratamento -->
+			</p:dialog>
+		</f:facet>
+	</p:toolbar>
+	<h:form>
 		<p:dataTable id="tratamentosTable" var="tratamento"
-			value="#{pacienteBean.paciente.tratamentos}" emptyMessage="Nenhum tratamento cadastrado para este paciente."
-			rows="10" paginatorPosition="bottom">
-			
+			value="#{pacienteBean.paciente.tratamentos}"
+			emptyMessage="Nenhum tratamento cadastrado para este paciente." rows="10"
+			paginatorPosition="bottom">
 			<p:growl id="growl" showDetail="true" autoUpdate="true" />
-    	    
 			<p:column headerText="Id">
 				<h:outputText value="#{tratamento.id}" />
 			</p:column>
@@ -50,17 +95,14 @@
 					<f:convertNumber type="currency" currencySymbol="R$" />
 				</h:outputText>
 			</p:column>
-			
+			<input type="hidden" name="tratamento_id" value="#{tratamento.id}" />
 			<p:column headerText="Acão" style="width:32px;text-align: center">
-			
-					
-			
-             <p:commandButton icon="ui-icon-pencil" title="Editar"
+				<p:commandButton icon="ui-icon-pencil" title="Editar"
                 action="#{tratamentoBean.mostrarDadosTratamento}" >
                 <f:setPropertyActionListener value="#{tratamento}" target="#{tratamentoBean.tratamentoSelecionado}" />
             </p:commandButton>
-        </p:column>
+			</p:column>
 		</p:dataTable>
-	</p:panel>
-</h:form>
+	</h:form>
+</p:panel>
 </html>

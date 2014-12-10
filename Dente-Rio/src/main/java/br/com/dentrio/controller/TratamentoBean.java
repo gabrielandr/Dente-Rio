@@ -4,21 +4,26 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.el.ELException;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 
 import org.apache.commons.lang3.StringUtils;
-import org.primefaces.context.RequestContext;
 import org.primefaces.event.CellEditEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Component;
 
+import br.com.dentrio.comum.BaseBean;
 import br.com.dentrio.comum.Constantes;
+import br.com.dentrio.comum.StatusProcedimentoEnum;
+import br.com.dentrio.comum.TiposOrcamentoEnum;
 import br.com.dentrio.funcionario.service.FuncionarioService;
 import br.com.dentrio.model.Funcionario;
 import br.com.dentrio.model.Paciente;
@@ -29,7 +34,7 @@ import br.com.dentrio.tratamento.service.TratamentoService;
 import br.com.dentrio.util.jsf.FacesUtil;
 
 @Component("tratamentoBean")
-public class TratamentoBean implements Serializable {
+public class TratamentoBean extends BaseBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private static final String ERROR = "error";
@@ -50,6 +55,8 @@ public class TratamentoBean implements Serializable {
 	private Integer func_id;
 	private List<String> listaProcedimentosDuplicados = new ArrayList<String>();
 	private BigDecimal valorTotalTrat;
+	private BigDecimal valorRestanteTratamento;
+	public int numeroProcedimentosSelecionados;
 
 	@PostConstruct
 	private void inicializar() {
@@ -58,7 +65,14 @@ public class TratamentoBean implements Serializable {
 
 	public void limpar() {
 		this.tratamento = new Tratamento();
+		this.setFunc_id(-1);
 		this.tratamento.setDataInicio(new Date());
+	}
+
+	public void reset() {
+		FacesUtil.resetForm("formTratamento:cadastroTabView:cadastroPanel");
+		FacesUtil.resetForm("formTratamento:cadastroTabView:dataTable");
+
 	}
 
 	public String novaTratamento() {
@@ -66,15 +80,12 @@ public class TratamentoBean implements Serializable {
 		return "formTratamento?faces-redirect=true";
 	}
 
-	public void cadastrarNovoTratamento() {
-		RequestContext.getCurrentInstance().openDialog("tratamento");
-	}
-
 	public String salvarTratamento(Paciente paciente) {
 		try {
 			setarTimestamps();
 			tratamento.setPaciente(paciente);
 			tratamento.setFuncionario(funcionarioService.getFuncionario(func_id));
+			tratamento.setStatusTratamento(TiposOrcamentoEnum.ORCAMENTO);
 			tratamentoService.salvarTratamento(tratamento);
 			Tratamento trat = tratamentoService.getLastInsertedRecord();
 			salvarProcedimentosTratamento(trat);
@@ -87,6 +98,23 @@ public class TratamentoBean implements Serializable {
 			FacesUtil.addErrorMessage(Constantes.ERRO, "Ocoreu um erro ao tentar salvar, por favor tente novamente!");
 			return null;
 		}
+	}
+
+	public String setarFacesMessageComboFuncionario() {
+		FacesUtil
+				.throwErroValidacao("Para o cadastro de um tratamento, é necessário selecionar o dentista responsável!");
+		return null;
+	}
+
+	public String setarFacesMessageDataInicio() {
+		FacesUtil.throwErroValidacao("Para o cadastro de um tratamento, é necessário escolher a data do orçamento!");
+		return null;
+	}
+
+	public String setarFacesMessageProcedimentosSelecionados() {
+		FacesUtil
+				.throwErroValidacao("Para o cadastro de um tratamento, é necessário marcar pelo menos um procedimento!");
+		return null;
 	}
 
 	public String editarTratamento(Integer tratamentoId) {
@@ -114,7 +142,7 @@ public class TratamentoBean implements Serializable {
 		try {
 			Tratamento tratamento = tratamentoService.getTratamento(tratamentoId);
 			tratamentoService.deletarTratamento(tratamento);
-			FacesUtil.addErrorMessage(Constantes.SUCESSO, "Tratamento deletada com Sucesso!");
+			FacesUtil.addErrorMessage(Constantes.SUCESSO, "Tratamento deletado com Sucesso!");
 			inicializar();
 			return "listarTratamentos?faces-redirect=true";
 		} catch (Exception e) {
@@ -140,19 +168,31 @@ public class TratamentoBean implements Serializable {
 			if (duplicateEntry) {
 				setarMensagemDuplicidade();
 				setProcedimentosSelecionados(new ArrayList<ProcedimentoTratamento>());
-				FacesUtil.redirect(null);
+				FacesUtil.redirect("dadosTratamento.xhtml?tratamento_id=" + tratamento.getId());
 			} else {
 				Tratamento trata = tratamentoService.getTratamento(Integer.valueOf(codigo_tratamento));
 				salvarProcedimentosTratamento(trata);
 			}
-			FacesUtil.addSuccessMessage(Constantes.SUCESSO, "Procedimento adicionado com Sucesso!");
+			FacesUtil.addSuccessMessage(Constantes.SUCESSO, "Procedimento adicionado com sucesso!");
 			FacesUtil.redirect("dadosTratamento.xhtml?tratamento_id=" + tratamento.getId());
 
 		} catch (DataAccessException e) {
 			e.printStackTrace();
 			FacesUtil.addErrorMessage(Constantes.ERRO, "Ocoreu um erro ao tentar salvar, por favor tente novamente!");
-			FacesUtil.redirect(null);
-			;
+			FacesUtil.redirect("dadosTratamento.xhtml?tratamento_id=" + tratamento.getId());
+		}
+	}
+
+	public void deletarProcedimentoTratamento(ProcedimentoTratamento procTratamento) {
+		try {
+			procedimentoTratamentoService.deletarProcedimentoTratamento(procTratamento);
+			atualizaValorTotalTratamento(tratamento.getId());
+			FacesUtil.addErrorMessage(Constantes.SUCESSO, "Procedimento deletado do Tratamento com sucesso!");
+			FacesUtil.redirect("dadosTratamento.xhtml?tratamento_id=" + tratamento.getId());
+		} catch (Exception e) {
+			e.printStackTrace();
+			FacesUtil.addErrorMessage(Constantes.ERRO, "Ocorreu um erro ao deletar!");
+			FacesUtil.redirect("dadosTratamento.xhtml?tratamento_id=" + tratamento.getId());
 		}
 	}
 
@@ -165,17 +205,29 @@ public class TratamentoBean implements Serializable {
 			FacesUtil.addErrorMessage(Constantes.ERRO, "O procedimento de # " + listaProcedimentosDuplicados.get(0)
 					+ " já foi cadastrado para este tratamento, selecione outro procedimento!");
 		}
+		listaProcedimentosDuplicados = new ArrayList<String>();
 	}
 
 	private void salvarProcedimentosTratamento(Tratamento trat) {
-		valorTotalTrat = BigDecimal.ZERO;
 		for (ProcedimentoTratamento procedimentoTrat : getProcedimentosSelecionados()) {
 			procedimentoTrat.setTratamento(trat);
+			procedimentoTrat.setStatusProcedimento(StatusProcedimentoEnum.NAO_INICIADO);
 			setarTimestampsProcedimentoTratamento(procedimentoTrat);
 			procedimentoTratamentoService.salvarProcedimentoTratamento(procedimentoTrat);
 			setProcedimentosSelecionados(new ArrayList<ProcedimentoTratamento>());
 		}
 		atualizaValorTotalTratamento(trat.getId());
+	}
+
+	public String validarProcedimentosSelecionados(FacesContext context, UIComponent component, Object value)
+			throws ValidatorException {
+		Integer qtd = (Integer) value;
+		if (qtd <= 0) {
+			FacesUtil.addErrorMessage(Constantes.ERRO,
+					"Para cração do Tratamento, é necessário selecionar pelo menos um procedimento!");
+			return null;
+		}
+		return null;
 	}
 
 	private Boolean checarDuplicateEntry(Boolean duplicateEntry) {
@@ -197,11 +249,11 @@ public class TratamentoBean implements Serializable {
 	 * dos procedimentos cadastrados.
 	 */
 	private void atualizaValorTotalTratamento(Integer trat_id) {
-		Tratamento trat = tratamentoService.getTratamento(trat_id);
-		setarValorTotalTratamento(trat);
+		valorTotalTrat = BigDecimal.ZERO;
+		tratamento = tratamentoService.getTratamento(trat_id);
+		setarValorTotalTratamento(tratamento);
 		tratamento.setValorTotal(valorTotalTrat);
 		tratamentoService.salvarTratamento(tratamento);
-
 		try {
 			tratamentoService.salvarTratamento(tratamento);
 		} catch (Exception e) {
@@ -241,19 +293,45 @@ public class TratamentoBean implements Serializable {
 					"#{procedimentoTratamento}", ProcedimentoTratamento.class);
 			valorAnterior = event.getOldValue();
 			valorNovo = event.getNewValue();
-			if ((valorNovo != null) && !valorNovo.equals(valorAnterior)) {
-				procedimentoTrat.setValorReal((BigDecimal) valorNovo);
-				procedimentoTratamentoService.salvarProcedimentoTratamento(procedimentoTrat);
-				atualizaValorTotalTratamento(procedimentoTrat.getTratamento().getId());
-				FacesUtil.addSuccessMessage(Constantes.SUCESSO, "Valor do tratamento alterado de R$" + valorAnterior
-						+ " para R$" + valorNovo);
-				FacesUtil.redirect("dadosTratamento.xhtml?tratamento_id=" + tratamento.getId());
+			if (valorAnterior instanceof BigDecimal) {
+				atualizaValorProcedimentoTratamento(valorAnterior, valorNovo, procedimentoTrat);
+			} else {
+				atualizaStatusProcedimentoTratamento(valorAnterior, valorNovo, procedimentoTrat);
 			}
 		} catch (ELException e) {
 			FacesUtil.addErrorMessage(Constantes.ERRO, "Ocorreu um erro ao salvar o valor.");
 			e.printStackTrace();
 		}
 
+	}
+
+	@SuppressWarnings("unchecked")
+	private void atualizaStatusProcedimentoTratamento(Object valorAnterior, Object valorNovo,
+			ProcedimentoTratamento procedimentoTrat) {
+		if (valorNovo != null && !valorNovo.equals(valorAnterior)) {
+			StatusProcedimentoEnum anteriorStatusProcedimentoEnum = (StatusProcedimentoEnum) ((List<Object>) valorAnterior)
+					.get(0);
+			StatusProcedimentoEnum novoStatusProcedimentoEnum = (StatusProcedimentoEnum) ((List<Object>) valorNovo)
+					.get(0);
+			procedimentoTrat.setStatusProcedimento(novoStatusProcedimentoEnum);
+			procedimentoTratamentoService.salvarProcedimentoTratamento(procedimentoTrat);
+			FacesUtil.addSuccessMessage(Constantes.SUCESSO,
+					"Status do tratamento alterado de " + anteriorStatusProcedimentoEnum.getDescricao() + " para "
+							+ novoStatusProcedimentoEnum.getDescricao());
+			FacesUtil.redirect("dadosTratamento.xhtml?tratamento_id=" + tratamento.getId());
+		}
+	}
+
+	private void atualizaValorProcedimentoTratamento(Object valorAnterior, Object valorNovo,
+			ProcedimentoTratamento procedimentoTrat) {
+		if (valorNovo != null && !valorNovo.equals(valorAnterior)) {
+			procedimentoTrat.setValorReal((BigDecimal) valorNovo);
+			procedimentoTratamentoService.salvarProcedimentoTratamento(procedimentoTrat);
+			atualizaValorTotalTratamento(procedimentoTrat.getTratamento().getId());
+			FacesUtil.addSuccessMessage(Constantes.SUCESSO, "Valor do tratamento alterado de R$" + valorAnterior
+					+ " para R$" + valorNovo);
+			FacesUtil.redirect("dadosTratamento.xhtml?tratamento_id=" + tratamento.getId());
+		}
 	}
 
 	/* Getters and setters */
@@ -266,10 +344,12 @@ public class TratamentoBean implements Serializable {
 		this.tratamento = tratamento;
 	}
 
+	@Override
 	public TratamentoService getTratamentoService() {
 		return tratamentoService;
 	}
 
+	@Override
 	public void setTratamentoService(TratamentoService tratamentoService) {
 		this.tratamentoService = tratamentoService;
 	}
@@ -293,7 +373,9 @@ public class TratamentoBean implements Serializable {
 	 * @return the listaProcedimentos
 	 */
 	public List<ProcedimentoTratamento> getListaProcedimentos() {
-		return procedimentoTratamentoService.listProcedimentoTratamentos();
+		listaProcedimentos = procedimentoTratamentoService.listProcedimentoTratamentos();
+		Collections.sort(listaProcedimentos);
+		return listaProcedimentos;
 	}
 
 	/**
@@ -436,7 +518,7 @@ public class TratamentoBean implements Serializable {
 	 * @return the valorTotalTrat
 	 */
 	public BigDecimal getValorTotalTrat() {
-		return valorTotalTrat;
+		return valorTotalTrat = tratamento.getValorTotal();
 	}
 
 	/**
@@ -446,4 +528,66 @@ public class TratamentoBean implements Serializable {
 	public void setValorTotalTrat(BigDecimal valorTotalTrat) {
 		this.valorTotalTrat = valorTotalTrat;
 	}
+
+	/**
+	 * @return the valorRestanteTratamento
+	 */
+	public BigDecimal getValorRestanteTratamento() {
+		BigDecimal valorTotPago = retornaValorTotalPago(tratamento);
+		valorRestanteTratamento = retornaValorRestanteTratamento(tratamento, valorTotPago);
+		return valorRestanteTratamento;
+	}
+
+	/**
+	 * @return the listaProcedimentosDuplicados
+	 */
+	public List<String> getListaProcedimentosDuplicados() {
+		return listaProcedimentosDuplicados;
+	}
+
+	/**
+	 * @param listaProcedimentosDuplicados
+	 *            the listaProcedimentosDuplicados to set
+	 */
+	public void setListaProcedimentosDuplicados(List<String> listaProcedimentosDuplicados) {
+		this.listaProcedimentosDuplicados = listaProcedimentosDuplicados;
+	}
+
+	/**
+	 * @return the listaStatusProcedimento
+	 */
+	public List<StatusProcedimentoEnum> getListaStatusProcedimento() {
+		return StatusProcedimentoEnum.listaTodos();
+	}
+
+	/**
+	 * @return the valorTotalPago
+	 */
+	public BigDecimal getValorTotalPago() {
+		return retornaValorTotalPago(tratamento);
+	}
+
+	/**
+	 * @param valorRestanteTratamento
+	 *            the valorRestanteTratamento to set
+	 */
+	public void setValorRestanteTratamento(BigDecimal valorRestanteTratamento) {
+		this.valorRestanteTratamento = valorRestanteTratamento;
+	}
+
+	/**
+	 * @return the numeroProcedimentosSelecionados
+	 */
+	public int getNumeroProcedimentosSelecionados() {
+		return getProcedimentosSelecionados() == null ? 0 : getProcedimentosSelecionados().size();
+	}
+
+	/**
+	 * @param numeroProcedimentosSelecionados
+	 *            the numeroProcedimentosSelecionados to set
+	 */
+	public void setNumeroProcedimentosSelecionados(int numeroProcedimentosSelecionados) {
+		this.numeroProcedimentosSelecionados = numeroProcedimentosSelecionados;
+	}
+
 }

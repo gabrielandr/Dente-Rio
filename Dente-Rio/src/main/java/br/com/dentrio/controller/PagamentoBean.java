@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Component;
 
-import br.com.dentrio.comum.Constantes;
 import br.com.dentrio.model.Pagamento;
 import br.com.dentrio.model.Tratamento;
 import br.com.dentrio.pagamento.service.PagamentoService;
@@ -19,19 +18,15 @@ import br.com.dentrio.util.jsf.FacesUtil;
 
 @Component("pagamentoBean")
 public class PagamentoBean implements Serializable {
-
 	private static final long serialVersionUID = 1L;
-	private static final String ERROR = "error";
 
 	@Autowired
 	PagamentoService pagamentoService;
-
 	@Autowired
 	TratamentoService tratamentoService;
 
 	private Pagamento pagamento;
 	List<Pagamento> listaPagamentos;
-
 	private String tratamentoId;
 
 	@PostConstruct
@@ -50,48 +45,46 @@ public class PagamentoBean implements Serializable {
 
 	public void salvarPagamento() {
 		try {
-			setarTimestamps();
 			String tratamento_id = FacesUtil.getRequestParam("tratamentoId");
-			Tratamento tratamento = tratamentoService.getTratamento(Integer.valueOf(tratamento_id));
-			pagamento.setTratamento(tratamento);
-			pagamentoService.salvarPagamento(pagamento);
-			FacesUtil.addSuccessMessage(Constantes.SUCESSO, "Pagamento adicionado com Sucesso!");
+			Tratamento tratamento = this.tratamentoService.getTratamento(Integer.valueOf(tratamento_id));
+			setarTimestamps();
+			this.pagamento.setTratamento(tratamento);
+			this.pagamentoService.salvarPagamento(this.pagamento);
+			FacesUtil.addSuccessMessage("Sucesso!", "Pagamento adicionado com Sucesso!");
 			inicializar();
-			FacesUtil.getRequestParam("dadosTratamentos.xhtml?faces-redirect=true?tratamento_id=" + tratamento.getId());
-
+			FacesUtil.redirect("dadosTratamento.xhtml?tratamento_id=" + tratamento.getId());
 		} catch (DataAccessException e) {
 			e.printStackTrace();
-			FacesUtil.addErrorMessage(Constantes.ERRO, "Ocoreu um erro ao tentar salvar!");
-			FacesUtil.redirect(null);
+			FacesUtil.addErrorMessage("Erro!", "Ocoreu um erro ao tentar salvar!");
 		}
 	}
 
 	public String editarPagamento(Integer pagamentoId) {
 		try {
-			pagamento = pagamentoService.getPagamento(pagamentoId);
+			this.pagamento = this.pagamentoService.getPagamento(pagamentoId);
 			return "formPagamento?faces-redirect=true&pagamentoId=" + pagamentoId;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return ERROR;
+		return "error";
 	}
 
 	public String deletarPagamento(Integer pagamentoId) {
 		try {
-			Pagamento pagamento = pagamentoService.getPagamento(pagamentoId);
-			pagamentoService.deletarPagamento(pagamento);
-			FacesUtil.addSuccessMessage(Constantes.SUCESSO, "Pagamento deletado com Sucesso!");
+			Pagamento pagamento = this.pagamentoService.getPagamento(pagamentoId);
+			this.pagamentoService.deletarPagamento(pagamento);
+			FacesUtil.addSuccessMessage("Sucesso!", "Pagamento deletado com Sucesso!");
 			inicializar();
 			return "listarPagamentos?faces-redirect=true";
 		} catch (Exception e) {
 			e.printStackTrace();
-			FacesUtil.addErrorMessage(Constantes.ERRO, "Ocorreu um erro ao deletar!");
-			return null;
+			FacesUtil.addErrorMessage("Erro!", "Ocorreu um erro ao deletar!");
 		}
+		return null;
 	}
 
 	public Pagamento getPagamento() {
-		return pagamento;
+		return this.pagamento;
 	}
 
 	public void setPagamento(Pagamento pagamento) {
@@ -99,7 +92,7 @@ public class PagamentoBean implements Serializable {
 	}
 
 	public List<Pagamento> getListaPagamentos() {
-		return pagamentoService.listPagamentos();
+		return this.pagamentoService.listPagamentos();
 	}
 
 	public void setListaPagamentos(List<Pagamento> listaPagamentos) {
@@ -107,7 +100,7 @@ public class PagamentoBean implements Serializable {
 	}
 
 	public PagamentoService getPagamentoService() {
-		return pagamentoService;
+		return this.pagamentoService;
 	}
 
 	public void setPagamentoService(PagamentoService pagamentoService) {
@@ -115,39 +108,25 @@ public class PagamentoBean implements Serializable {
 	}
 
 	public void setarTimestamps() {
-		if (pagamento.createdAt == null) {
-			pagamento.setCreatedAt(new Date());
-			pagamento.setUpdatedAt(new Date());
+		if (this.pagamento.createdAt == null) {
+			this.pagamento.setCreatedAt(new Date());
+			this.pagamento.setUpdatedAt(new Date());
 		}
-		pagamento.setUpdatedAt(new Date());
+		this.pagamento.setUpdatedAt(new Date());
 	}
 
-	/**
-	 * @return the tratamentoId
-	 */
 	public String getTratamentoId() {
-		return tratamentoId;
+		return this.tratamentoId;
 	}
 
-	/**
-	 * @param tratamentoId
-	 *            the tratamentoId to set
-	 */
 	public void setTratamentoId(String tratamentoId) {
 		this.tratamentoId = tratamentoId;
 	}
 
-	/**
-	 * @return the tratamentoService
-	 */
 	public TratamentoService getTratamentoService() {
-		return tratamentoService;
+		return this.tratamentoService;
 	}
 
-	/**
-	 * @param tratamentoService
-	 *            the tratamentoService to set
-	 */
 	public void setTratamentoService(TratamentoService tratamentoService) {
 		this.tratamentoService = tratamentoService;
 	}

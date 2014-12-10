@@ -952,10 +952,10 @@ span.box-icon {
 
 .tituloPagina {
 	width: 25%;
-/* 	margin: 0 auto; */
+	/* 	margin: 0 auto; */
 }
 
-.ui-selectonemenu label.ui-selectonemenu-label{
+.ui-selectonemenu label.ui-selectonemenu-label {
 	width: 217px;
 }
 
@@ -972,10 +972,17 @@ span.box-icon {
 	text-align: center;
 }
 
-.ui-growl{
+.ui-growl {
 	margin-right: 80px !important;
 	width: 350px !important;
 }
-.ui-growl-message{
+
+.ui-growl-message {
 	margin-right: 50px !important;
+}
+
+.dialogProcedimentosTratamento {
+	position: absolute !important;
+	margin: 0px auto !important;
+	width: 75% !important
 }

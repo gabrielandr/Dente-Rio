@@ -8,16 +8,12 @@ import javax.persistence.ManyToOne;
 
 @Embeddable
 public class ProcedimentoTratamentoId implements Serializable {
-
 	private static final long serialVersionUID = 1L;
-
 	@ManyToOne
 	private Tratamento tratamento;
-
 	@ManyToOne
 	private Procedimento procedimento;
-
-	@Column(name = "posicao_dente", columnDefinition = "int DEFAULT -1")
+	@Column(name = "posicao_dente", columnDefinition = "int DEFAULT '-1'")
 	private Integer posicaoDente;
 
 	public ProcedimentoTratamentoId() {
@@ -29,56 +25,31 @@ public class ProcedimentoTratamentoId implements Serializable {
 		this.posicaoDente = posicaoDente;
 	}
 
-	/**
-	 * @return the tratamento
-	 */
 	public Tratamento getTratamento() {
-		return tratamento;
+		return this.tratamento;
 	}
 
-	/**
-	 * @param tratamento
-	 *            the tratamento to set
-	 */
 	public void setTratamento(Tratamento tratamento) {
 		this.tratamento = tratamento;
 	}
 
-	/**
-	 * @return the procedimento
-	 */
 	public Procedimento getProcedimento() {
-		return procedimento;
+		return this.procedimento;
 	}
 
-	/**
-	 * @param procedimento
-	 *            the procedimento to set
-	 */
 	public void setProcedimento(Procedimento procedimento) {
 		this.procedimento = procedimento;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#hashCode()
-	 */
 	@Override
 	public int hashCode() {
-		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((posicaoDente == null) ? 0 : posicaoDente.hashCode());
-		result = prime * result + ((procedimento == null) ? 0 : procedimento.hashCode());
-		result = prime * result + ((tratamento == null) ? 0 : tratamento.hashCode());
+		result = 31 * result + (this.posicaoDente == null ? 0 : this.posicaoDente.hashCode());
+		result = 31 * result + (this.procedimento == null ? 0 : this.procedimento.hashCode());
+		result = 31 * result + (this.tratamento == null ? 0 : this.tratamento.hashCode());
 		return result;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -91,36 +62,28 @@ public class ProcedimentoTratamentoId implements Serializable {
 			return false;
 		}
 		ProcedimentoTratamentoId other = (ProcedimentoTratamentoId) obj;
-		if (posicaoDente == null) {
+		if (this.posicaoDente == null) {
 			if (other.posicaoDente != null) {
 				return false;
 			}
-		} else if (!posicaoDente.equals(other.posicaoDente)) {
+		} else if (!this.posicaoDente.equals(other.posicaoDente)) {
 			return false;
 		}
-		if (procedimento == null) {
+		if (this.procedimento == null) {
 			if (other.procedimento != null) {
 				return false;
 			}
-		} else if (!procedimento.equals(other.procedimento)) {
+		} else if (!this.procedimento.equals(other.procedimento)) {
 			return false;
 		}
 		return true;
 	}
 
-	/**
-	 * @return the posicaoDente
-	 */
 	public Integer getPosicaoDente() {
-		return posicaoDente;
+		return this.posicaoDente;
 	}
 
-	/**
-	 * @param posicaoDente
-	 *            the posicaoDente to set
-	 */
 	public void setPosicaoDente(Integer posicaoDente) {
 		this.posicaoDente = posicaoDente;
 	}
-
 }
