@@ -1,28 +1,29 @@
-function validaCampoNumerico(valor){
-	$('.numerico').each(function() {
-		if($(this).val() == "" || $(this).val() == -1 || $(this).val() == 0) {
-			mensagens.push("O campo "+ $(this).attr('title') + " \u00E9 de preenchimento obrigat\u00F3rio.");
-		}
-	});
-	
-	
+function validaCampoNumerico(valor) {
+	$('.numerico').each(
+			function() {
+				if ($(this).val() == "" || $(this).val() == -1
+						|| $(this).val() == 0) {
+					mensagens.push("O campo " + $(this).attr('title')
+							+ " \u00E9 de preenchimento obrigat\u00F3rio.");
+				}
+			});
+
 }
 
 function validarFormTratamento() {
-	var comboFuncionarios = $(".comboFuncionarios option:selected")
-			.val();
+	var comboFuncionarios = $(".comboFuncionarios option:selected").val();
 	var dataInicio = PF('dataInicio').getDate();
 	var procedimentos = $(".procedimentosTratamentoTable [type=checkbox]:checked").length;
-	
-	if(comboFuncionarios == "" && dataInicio == null && procedimentos == 0){
+
+	if (comboFuncionarios == "" && dataInicio == null && procedimentos == 0) {
 		comboFuncionariosButton();
 		campoDatainicio();
 		campoProcedimentos();
-	}else if(comboFuncionarios == ""){
+	} else if (comboFuncionarios == "") {
 		comboFuncionariosButton();
-	} else if (dataInicio == null){
+	} else if (dataInicio == null) {
 		campoDatainicio();
-	} else if(procedimentos == 0){
+	} else if (procedimentos == 0) {
 		campoProcedimentos();
 	} else {
 		$("#formTratamento\\:cadastroTabView\\:botaoSalvar").click();
@@ -31,8 +32,8 @@ function validarFormTratamento() {
 
 function validarFormProcedimentosTratamento() {
 	var procedimentos = $(".procedimentosTratamentoTable [type=checkbox]:checked").length;
-	
-	if(procedimentos == 0){
+
+	if (procedimentos == 0) {
 		campoProcedimentos();
 	} else {
 		$("#formulario\\:dataTable\\:botaoSalvar").click();
@@ -42,7 +43,7 @@ function validarFormProcedimentosTratamento() {
 $(function() {
 	$('.valorPagamento').maskMoney({
 		prefix : 'R$ ',
-		// 						affixesStay:false,
+		// affixesStay:false,
 		thousands : '.',
 		decimal : ',',
 		allowZero : true,
@@ -57,11 +58,30 @@ function limpaValor() {
 }
 
 function preencheValorTotal() {
-	var restante = "R$ " + $('#formulario\\:formPagamento\\:hiddenValorRestante').val();
-	restante = restante.replace(".",",");
+	var restante = "R$ "
+			+ $('#formulario\\:formPagamento\\:hiddenValorRestante').val();
+	restante = restante.replace(".", ",");
 	$('#formulario\\:formPagamento\\:valorPagamento').val(restante);
 }
 
-function resetFormPagamento(){
+function resetFormPagamento() {
 	$("#formulario\\:valorPagamento").val("R$ 0,00");
+}
+
+
+function trataCampoSocio() {
+	if ($('.tiposFuncionario option:selected').val() == 'DENTISTA') {
+		$('.trDentista').show();
+	} else {
+		$('.trDentista').hide();
+	}
+}
+function trataCampoFormaPagamento() {
+	if ($("#formulario\\:formaPagamento option:selected").val() == 'CARTAO') {
+		$("#trNumeroParcelas").show();
+		$("#trCodigoEstorno").show();
+	} else {
+		$("#trNumeroParcelas").hide();
+		$("#trCodigoEstorno").hide();
+	}
 }

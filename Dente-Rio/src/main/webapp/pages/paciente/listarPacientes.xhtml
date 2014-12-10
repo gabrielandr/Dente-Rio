@@ -27,12 +27,6 @@
 					<p:dataTable id="pacientesTable"
 						emptyMessage="Nenhum registro foi encontrado."
 						value="#{pacienteBean.listaPacientes}" var="paciente">
-<!-- 						<f:facet name="header"> -->
-<!-- 				            <p:outputPanel> -->
-<!-- 				                <h:outputText value="Filtrar por qualquer campo:" /> -->
-<!-- 				                <p:inputText id="globalFilter" onkeyup="PF('pacientesTable').filter()" style="width:150px" placeholder="Enter keyword"/> -->
-<!-- 				            </p:outputPanel> -->
-<!-- 						</f:facet> -->
 						<p:column filterBy="#{paciente.nomePessoa}" headerText="Paciente" filterMatchMode="contains">
 							<h:outputText value="#{paciente.nomePessoa}" />
 						</p:column>

@@ -18,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -61,10 +62,12 @@ public class Tratamento extends Timestampable implements Serializable {
 	private String obsAlta;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tratamento")
+	@OrderBy("id")
 	private Set<Pagamento> pagamentos;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.tratamento", cascade = CascadeType.ALL)
 	@LazyCollection(LazyCollectionOption.FALSE)
+	@OrderBy("dataInicio")
 	private Set<ProcedimentoTratamento> procedimentoTratamentos = new HashSet<ProcedimentoTratamento>();
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)

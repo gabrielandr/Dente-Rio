@@ -5,7 +5,7 @@
 <h:head>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$('.valorPagamento').val(" ");
+			trataCampoFormaPagamento();
 		});
 
 	</script>
@@ -36,6 +36,44 @@
 			</tr>
 			<tr>
 				<td class="labelInput">
+					<p:outputLabel for="formaPagamento" value="Forma de Pagamento:" />
+				</td>
+				<td>
+					<p:selectOneMenu id="formaPagamento" 
+									binding="#{formaPagamentoBind}" label="Forma de Pagamento"
+									value="#{pagamentoBean.pagamento.formaPagamento}" required="true"
+									converter="omnifaces.SelectItemsConverter">
+									<f:selectItems value="#{pagamentoBean.listaFormasPagamento}"
+										var="formaPagamento" itemLabel="#{formaPagamento.descricao}" itemValue="#{formaPagamento}" />
+									<p:ajax event="change" ignoreAutoUpdate="true"
+										update="numeroParcelas numeroParcelasLabel codigoEstorno codigoEstornoLabel"
+										onstart="trataCampoFormaPagamento()" />
+								</p:selectOneMenu>
+				</td>
+			</tr>
+			<tr id="trNumeroParcelas">
+				<td>
+					<p:outputLabel id="numeroParcelasLabel" for="numeroParcelas" value="Número de Parcelas:" />
+				</td>
+				<td>
+					<p:spinner id="numeroParcelas" size="3"
+  						value="#{pagamentoBean.pagamento.numeroParcela}" min="1" max="6"
+						required="#{formaPagamentoBind == 'CARTAO'}" disabled="{formaPagamentoBind != 'CARTAO'}" />
+				</td>
+			</tr>
+			<tr id="trCodigoEstorno">
+				<td>
+					<p:outputLabel id="codigoEstornoLabel" for="codigoEstorno" value="Código de Estorno:" />
+				</td>
+				<td>
+					<p:inputText id="codigoEstorno" label="Código de Estorno"
+						value="#{pagamentoBean.pagamento.codigoEstorno}"
+						required="#{formaPagamentoBind == 'CARTAO'}"
+						disabled="{formaPagamentoBind != 'CARTAO'}" />
+				</td>
+			</tr>
+			<tr>
+				<td class="labelInput">
 					<p:outputLabel for="valorPagamento" value="Valor:" />
 				</td>
 				<td>
@@ -57,7 +95,7 @@
 					<p:commandButton icon="ui-icon-disk" title="Salvar" value="Salvar"
 						action="#{pagamentoBean.salvarPagamento}"
 						oncomplete="PF('pagamentoDialog').hide();">
-						<f:param name="tratamentoId" value="#{param['tratamento_id']}" />
+						<f:param name="tratamento_id" value="#{param['tratamento_id']}" />
 					</p:commandButton>
 				</td>
 			</tr>

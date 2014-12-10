@@ -197,7 +197,7 @@
 								<p:ajax event="click" listener="#{pagamentoBean.limpar}" />
 							</p:commandButton>
 							<p:dialog header="Cadastro de Pagamento" widgetVar="pagamentoDialog"
-								modal="true" height="150">
+								modal="true" style="height: auto;">
 					
 								<!-- Form Pagamento -->
 								
@@ -211,7 +211,7 @@
 					<p:dataTable id="pagamentosTableTratamento" var="pagamento"
 						value="#{tratamentoBean.tratamento.pagamentos}"
 						emptyMessage="Nenhum pagamento cadastrado para este tratamento."
-						rowStyleClass="#{pagamento.valor gt 100 ? 'pgmt_cartao' : 'pgmt_dinheiro'}">
+						rowStyleClass="#{pagamento.formaPagamento eq 'CARTAO' ? 'pgmt_cartao' : 'pgmt_dinheiro'}">
 						<p:growl id="growl" showDetail="true" autoUpdate="true" />
 						<p:column headerText="Id">
 							<h:outputText value="#{pagamento.id}" />
@@ -223,6 +223,27 @@
 							<h:outputText value="#{pagamento.valor}">
 								<f:convertNumber type="currency" currencySymbol="R$" />
 							</h:outputText>
+						</p:column>
+						
+						<p:column headerText="Ações" style="text-align: center; width: 80px;">
+							
+							<p:commandButton icon="ui-icon-seek-prev" style="float:right;" rendered="#{pagamento.estornado eq false}"
+								value="Estornar" title="Estornar" process="@this" 
+								action="#{pagamentoBean.estornarPagamento(pagamento)}">
+								<f:param name="tratamento_id" value="#{param['tratamento_id']}" />
+								<p:confirm header="Confirmação"
+									message="Você tem certeza que dezeja estornar?" icon="ui-icon-alert" />
+							</p:commandButton>
+							
+							
+							
+							<p:confirmDialog global="true">
+								<p:commandButton value="Sim" type="button"
+									styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+								<p:commandButton value="Não" type="button"
+									styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+							</p:confirmDialog>
+							
 						</p:column>
 					</p:dataTable>
 					
