@@ -367,7 +367,7 @@ footer .copyright {
 }
 
 .blog-cp .tag:hover {
-	background-position: -62px -29px
+/* 	background-position: -62px -29px */
 }
 
 .blog img {
@@ -960,8 +960,8 @@ span.box-icon {
 }
 
 .pgmt_cartao {
-	background-color: red !important;
-	color: white !important;
+	background-color: #FFBBBB !important;
+	color: black !important;
 	font-weight: bold;
 	text-align: center;
 	opacity: 0.7 !important;
@@ -985,4 +985,9 @@ span.box-icon {
 	position: absolute !important;
 	margin: 0px auto !important;
 	width: 75% !important
+}
+
+.ui-spinner-input{
+	width: 50px !important;
+	height: 30px !important;
 }

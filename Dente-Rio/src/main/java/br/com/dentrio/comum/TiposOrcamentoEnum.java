@@ -5,7 +5,10 @@ import java.util.List;
 
 public enum TiposOrcamentoEnum {
 
-	ORCAMENTO(1, "Orçamento"), ORCAMENTO_CONTRATADO(2, "Orçamento Contratado"), FICHA_LIQUIDADA(2, "Ficha Liquidada"), ORCAMENTO_CONTRATADO_FICHA_LIQUIDADA(
+	ORCAMENTO(1, "Orçamento"),
+	ORCAMENTO_CONTRATADO(2, "Orçamento Contratado"),
+	FICHA_LIQUIDADA(3, "Ficha Liquidada"),
+	ORCAMENTO_CONTRATADO_FICHA_LIQUIDADA(
 			4, "Orçamento Contratado/Ficha Liquidada");
 	// TODO colocar demais status do tratamento ou da ficha... sao status
 	// diferentes.

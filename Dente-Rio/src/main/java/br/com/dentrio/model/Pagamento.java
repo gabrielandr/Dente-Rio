@@ -22,14 +22,17 @@ public class Pagamento extends Movimento implements Serializable {
 
 	@Enumerated(EnumType.STRING)
 	private FormaPagamentoEnum formaPagamento;
-	
-	@Column(name="numero_parcela")
+
+	@Column(name = "numero_parcela", nullable = true, columnDefinition = "int DEFAULT null")
 	private Integer numeroParcela;
+
+	@Column(name = "codigo_estorno")
+	private Integer codigoEstorno;
 
 	@ManyToOne
 	@JoinColumn(name = "tratamento_id")
 	private Tratamento tratamento;
-	
+
 	/**
 	 * @return the formaPagamento
 	 */
@@ -65,9 +68,9 @@ public class Pagamento extends Movimento implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((formaPagamento == null) ? 0 : formaPagamento.hashCode());
-		result = prime * result + ((numeroParcela == null) ? 0 : numeroParcela.hashCode());
-		result = prime * result + ((tratamento == null) ? 0 : tratamento.hashCode());
+		result = prime * result + (formaPagamento == null ? 0 : formaPagamento.hashCode());
+		result = prime * result + (numeroParcela == null ? 0 : numeroParcela.hashCode());
+		result = prime * result + (tratamento == null ? 0 : tratamento.hashCode());
 		return result;
 	}
 
@@ -119,5 +122,20 @@ public class Pagamento extends Movimento implements Serializable {
 	public void setTratamento(Tratamento tratamento) {
 		this.tratamento = tratamento;
 	}
-	
+
+	/**
+	 * @return the codigoEstorno
+	 */
+	public Integer getCodigoEstorno() {
+		return codigoEstorno;
+	}
+
+	/**
+	 * @param codigoEstorno
+	 *            the codigoEstorno to set
+	 */
+	public void setCodigoEstorno(Integer codigoEstorno) {
+		this.codigoEstorno = codigoEstorno;
+	}
+
 }
