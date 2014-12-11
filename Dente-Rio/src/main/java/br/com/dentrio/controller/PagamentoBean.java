@@ -22,7 +22,7 @@ import br.com.dentrio.util.jsf.FacesUtil;
 
 @Component("pagamentoBean")
 public class PagamentoBean extends BaseBean implements Serializable {
-
+	
 	private static final long serialVersionUID = 1L;
 
 	@Autowired

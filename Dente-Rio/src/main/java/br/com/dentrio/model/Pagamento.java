@@ -34,7 +34,7 @@ public class Pagamento extends Movimento implements Serializable {
 	private Tratamento tratamento;
 
 	@Column(name = "estornado", nullable = false, columnDefinition = "tinyint(1) default false")
-	private Boolean estornado = false;
+	private Boolean estornado;
 
 	/**
 	 * @return the formaPagamento

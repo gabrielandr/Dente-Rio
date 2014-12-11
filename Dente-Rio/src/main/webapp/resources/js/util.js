@@ -68,7 +68,6 @@ function resetFormPagamento() {
 	$("#formulario\\:valorPagamento").val("R$ 0,00");
 }
 
-
 function trataCampoSocio() {
 	if ($('.tiposFuncionario option:selected').val() == 'DENTISTA') {
 		$('.trDentista').show();
