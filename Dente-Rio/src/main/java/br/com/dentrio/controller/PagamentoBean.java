@@ -16,19 +16,22 @@ import br.com.dentrio.comum.Constantes;
 import br.com.dentrio.comum.FormaPagamentoEnum;
 import br.com.dentrio.model.Pagamento;
 import br.com.dentrio.model.Tratamento;
+import br.com.dentrio.movimento.service.MovimentoService;
 import br.com.dentrio.pagamento.service.PagamentoService;
 import br.com.dentrio.tratamento.service.TratamentoService;
 import br.com.dentrio.util.jsf.FacesUtil;
 
 @Component("pagamentoBean")
 public class PagamentoBean extends BaseBean implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	@Autowired
-	PagamentoService pagamentoService;
+	private PagamentoService pagamentoService;
 	@Autowired
-	TratamentoService tratamentoService;
+	private MovimentoService movimentoService;
+	@Autowired
+	private TratamentoService tratamentoService;
 
 	private Pagamento pagamento;
 	List<Pagamento> listaPagamentos;
@@ -50,8 +53,7 @@ public class PagamentoBean extends BaseBean implements Serializable {
 
 	public String salvarPagamento() {
 		try {
-			String tratamento_id = FacesUtil.getRequestParam("tratamento_id");
-			Tratamento tratamento = tratamentoService.getTratamento(Integer.valueOf(tratamento_id));
+			Tratamento tratamento = recuperarTratamento();
 			BigDecimal valorTotalPago = retornaValorTotalPago(tratamento);
 			BigDecimal valorRestTrat = retornaValorRestanteTratamento(tratamento, valorTotalPago);
 			int resultadoTotalTrat = pagamento.getValor().compareTo(tratamento.getValorTotal());
@@ -85,19 +87,10 @@ public class PagamentoBean extends BaseBean implements Serializable {
 
 	public String estornarPagamento(Pagamento pagament) {
 		try {
-			String tratamento_id = FacesUtil.getRequestParam("tratamento_id");
-			Tratamento tratamento = tratamentoService.getTratamento(Integer.valueOf(tratamento_id));
+			Tratamento tratamento = recuperarTratamento();
 			BigDecimal valorEstornado = pagament.getValor().negate();
-			Pagamento pag = new Pagamento();
-			setarTimestamps(pag);
-			pag.setValor(valorEstornado);
-			pag.setTratamento(tratamento);
-			pag.setCodigoEstorno(pagament.getCodigoEstorno());
-			pag.setEstornado(true);
-			pagamentoService.salvarPagamento(pag);
-			Pagamento pagamento_estornado = pagamentoService.getPagamento(pagament.getId());
-			pagamento_estornado.setEstornado(true);
-			pagamentoService.salvarPagamento(pagamento_estornado);
+			estornarMovimento(pagament);
+			salvarPagamentoEstorno(pagament, tratamento, valorEstornado);
 			FacesUtil.addSuccessMessage(Constantes.SUCESSO, "Pagamento estornado com Sucesso!");
 			inicializar();
 			return "dadosTratamento?faces-redirect=true&tratamento_id=" + tratamento.getId();
@@ -106,6 +99,42 @@ public class PagamentoBean extends BaseBean implements Serializable {
 			FacesUtil.addErrorMessage(Constantes.ERRO, "Ocoreu um erro ao tentar salvar!");
 			return null;
 		}
+	}
+
+	/**
+	 * @param pagament
+	 */
+	private void estornarMovimento(Pagamento pagament) {
+		movimentoService.estornarMovimento(pagament.getId());
+	}
+
+	/**
+	 * @param pagament
+	 * @param tratamento
+	 * @param valorEstornado
+	 */
+	private void salvarPagamentoEstorno(Pagamento pagament, Tratamento tratamento, BigDecimal valorEstornado) {
+		try {
+			Pagamento pag = new Pagamento();
+			setarTimestamps(pag);
+			pag.setValor(valorEstornado);
+			pag.setTratamento(tratamento);
+			pag.setCodigoEstorno(pagament.getCodigoEstorno());
+			pag.setEstornado(true);
+			pag.setPagamentoEstornado(pagament);
+			pagamentoService.salvarPagamento(pag);
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+			FacesUtil.addErrorMessage(Constantes.ERRO, "Ocoreu um erro ao tentar salvar!");
+		}
+	}
+
+	/**
+	 * @return
+	 */
+	private Tratamento recuperarTratamento() {
+		String tratamento_id = FacesUtil.getRequestParam("tratamento_id");
+		return tratamentoService.getTratamento(Integer.valueOf(tratamento_id));
 	}
 
 	public String editarPagamento(Integer pagamentoId) {
@@ -201,6 +230,21 @@ public class PagamentoBean extends BaseBean implements Serializable {
 	 */
 	public List<FormaPagamentoEnum> getListaFormasPagamento() {
 		return FormaPagamentoEnum.listaTodos();
+	}
+
+	/**
+	 * @return the movimentoService
+	 */
+	public MovimentoService getMovimentoService() {
+		return movimentoService;
+	}
+
+	/**
+	 * @param movimentoService
+	 *            the movimentoService to set
+	 */
+	public void setMovimentoService(MovimentoService movimentoService) {
+		this.movimentoService = movimentoService;
 	}
 
 }

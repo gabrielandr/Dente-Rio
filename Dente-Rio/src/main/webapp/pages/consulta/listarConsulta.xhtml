@@ -40,7 +40,9 @@
 								<f:convertNumber type="currency" currencySymbol="R$" />
 							</h:outputText>
 						</p:column>
-						<p:column style="text-align: center; width: 80px;">
+						
+						<p:column headerText="Ações" style="text-align: center; width: 80px;">
+						
 							<p:commandButton icon="ui-icon-pencil" title="Editar" style="float:left;"
 								process="@this" action="#{despesaBean.editarDespesa(despesa.id)}">
 							</p:commandButton>

@@ -140,6 +140,7 @@
 						value="#{tratamentoBean.tratamento.procedimentoTratamentos}"
 						var="procedimentoTratamento" paginator="true" rows="10"
 						paginatorPosition="bottom">
+						
 						<p:ajax event="cellEdit" listener="#{tratamentoBean.onCellEdit}"
 							process="@this" update="@all" />
 						<p:column headerText="# Procedimento" style="text-align:center;">
@@ -190,9 +191,9 @@
 							<h3 class="tree">Pagamentos</h3>
 						</div>
 					</div>
-					<p:toolbar styleClass="barraBotoes">
+					<p:toolbar styleClass="barraBotoes" rendered="#{tratamentoBean.valorRestanteTratamento ne '0.00'}">
 						<f:facet name="left">
-							<p:commandButton value="Novo" icon="ui-icon-document" type="button"
+							<p:commandButton value="Novo" icon="ui-icon-document" type="button" 
 								onclick="PF('pagamentoDialog').show();resetFormPagamento()">
 								<p:ajax event="click" listener="#{pagamentoBean.limpar}" />
 							</p:commandButton>
@@ -225,17 +226,15 @@
 							</h:outputText>
 						</p:column>
 						
-						<p:column headerText="Ações" style="text-align: center; width: 80px;">
+						<p:column headerText="Ações" style="text-align: center; width: 120px;">
 							
-							<p:commandButton icon="ui-icon-seek-prev" style="float:right;" rendered="#{pagamento.estornado eq false}"
+							<p:commandButton icon="ui-icon-seek-prev" style="float:right;" rendered="#{(pagamento.estornado eq false) and (pagamento.formaPagamento eq 'CARTAO')}"
 								value="Estornar" title="Estornar" process="@this" 
 								action="#{pagamentoBean.estornarPagamento(pagamento)}">
 								<f:param name="tratamento_id" value="#{param['tratamento_id']}" />
 								<p:confirm header="Confirmação"
 									message="Você tem certeza que dezeja estornar?" icon="ui-icon-alert" />
 							</p:commandButton>
-							
-							
 							
 							<p:confirmDialog global="true">
 								<p:commandButton value="Sim" type="button"

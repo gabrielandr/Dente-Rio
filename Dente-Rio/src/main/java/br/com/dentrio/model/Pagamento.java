@@ -9,6 +9,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import br.com.dentrio.comum.FormaPagamentoEnum;
@@ -33,8 +34,12 @@ public class Pagamento extends Movimento implements Serializable {
 	@JoinColumn(name = "tratamento_id")
 	private Tratamento tratamento;
 
-	@Column(name = "estornado", nullable = false, columnDefinition = "tinyint(1) default false")
-	private Boolean estornado;
+	@Column(name = "estornado", nullable = false, columnDefinition = "bit default 0")
+	private Boolean estornado = false;
+
+	@OneToOne
+	@JoinColumn(name = "pagamento_estornado")
+	private Pagamento pagamentoEstornado;
 
 	/**
 	 * @return the formaPagamento
@@ -154,6 +159,21 @@ public class Pagamento extends Movimento implements Serializable {
 	 */
 	public void setEstornado(Boolean estornado) {
 		this.estornado = estornado;
+	}
+
+	/**
+	 * @return the pagamentoEstornado
+	 */
+	public Pagamento getPagamentoEstornado() {
+		return pagamentoEstornado;
+	}
+
+	/**
+	 * @param pagamentoEstornado
+	 *            the pagamentoEstornado to set
+	 */
+	public void setPagamentoEstornado(Pagamento pagamentoEstornado) {
+		this.pagamentoEstornado = pagamentoEstornado;
 	}
 
 }

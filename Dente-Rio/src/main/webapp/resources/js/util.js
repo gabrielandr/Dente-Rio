@@ -1,14 +1,6 @@
-function validaCampoNumerico(valor) {
-	$('.numerico').each(
-			function() {
-				if ($(this).val() == "" || $(this).val() == -1
-						|| $(this).val() == 0) {
-					mensagens.push("O campo " + $(this).attr('title')
-							+ " \u00E9 de preenchimento obrigat\u00F3rio.");
-				}
-			});
-
-}
+$(document).ready(function() {
+	escDialog();
+});
 
 function validarFormTratamento() {
 	var comboFuncionarios = $(".comboFuncionarios option:selected").val();
@@ -57,11 +49,10 @@ function limpaValor() {
 	}
 }
 
-function preencheValorTotal() {
-	var restante = "R$ "
-			+ $('#formulario\\:formPagamento\\:hiddenValorRestante').val();
+function preencheRestanteValorPagamento() {
+	var restante = "R$ " + $('#formulario\\:hiddenValorRestante').val();
 	restante = restante.replace(".", ",");
-	$('#formulario\\:formPagamento\\:valorPagamento').val(restante);
+	$('#formulario\\:valorPagamento').val(restante);
 }
 
 function resetFormPagamento() {
@@ -83,5 +74,22 @@ function trataCampoFormaPagamento() {
 	} else {
 		$("#trNumeroParcelas").hide();
 		$("#trCodigoEstorno").hide();
+	}
+}
+
+function escDialog() {
+	$(document).keyup(function(e) {
+		if (e.keyCode == 27) { // esc code is 27
+			closeAllDialog();
+		}
+	});
+}
+
+function closeAllDialog() {
+	for ( var propertyName in PrimeFaces.widgets) {
+		if (PrimeFaces.widgets[propertyName] instanceof PrimeFaces.widget.Dialog
+				|| PrimeFaces.widgets[propertyName] instanceof PrimeFaces.widget.LightBox) {
+			PrimeFaces.widgets[propertyName].hide();
+		}
 	}
 }
