@@ -75,6 +75,9 @@ function trataCampoSocio() {
 		$('.trDentista').hide();
 	}
 }
+function teste(){
+	alert(213);
+}
 function trataCampoFormaPagamento() {
 	if ($("#formulario\\:formaPagamento option:selected").val() == 'CARTAO') {
 		$("#trNumeroParcelas").show();
