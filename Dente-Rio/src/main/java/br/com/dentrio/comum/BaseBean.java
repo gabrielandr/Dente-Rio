@@ -73,7 +73,7 @@ public class BaseBean implements Serializable {
 	public BigDecimal retornaValorTotalPago(Tratamento tratamento) {
 		BigDecimal valorTotalPago = BigDecimal.ZERO;
 		for (Pagamento pagamento : tratamento.getPagamentos()) {
-			valorTotalPago = valorTotalPago.add(pagamento.getValor());
+			valorTotalPago = valorTotalPago.add(pagamento.getValorPagamento());
 		}
 		return valorTotalPago;
 	}
@@ -91,7 +91,7 @@ public class BaseBean implements Serializable {
 
 	public void atualizaStatusTratamento(Integer tratamentoId, Pagamento pagamento) {
 		Tratamento tratamento = tratamentoService.getTratamento(tratamentoId);
-		int retornoValorPago = retornaComparacaoBigDecimal(pagamento.getValor(), tratamento.getValorTotal());
+		int retornoValorPago = retornaComparacaoBigDecimal(pagamento.getValorPagamento(), tratamento.getValorTotal());
 		BigDecimal valorTotalPago = retornaValorTotalPago(tratamento);
 		int retornoValorTotalTratamentoPago = retornaComparacaoBigDecimal(valorTotalPago, tratamento.getValorTotal());
 		if (tratamento.getPagamentos().size() == 1 && retornoValorPago == 0) {
@@ -118,4 +118,10 @@ public class BaseBean implements Serializable {
 	public void setTratamentoService(TratamentoService tratamentoService) {
 		this.tratamentoService = tratamentoService;
 	}
+
+	// public BigDecimal retornaValorRestanteTratamento(Tratamento tratamento) {
+	// BigDecimal valorTotPago = retornaValorTotalPago(tratamento);
+	// return retornaValorRestanteTratamento(tratamento, valorTotPago);
+	// }
+
 }

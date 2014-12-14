@@ -78,7 +78,7 @@
 				</td>
 				<td>
 					<p:inputText styleClass="valorPagamento" id="valorPagamento" label="Valor"
-						value="#{pagamentoBean.pagamento.valor}" onblur="limpaValor();">
+						value="#{pagamentoBean.pagamento.valorPagamento}" onblur="limpaValor();">
 						<f:converter converterId="javax.faces.BigDecimal" />
 						<f:convertNumber type="currency" currencySymbol="R$" />
 					</p:inputText>

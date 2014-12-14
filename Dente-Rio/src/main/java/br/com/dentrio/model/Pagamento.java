@@ -1,6 +1,7 @@
 package br.com.dentrio.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
@@ -40,6 +41,12 @@ public class Pagamento extends Movimento implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "pagamento_estornado")
 	private Pagamento pagamentoEstornado;
+
+	@Column(name = "soma")
+	private BigDecimal soma;
+
+	@Column(name = "restante")
+	private BigDecimal restante;
 
 	/**
 	 * @return the formaPagamento
@@ -174,6 +181,36 @@ public class Pagamento extends Movimento implements Serializable {
 	 */
 	public void setPagamentoEstornado(Pagamento pagamentoEstornado) {
 		this.pagamentoEstornado = pagamentoEstornado;
+	}
+
+	/**
+	 * @return the soma
+	 */
+	public BigDecimal getSoma() {
+		return soma;
+	}
+
+	/**
+	 * @param soma
+	 *            the soma to set
+	 */
+	public void setSoma(BigDecimal soma) {
+		this.soma = soma;
+	}
+
+	/**
+	 * @return the restante
+	 */
+	public BigDecimal getRestante() {
+		return restante;
+	}
+
+	/**
+	 * @param restante
+	 *            the restante to set
+	 */
+	public void setRestante(BigDecimal restante) {
+		this.restante = restante;
 	}
 
 }

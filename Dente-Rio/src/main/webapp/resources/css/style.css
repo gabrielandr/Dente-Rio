@@ -961,10 +961,8 @@ span.box-icon {
 
 .pgmt_cartao {
 	background-color: #FF9898 !important;
-	color: black !important;
 	font-weight: bold;
 	text-align: center;
-	opacity: 0.7 !important;
 }
 
 .pgmt_dinheiro {

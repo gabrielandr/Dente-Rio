@@ -213,15 +213,33 @@
 						value="#{tratamentoBean.tratamento.pagamentos}"
 						emptyMessage="Nenhum pagamento cadastrado para este tratamento."
 						rowStyleClass="#{pagamento.formaPagamento eq 'CARTAO' ? 'pgmt_cartao' : 'pgmt_dinheiro'}">
+						
 						<p:growl id="growl" showDetail="true" autoUpdate="true" />
+						
 						<p:column headerText="Id">
 							<h:outputText value="#{pagamento.id}" />
 						</p:column>
+						
 						<p:column headerText="Tratamento">
 							<h:outputText value="#{pagamento.tratamento.id}" />
 						</p:column>
+						
 						<p:column headerText="Valor">
-							<h:outputText value="#{pagamento.valor}">
+							<h:outputText value="#{pagamento.valorPagamento}">
+								<f:convertNumber type="currency" currencySymbol="R$" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Soma">
+							<h:outputText value="#{pagamento.soma}" rendered="#{pagamento.soma ne null}" >
+								<f:convertNumber type="currency" currencySymbol="R$" />
+							</h:outputText>
+							<h:outputText value="-" rendered="#{pagamento.soma eq null}" >
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Restante">
+							<h:outputText value="#{pagamento.restante}">
 								<f:convertNumber type="currency" currencySymbol="R$" />
 							</h:outputText>
 						</p:column>
