@@ -14,4 +14,8 @@ public interface DespesaService {
 
 	public void deletarDespesa(Despesa despesa);
 
+	public List<Despesa> listarDespesasOutros();
+
+	public List<Despesa> listarDespesasOrtodontista();
+
 }

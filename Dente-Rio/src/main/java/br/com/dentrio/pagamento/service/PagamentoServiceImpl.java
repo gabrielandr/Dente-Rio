@@ -54,9 +54,28 @@ public class PagamentoServiceImpl implements PagamentoService {
 		this.pagamentoDao = pagamentoDao;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Pagamento getLastInsertedRecord() {
 		return pagamentoDao.getLastInsertedRecord();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Pagamento> listarPagamentosDinheiro() {
+		return pagamentoDao.listarPagamentosDinheiro();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Pagamento> listarPagamentosCartao() {
+		return pagamentoDao.listarPagamentosCartao();
 	}
 
 }

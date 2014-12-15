@@ -41,6 +41,22 @@
 						</tr>
 						<tr>
 							<td class="labelInput">
+								<p:outputLabel for="tiposDespesa" value="Tipo de Despesa:" />
+							</td>
+							<td>
+								<p:selectOneMenu id="tiposDespesa" styleClass="tiposDespesa"
+									binding="#{tipoDespesaBind}" label="Tipos"
+									value="#{despesaBean.despesa.tipoDespesa}" required="true"
+									converter="omnifaces.SelectItemsConverter">
+									<f:selectItem itemLabel="Selecione" itemValue=""
+										noSelectionOption="true" />
+									<f:selectItems value="#{despesaBean.listaTiposDespesa}" var="tipo"
+										itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
+								</p:selectOneMenu>
+							</td>
+						</tr>
+						<tr>
+							<td class="labelInput">
 								<p:outputLabel for="descricao" value="Descrição:" />
 							</td>
 							<td colspan="3">

@@ -225,7 +225,7 @@
 						</p:column>
 						
 						<p:column headerText="Valor">
-							<h:outputText value="#{pagamento.valorPagamento}">
+							<h:outputText value="#{pagamento.valor}">
 								<f:convertNumber type="currency" currencySymbol="R$" />
 							</h:outputText>
 						</p:column>
@@ -234,16 +234,16 @@
 							<h:outputText value="#{pagamento.soma}" rendered="#{pagamento.soma ne null}" >
 								<f:convertNumber type="currency" currencySymbol="R$" />
 							</h:outputText>
-							<h:outputText value="-" rendered="#{pagamento.soma eq null}" >
-							</h:outputText>
+							<h:outputText value="-" rendered="#{pagamento.soma eq null}" />
 						</p:column>
 
 						<p:column headerText="Restante">
-							<h:outputText value="#{pagamento.restante}">
+							<h:outputText value="#{pagamento.restante}" rendered="#{pagamento.restante.toString() ne '0.00'}">
 								<f:convertNumber type="currency" currencySymbol="R$" />
 							</h:outputText>
+							<h:outputText value="-" rendered="#{pagamento.restante.toString() eq '0.00'}" />
 						</p:column>
-						
+
 						<p:column headerText="Ações" style="text-align: center; width: 120px;">
 							
 							<p:commandButton icon="ui-icon-seek-prev" style="float:right;" rendered="#{(pagamento.estornado eq false) and (pagamento.formaPagamento eq 'CARTAO')}"

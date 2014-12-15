@@ -16,4 +16,8 @@ public interface PagamentoService {
 
 	public Pagamento getLastInsertedRecord();
 
+	public List<Pagamento> listarPagamentosDinheiro();
+
+	public List<Pagamento> listarPagamentosCartao();
+
 }

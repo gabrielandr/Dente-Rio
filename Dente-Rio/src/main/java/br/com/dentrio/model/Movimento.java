@@ -24,7 +24,7 @@ public abstract class Movimento extends Timestampable implements Serializable {
 	@GeneratedValue
 	private Integer id;
 
-	private BigDecimal valorPagamento;
+	private BigDecimal valor;
 
 	/**
 	 * @return the id
@@ -42,20 +42,6 @@ public abstract class Movimento extends Timestampable implements Serializable {
 	}
 
 
-		/**
-	 * @return the valorPagamento
-	 */
-	public BigDecimal getValorPagamento() {
-		return valorPagamento;
-	}
-
-	/**
-	 * @param valorPagamento
-	 *            the valorPagamento to set
-	 */
-	public void setValorPagamento(BigDecimal valorPagamento) {
-		this.valorPagamento = valorPagamento;
-	}
 
 	/*
 	 * (non-Javadoc)
@@ -67,7 +53,7 @@ public abstract class Movimento extends Timestampable implements Serializable {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result + (id == null ? 0 : id.hashCode());
-		result = prime * result + (valorPagamento == null ? 0 : valorPagamento.hashCode());
+		result = prime * result + (valor == null ? 0 : valor.hashCode());
 		return result;
 	}
 
@@ -95,14 +81,29 @@ public abstract class Movimento extends Timestampable implements Serializable {
 		} else if (!id.equals(other.id)) {
 			return false;
 		}
-		if (valorPagamento == null) {
-			if (other.valorPagamento != null) {
+		if (valor == null) {
+			if (other.valor != null) {
 				return false;
 			}
-		} else if (!valorPagamento.equals(other.valorPagamento)) {
+		} else if (!valor.equals(other.valor)) {
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * @return the valor
+	 */
+	public BigDecimal getValor() {
+		return valor;
+	}
+
+	/**
+	 * @param valor
+	 *            the valor to set
+	 */
+	public void setValor(BigDecimal valor) {
+		this.valor = valor;
 	}
 
 }

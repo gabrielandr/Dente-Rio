@@ -38,7 +38,6 @@ public class DespesaServiceImpl implements DespesaService {
 		return despesaDao.getDespesa(despesaId);
 	}
 
-	//
 	/**
 	 * {@inheritDoc}
 	 */
@@ -54,6 +53,22 @@ public class DespesaServiceImpl implements DespesaService {
 
 	public void setDespesaDao(DespesaDao despesaDao) {
 		this.despesaDao = despesaDao;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Despesa> listarDespesasOutros() {
+		return despesaDao.listarDespesasOutros();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Despesa> listarDespesasOrtodontista() {
+		return despesaDao.listarDespesasOrtodontista();
 	}
 
 }

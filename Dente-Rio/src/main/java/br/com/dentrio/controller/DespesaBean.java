@@ -10,20 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Component;
 
-import br.com.dentrio.comum.Constantes;
+import br.com.dentrio.comum.TipoDespesaEnum;
 import br.com.dentrio.despesa.service.DespesaService;
 import br.com.dentrio.model.Despesa;
 import br.com.dentrio.util.jsf.FacesUtil;
 
 @Component("despesaBean")
 public class DespesaBean implements Serializable {
-
 	private static final long serialVersionUID = 1L;
-	private static final String ERROR = "error";
-
 	@Autowired
 	DespesaService despesaService;
-
 	private Date data;
 	private Despesa despesa;
 	private Despesa despesaSelecionado;
@@ -33,7 +29,7 @@ public class DespesaBean implements Serializable {
 	private void inicializar() {
 		limpar();
 		this.listaDespesas = null;
-		this.listaDespesas = despesaService.listDespesas();
+		this.listaDespesas = this.despesaService.listDespesas();
 	}
 
 	public void limpar() {
@@ -48,48 +44,47 @@ public class DespesaBean implements Serializable {
 	public String salvarDespesa() {
 		try {
 			setarTimestamps();
-			despesaService.addDespesa(despesa);
-			FacesUtil.addSuccessMessage(Constantes.SUCESSO, "Despesa adicionada com Sucesso!");
+			this.despesaService.addDespesa(this.despesa);
+			FacesUtil.addSuccessMessage("Sucesso!", "Despesa adicionada com Sucesso!");
 			inicializar();
 			return "listarDespesas?faces-redirect=true";
-
 		} catch (DataAccessException e) {
 			e.printStackTrace();
-			FacesUtil.addErrorMessage(Constantes.ERRO, "Ocoreu um erro ao tentar salvar, por favor tente novamente!");
-			return null;
+			FacesUtil.addErrorMessage("Erro!", "Ocoreu um erro ao tentar salvar, por favor tente novamente!");
 		}
+		return null;
 	}
 
 	public String editarDespesa(Integer despesaId) {
 		try {
-			despesa = despesaService.getDespesa(despesaId);
+			this.despesa = this.despesaService.getDespesa(despesaId);
 			return "formDespesa?faces-redirect=true&despesaId=" + despesaId;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return ERROR;
+		return null;
 	}
 
 	public String deletarDespesa(Integer despesaId) {
 		try {
-			Despesa despesa = despesaService.getDespesa(despesaId);
-			despesaService.deletarDespesa(despesa);
-			FacesUtil.addSuccessMessage(Constantes.SUCESSO, "Despesa deletada com Sucesso!");
+			Despesa despesa = this.despesaService.getDespesa(despesaId);
+			this.despesaService.deletarDespesa(despesa);
+			FacesUtil.addSuccessMessage("Sucesso!", "Despesa deletada com Sucesso!");
 			inicializar();
 			return "listarDespesas?faces-redirect=true";
 		} catch (Exception e) {
 			e.printStackTrace();
-			FacesUtil.addErrorMessage(Constantes.ERRO, "Ocorreu um erro ao deletar!");
-			return null;
+			FacesUtil.addErrorMessage("Erro!", "Ocorreu um erro ao deletar!");
 		}
+		return null;
 	}
 
 	public void resetForm() {
-		despesa = new Despesa();
+		this.despesa = new Despesa();
 	}
 
 	public Despesa getDespesa() {
-		return despesa;
+		return this.despesa;
 	}
 
 	public void setDespesa(Despesa despesa) {
@@ -97,7 +92,7 @@ public class DespesaBean implements Serializable {
 	}
 
 	public Date getData() {
-		return data;
+		return this.data;
 	}
 
 	public void setData(Date data) {
@@ -105,7 +100,7 @@ public class DespesaBean implements Serializable {
 	}
 
 	public List<Despesa> getListaDespesas() {
-		return listaDespesas;
+		return this.listaDespesas;
 	}
 
 	public void setListaDespesas(List<Despesa> listaDespesas) {
@@ -113,7 +108,7 @@ public class DespesaBean implements Serializable {
 	}
 
 	public Despesa getDespesaSelecionado() {
-		return despesaSelecionado;
+		return this.despesaSelecionado;
 	}
 
 	public void setDespesaSelecionado(Despesa despesaSelecionado) {
@@ -121,7 +116,7 @@ public class DespesaBean implements Serializable {
 	}
 
 	public DespesaService getDespesaService() {
-		return despesaService;
+		return this.despesaService;
 	}
 
 	public void setDespesaService(DespesaService despesaService) {
@@ -129,10 +124,15 @@ public class DespesaBean implements Serializable {
 	}
 
 	public void setarTimestamps() {
-		if (despesa.createdAt == null) {
-			despesa.setCreatedAt(new Date());
-			despesa.setUpdatedAt(new Date());
+		if (this.despesa.createdAt == null) {
+			this.despesa.setCreatedAt(new Date());
+			this.despesa.setUpdatedAt(new Date());
 		}
-		despesa.setUpdatedAt(new Date());
+		this.despesa.setUpdatedAt(new Date());
 	}
+
+	public List<TipoDespesaEnum> getListaTiposDespesa() {
+		return TipoDespesaEnum.listaTodos();
+	}
+
 }

@@ -14,4 +14,8 @@ public interface DespesaDao {
 
 	public void deletarDespesa(Despesa despesa);
 
+	public List<Despesa> listarDespesasOutros();
+
+	public List<Despesa> listarDespesasOrtodontista();
+
 }

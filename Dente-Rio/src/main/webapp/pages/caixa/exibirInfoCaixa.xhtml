@@ -3,17 +3,137 @@
 	xmlns:f="http://java.sun.com/jsf/core" xmlns:o="http://omnifaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
 	<f:metadata>
-		<f:viewAction
-			action="#{tratamentoBean.buscarTatamento(param['tratamento_id'])}" />
+		<f:viewAction action="#{tabbedView.onMenuSelect('linkCaixa')}" />
 	</f:metadata>
 	<ui:define name="corpo">
 		<h:head>
 			<script type="text/javascript">
-
+				
 			</script>
 		</h:head>
 		<h:body>
-		
+
+			<h:form>
+				<p:dataTable id="pagamentosDinheiroTable" var="pagamento"
+					emptyMessage="Nenhum pagamento em dinheiro encontrado."
+					value="#{caixaBean.listPagamentosDinheiro}">
+
+					<f:facet name="header">
+            			Pagamentos em Dinheiro
+        			</f:facet>
+
+					<p:column headerText="Paciente">
+						<h:outputText value="#{pagamento.tratamento.paciente.nomePessoa}" />
+					</p:column>
+
+					<p:column headerText="Valor">
+						<h:outputText value="#{pagamento.valor}">
+							<f:convertNumber type="currency" currencySymbol="R$" />
+						</h:outputText>
+					</p:column>
+
+					<!-- 					<p:column headerText="Soma"> -->
+					<!-- 						<h:outputText value="#{pagamento.soma}" -->
+					<!-- 							rendered="#{pagamento.soma ne null}"> -->
+					<!-- 							<f:convertNumber type="currency" currencySymbol="R$" /> -->
+					<!-- 						</h:outputText> -->
+					<!-- 						<h:outputText value="-" rendered="#{pagamento.soma eq null}" /> -->
+					<!-- 					</p:column> -->
+
+
+				</p:dataTable>
+
+				<p:separator />
+
+				<p:dataTable id="pagamentosCartaoTable" var="pagamento"
+					emptyMessage="Nenhum pagamento com cartao encontrado."
+					value="#{caixaBean.listPagamentosCartao}">
+
+					<f:facet name="header">
+            			Pagamentos em Cartao
+        			</f:facet>
+
+					<p:column headerText="Paciente">
+						<h:outputText value="#{pagamento.tratamento.paciente.nomePessoa}" />
+					</p:column>
+
+					<p:column headerText="Valor">
+						<h:outputText value="#{pagamento.valor}">
+							<f:convertNumber type="currency" currencySymbol="R$" />
+						</h:outputText>
+					</p:column>
+
+					<!-- 					<p:column headerText="Soma"> -->
+					<!-- 						<h:outputText value="#{pagamento.soma}" -->
+					<!-- 							rendered="#{pagamento.soma ne null}"> -->
+					<!-- 							<f:convertNumber type="currency" currencySymbol="R$" /> -->
+					<!-- 						</h:outputText> -->
+					<!-- 						<h:outputText value="-" rendered="#{pagamento.soma eq null}" /> -->
+					<!-- 					</p:column> -->
+
+
+				</p:dataTable>
+
+				<p:separator />
+
+				<p:dataTable id="despesasOutrosTable" var="despesa"
+					emptyMessage="Nenhuma outra despesa cadastrada."
+					value="#{caixaBean.listDespesasOutros}">
+
+					<f:facet name="header">
+            			Despesas Outros
+        			</f:facet>
+
+					<p:column headerText="Descrição">
+						<h:outputText value="#{despesa.descricaoDespesa}" />
+					</p:column>
+
+					<p:column headerText="Valor">
+						<h:outputText value="#{despesa.valor}">
+							<f:convertNumber type="currency" currencySymbol="R$" />
+						</h:outputText>
+					</p:column>
+				</p:dataTable>
+
+				<p:separator />
+
+				<p:dataTable id="despesasOrtodontistasTable" var="despesa"
+					emptyMessage="Nenhuma despesa para Ortodontistas."
+					value="#{caixaBean.listDespesasOrtodontista}">
+
+					<f:facet name="header">
+            			Despesas Ortodontistas
+        			</f:facet>
+
+					<p:column headerText="Descrição">
+						<h:outputText value="#{despesa.descricaoDespesa}" />
+					</p:column>
+
+					<p:column headerText="Valor">
+						<h:outputText value="#{despesa.valor}">
+							<f:convertNumber type="currency" currencySymbol="R$" />
+						</h:outputText>
+					</p:column>
+				</p:dataTable>
+
+				<p:separator />
+
+				<p:panelGrid columns="2" style="margin: 0 auto;">
+
+					<h:outputText value="Total Pagamento Dinheiro:" />
+					<h:outputText value="#{caixaBean.totalPagamentoDinheiro}" >
+						<f:convertNumber type="currency" currencySymbol="R$" />
+					</h:outputText>
+
+					<h:outputText value="Total Pagamento Cartao:" />
+					<h:outputText value="#{caixaBean.totalPagamentoCartao}" >
+						<f:convertNumber type="currency" currencySymbol="R$" />
+					</h:outputText>
+
+
+				</p:panelGrid>
+
+			</h:form>
 		</h:body>
 	</ui:define>
 </ui:composition>

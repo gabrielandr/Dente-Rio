@@ -70,7 +70,7 @@ public class Tratamento extends Timestampable implements Serializable {
 	@OrderBy("dataInicio")
 	private Set<ProcedimentoTratamento> procedimentoTratamentos = new HashSet<ProcedimentoTratamento>();
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	@ManyToOne
 	@JoinColumn(name = "paciente_id")
 	private Paciente paciente;
 

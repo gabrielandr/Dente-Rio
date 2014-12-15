@@ -55,8 +55,8 @@ public class PagamentoBean extends BaseBean implements Serializable {
 			Tratamento tratamento = recuperarTratamento();
 			BigDecimal valorTotalPago = retornaValorTotalPago(tratamento);
 			BigDecimal valorRestTrat = retornaValorRestanteTratamento(tratamento, valorTotalPago);
-			int resultadoTotalTrat = pagamento.getValorPagamento().compareTo(tratamento.getValorTotal());
-			int resultadoValorRestante = pagamento.getValorPagamento().compareTo(valorRestTrat);
+			int resultadoTotalTrat = pagamento.getValor().compareTo(tratamento.getValorTotal());
+			int resultadoValorRestante = pagamento.getValor().compareTo(valorRestTrat);
 			if (resultadoTotalTrat == 1) {
 				FacesUtil.addErrorMessage(Constantes.ERRO,
 						"O valor do pagamento é maior que o valor total do tratamento! Escolha um valor menor.");
@@ -65,7 +65,7 @@ public class PagamentoBean extends BaseBean implements Serializable {
 				FacesUtil.addErrorMessage(Constantes.ERRO,
 						"O valor do pagamento é maior que o valor restante a ser pago! Escolha um valor menor.");
 				return null;
-			} else if ("0.00".equalsIgnoreCase(pagamento.getValorPagamento().toString())) {
+			} else if ("0.00".equalsIgnoreCase(pagamento.getValor().toString())) {
 				FacesUtil.addErrorMessage(Constantes.ERRO, "Você deve informar um valor para o pagamento.");
 				return null;
 			}
@@ -73,7 +73,7 @@ public class PagamentoBean extends BaseBean implements Serializable {
 			pagamento.setTratamento(tratamento);
 
 			if (!tratamento.getPagamentos().isEmpty()) {
-				pagamento.setSoma(valorTotalPago.add(pagamento.getValorPagamento()));
+				pagamento.setSoma(valorTotalPago.add(pagamento.getValor()));
 			}
 
 			setarValorRestantePagamento(tratamento, valorTotalPago);
@@ -97,14 +97,14 @@ public class PagamentoBean extends BaseBean implements Serializable {
 	 */
 	private void setarValorRestantePagamento(Tratamento tratamento, BigDecimal valorTotalPago) {
 		BigDecimal restante = retornaValorRestanteTratamento(tratamento, valorTotalPago).subtract(
-				pagamento.getValorPagamento());
+				pagamento.getValor());
 		pagamento.setRestante(restante);
 	}
 
 	public String estornarPagamento(Pagamento pagament) {
 		try {
 			Tratamento tratamento = recuperarTratamento();
-			BigDecimal valorEstornado = pagament.getValorPagamento().negate();
+			BigDecimal valorEstornado = pagament.getValor().negate();
 			estornarMovimento(pagament);
 			salvarPagamentoEstorno(pagament, tratamento, valorEstornado);
 			FacesUtil.addSuccessMessage(Constantes.SUCESSO, "Pagamento estornado com Sucesso!");
@@ -133,7 +133,7 @@ public class PagamentoBean extends BaseBean implements Serializable {
 		try {
 			Pagamento pag = new Pagamento();
 			setarTimestamps(pag);
-			pag.setValorPagamento(valorEstornado);
+			pag.setValor(valorEstornado);
 			pag.setTratamento(tratamento);
 			pag.setCodigoEstorno(pagament.getCodigoEstorno());
 			pag.setEstornado(true);

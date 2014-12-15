@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.dentrio.comum.FormaPagamentoEnum;
 import br.com.dentrio.model.Pagamento;
 
 @Repository
@@ -54,5 +55,25 @@ public class PagamentoDaoImpl implements PagamentoDao, Serializable {
 	public Pagamento getLastInsertedRecord() {
 		return (Pagamento) getSessionFactory().getCurrentSession().createQuery("from Pagamento ORDER BY id DESC")
 				.setMaxResults(1).uniqueResult();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Pagamento> listarPagamentosDinheiro() {
+		return getSessionFactory()
+				.getCurrentSession()
+				.createQuery(
+						"SELECT pag from Pagamento pag where pag.formaPagamento = :formaPagamento and DATE(pag.createdAt) = CURDATE()")
+						.setParameter("formaPagamento", FormaPagamentoEnum.DINHEIRO).list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Pagamento> listarPagamentosCartao() {
+		return getSessionFactory()
+				.getCurrentSession()
+				.createQuery(
+						"SELECT pag from Pagamento pag where pag.formaPagamento = :formaPagamento and DATE(pag.createdAt) = CURDATE()")
+						.setParameter("formaPagamento", FormaPagamentoEnum.CARTAO).list();
 	}
 }
