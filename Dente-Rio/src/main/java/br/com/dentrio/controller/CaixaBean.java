@@ -93,7 +93,7 @@ public class CaixaBean implements Serializable {
 	}
 
 	/**
-	 * @return the totalPagamentoDinheiro
+	 * @return the totalPagamentoCartao
 	 */
 	public BigDecimal getTotalPagamentoCartao() {
 		BigDecimal totalPagamentoCartao = BigDecimal.ZERO;
@@ -101,6 +101,28 @@ public class CaixaBean implements Serializable {
 			totalPagamentoCartao = totalPagamentoCartao.add(pagamentoCartao.getValor());
 		}
 		return totalPagamentoCartao;
+	}
+
+	/**
+	 * @return the totalPagamentoDinheiro
+	 */
+	public BigDecimal getTotalDespesasOutros() {
+		BigDecimal totalDespesasOutros = BigDecimal.ZERO;
+		for (Despesa despesaOutro : getListDespesasOutros()) {
+			totalDespesasOutros = totalDespesasOutros.add(despesaOutro.getValor());
+		}
+		return totalDespesasOutros;
+	}
+
+	/**
+	 * @return the totalPagamentoDinheiro
+	 */
+	public BigDecimal getTotalDespesasOrto() {
+		BigDecimal totalDespesasOrto = BigDecimal.ZERO;
+		for (Despesa despesaOrtto : getListDespesasOrtodontista()) {
+			totalDespesasOrto = totalDespesasOrto.add(despesaOrtto.getValor());
+		}
+		return totalDespesasOrto;
 	}
 
 }

@@ -57,7 +57,7 @@
 								title="Excluir" process="@this" update="funcionariosTable growl"
 								action="#{funcionarioBean.deletarFuncionario(funcionario.id)}">
 								<p:confirm header="Confirmação"
-									message="Você tem certeza que dezeja excluir este funcionário? Ele pode estar vinculado à algum paciente, se for deletado essa ligação será desfeita!"
+									message="Você tem certeza que deseja excluir este funcionário? Ele pode estar vinculado à algum paciente, se for deletado essa ligação será desfeita!"
 									icon="ui-icon-alert" />
 							</p:commandButton>
 							<p:confirmDialog global="true">

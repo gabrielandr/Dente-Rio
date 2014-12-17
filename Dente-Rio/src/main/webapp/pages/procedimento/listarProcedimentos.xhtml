@@ -30,10 +30,10 @@
 						value="#{procedimentoBean.listaProcedimentos}" var="procedimento" paginator="true"
 						rows="10" paginatorPosition="bottom">
 						
-						<p:column headerText="Código" style="text-align: center;">
+						<p:column filterBy="#{procedimento.codigoProcedimento}" headerText="Código" style="text-align: center;">
 							<h:outputText value="#{procedimento.codigoProcedimento}" />
 						</p:column>
-						<p:column headerText="Procedimento">
+						<p:column filterBy="#{procedimento.nomeProcedimento}" headerText="Procedimento">
 							<h:outputText value="#{procedimento.nomeProcedimento}" />
 						</p:column>
 						<p:column headerText="Valor">
@@ -51,7 +51,7 @@
 								title="Excluir" process="@this" update="procedimentosTable growl"
 								action="#{procedimentoBean.deletarProcedimento(procedimento)}">
 								<p:confirm header="Confirmação"
-									message="Você tem certeza que dezeja excluir?" icon="ui-icon-alert" />
+									message="Você tem certeza que deseja excluir?" icon="ui-icon-alert" />
 							</p:commandButton>
 							<p:confirmDialog global="true">
 								<p:commandButton value="Sim" type="button"

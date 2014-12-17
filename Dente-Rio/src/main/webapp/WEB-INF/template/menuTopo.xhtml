@@ -12,7 +12,8 @@
 				<li class="#{sessionScope['MENU_ATIVO'] == 'menuHome' ? 'active' : ''}">
 					<h:link outcome="/home">Home</h:link>
 				</li>
-				<li class="#{(sessionScope['MENU_ATIVO'] == 'menuPaciente') ? 'dropdown active' : 'dropdown'}">
+				<li
+					class="#{(sessionScope['MENU_ATIVO'] == 'menuPaciente') ? 'dropdown active' : 'dropdown'}">
 					<a class="dropdown-toggle" data-toggle="dropdown" href="#">Paciente</a>
 					<ul class="dropdown-menu">
 						<li>
@@ -23,25 +24,24 @@
 						</li>
 					</ul>
 				</li>
-				<li class="#{(sessionScope['MENU_ATIVO'] == 'menuMovimento') ? 'dropdown active' : 'dropdown'}">
+				<li
+					class="#{(sessionScope['MENU_ATIVO'] == 'menuMovimento') ? 'dropdown active' : 'dropdown'}">
 					<a class="dropdown-toggle" data-toggle="dropdown" href="#">Movimento</a>
 					<ul class="dropdown-menu">
 						<li>
 							<h:link outcome="/pages/despesa/listarDespesas">Despesa</h:link>
 						</li>
+						<li>
+							<h:link outcome="/pages/caixa/exibirInfoCaixa">Caixa</h:link>
+						</li>
 					</ul>
 				</li>
-				<li class="#{(sessionScope['MENU_ATIVO'] == 'menuCaixa') ? 'dropdown active' : 'dropdown'}">
-					<h:link outcome="/pages/caixa/exibirInfoCaixa">Caixa</h:link>
-				</li>
-				<li class="#{(sessionScope['MENU_ATIVO'] == 'menuCadastros') ? 'dropdown active' : 'dropdown'}">
+				<li
+					class="#{(sessionScope['MENU_ATIVO'] == 'menuCadastros') ? 'dropdown active' : 'dropdown'}">
 					<a class="dropdown-toggle" data-toggle="dropdown" href="#">Cadastros</a>
 					<ul class="dropdown-menu">
 						<li>
 							<h:link outcome="/pages/funcionario/listarFuncionarios">Funcionário</h:link>
-						</li>
-						<li>
-							<h:link outcome="/pages/despesa/listarDespesas">Despesa</h:link>
 						</li>
 						<li>
 							<h:link outcome="/pages/areaEspecializada/listarAreasEspecializadas">Area Especializada</h:link>
@@ -65,7 +65,8 @@
 				<li>
 					<a href="http://byrushan.com/projects/medical-pro/contact-us.html">Contato</a>
 				</li>
-				<li class="#{(sessionScope['MENU_ATIVO'] == 'menuSugestao') ? 'dropdown active' : 'dropdown'}">
+				<li
+					class="#{(sessionScope['MENU_ATIVO'] == 'menuSugestao') ? 'dropdown active' : 'dropdown'}">
 					<h:link outcome="/pages/sugestao/listarSugestoes">Sugestão</h:link>
 				</li>
 			</ul>

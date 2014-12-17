@@ -121,15 +121,36 @@
 				<p:panelGrid columns="2" style="margin: 0 auto;">
 
 					<h:outputText value="Total Pagamento Dinheiro:" />
-					<h:outputText value="#{caixaBean.totalPagamentoDinheiro}" >
+					<h:outputText value="#{caixaBean.totalPagamentoDinheiro}">
 						<f:convertNumber type="currency" currencySymbol="R$" />
 					</h:outputText>
 
 					<h:outputText value="Total Pagamento Cartao:" />
-					<h:outputText value="#{caixaBean.totalPagamentoCartao}" >
+					<h:outputText styleClass="pgmt_cartao" value="#{caixaBean.totalPagamentoCartao.negate()}">
 						<f:convertNumber type="currency" currencySymbol="R$" />
 					</h:outputText>
 
+					<h:outputText value="Subtotal:" style="font-weight: bold;" />
+					<h:outputText
+						value="#{caixaBean.totalPagamentoDinheiro - caixaBean.totalPagamentoCartao}">
+						<f:convertNumber type="currency" currencySymbol="R$" />
+					</h:outputText>
+
+					<h:outputText value="Total Despesas Outros:" />
+					<h:outputText styleClass="pgmt_cartao" value="#{caixaBean.totalDespesasOutros.negate()}">
+						<f:convertNumber type="currency" currencySymbol="R$" />
+					</h:outputText>
+
+					<h:outputText value="Total Despesas Orto:" />
+					<h:outputText styleClass="pgmt_cartao" value="#{caixaBean.totalDespesasOrto.negate()}">
+						<f:convertNumber type="currency" currencySymbol="R$" />
+					</h:outputText>
+
+					<h:outputText value="Total do Caixa:" style="font-weight: bold;" />
+					<h:outputText
+						value="#{caixaBean.totalPagamentoDinheiro - caixaBean.totalPagamentoCartao - caixaBean.totalDespesasOutros - caixaBean.totalDespesasOrto}">
+						<f:convertNumber type="currency" currencySymbol="R$" />
+					</h:outputText>
 
 				</p:panelGrid>
 

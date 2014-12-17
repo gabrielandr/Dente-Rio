@@ -3,6 +3,7 @@ package br.com.dentrio.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
@@ -24,6 +25,7 @@ public abstract class Movimento extends Timestampable implements Serializable {
 	@GeneratedValue
 	private Integer id;
 
+	@Column(name = "valor")
 	private BigDecimal valor;
 
 	/**

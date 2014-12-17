@@ -73,7 +73,7 @@ public class PagamentoDaoImpl implements PagamentoDao, Serializable {
 		return getSessionFactory()
 				.getCurrentSession()
 				.createQuery(
-						"SELECT pag from Pagamento pag where pag.formaPagamento = :formaPagamento and DATE(pag.createdAt) = CURDATE()")
+						"SELECT pag from Pagamento pag WHERE pag.formaPagamento = :formaPagamento and DATE(pag.createdAt) = CURDATE() AND estornado = false AND pagamento_estornado IS NULL")
 						.setParameter("formaPagamento", FormaPagamentoEnum.CARTAO).list();
 	}
 }

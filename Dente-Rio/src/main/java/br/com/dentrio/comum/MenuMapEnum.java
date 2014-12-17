@@ -15,7 +15,7 @@ public enum MenuMapEnum {
 	// LINK_PAGAMENTO("linkPagamento", "menuMovimento",
 	// "../pagamento/listarDespesas.xhtml"),
 	/* Fim Movimento */
-	LINK_CAIXA("linkCaixa", "menuCaixa", "../caixa/exibirInfoCaixa.xhtml"),
+	LINK_CAIXA("linkCaixa", "menuMovimento", "../caixa/exibirInfoCaixa.xhtml"),
 	LINK_FUNCIONARIO("linkFuncionario", "menuCadastros", "../funcionario/listarFuncionarios.xhtml"),
 	LINK_AREA_ESPECIALIZADA("linkAreaEspecializada", "menuCadastros",
 			"../areaEspecializada/listarAreasEspecializadas.xhtml"),
