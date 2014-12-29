@@ -8,14 +8,13 @@
 				$(document).ready(function() {
 					trataCampoSocio();
 				});
-				
 			</script>
 		</h:head>
 		<h:body>
 			<h:form>
 				<p:panel header="Dados do Funcionário" id="cadastroPanel">
 					<p:messages autoUpdate="true" />
-					<table>
+					<table id="formFuncionario">
 						<p:focus for="nome" />
 						<tr>
 							<td class="labelInput">
@@ -36,6 +35,29 @@
 									<f:validateLength />
 								</p:inputText>
 							</td>
+						</tr>
+						<tr>
+							<td class="labelInput">
+								<p:outputLabel for="login" value="Login:" />
+							</td>
+							<td>
+							
+								<p:inputText id="login" label="Login"
+									value="#{funcionarioBean.funcionario.login}"
+									required="true">
+								</p:inputText>
+							</td>
+						</tr>
+						<tr>
+							<td class="labelInput">
+								<p:outputLabel for="senha" value="Senha:" />
+							</td>
+							<td>
+								<p:password id="senha" label="Senha" feedback="true"
+									value="#{funcionarioBean.funcionario.senha}" required="true">
+								</p:password>
+							</td>
+						
 						</tr>
 						<tr>
 							<td class="labelInput">
@@ -157,7 +179,7 @@
 					<p:commandButton type="button" value="Voltar"
 						onclick="window.history.back();" icon="ui-icon-arrowreturn-1-w" />
 					<p:commandButton id="salvar" value="Salvar" icon="ui-icon-disk"
-						action="#{funcionarioBean.salvarFuncionario}" ajax="false" />
+						action="#{funcionarioBean.salvarFuncionario}" ajax="false" update="formFuncionario" />
 				</p:panel>
 			</h:form>
 		</h:body>

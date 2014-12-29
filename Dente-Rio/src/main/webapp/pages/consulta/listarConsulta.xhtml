@@ -9,6 +9,7 @@
 	
 	<ui:define name="corpo">
 		<h:body>
+			<f:event listener="#{loginBean.temPermissao}" type="preRenderView" />
 			<h:form styleClass="formulatio">
 				<p:panel>
 					<div style="width: 100%;">

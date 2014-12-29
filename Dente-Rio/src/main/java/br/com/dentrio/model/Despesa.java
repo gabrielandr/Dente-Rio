@@ -12,13 +12,16 @@ import javax.persistence.Table;
 import br.com.dentrio.comum.TipoDespesaEnum;
 
 @Entity
-@Table(name = "movimento")
+@Table(name = "MOVIMENTO")
 @DiscriminatorValue("D")
 public class Despesa extends Movimento implements Serializable {
+
 	private static final long serialVersionUID = -5988625296699742692L;
-	@Column(name = "descricao_despesa")
+
+	@Column(name = "DESCRICAO_DESPESA")
 	private String descricaoDespesa;
-	@Column(name = "tipo_despesa")
+
+	@Column(name = "TIPO_DESPESA")
 	@Enumerated(EnumType.STRING)
 	private TipoDespesaEnum tipoDespesa;
 

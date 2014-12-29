@@ -1,7 +1,6 @@
 <ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
 	xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:o="http://omnifaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:o="http://omnifaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
 	<f:metadata>
 		<f:viewAction
@@ -41,15 +40,15 @@
 					<h:outputText value="#{tratamentoBean.tratamento.dataInicio}">
 						<f:convertDateTime pattern="dd/MM/yyyy" />
 					</h:outputText>
-					
+
 					<!-- Form Procedimentos -->
-					
+
 					<div style="width: 100%;">
 						<div class="tituloPagina">
 							<h3 class="tree">Procedimentos</h3>
 						</div>
 					</div>
-					
+
 					<p:toolbar styleClass="barraBotoes">
 						<f:facet name="left">
 							<p:commandButton value="Novo" type="button" icon="ui-icon-document"
@@ -57,13 +56,14 @@
 							<span class="ui-separator"> <span
 								class="ui-icon ui-icon-grip-dotted-vertical" />
 							</span>
-							
+
 							<p:commandButton type="button" value="Voltar"
 								onclick="window.history.back();" icon="ui-icon-arrowreturn-1-w" />
-							
-							<p:dialog styleClass="dialogProcedimentosTratamento" header="Selecione um procedimento"
-								widgetVar="procedimentoDialog" modal="true">
-								
+
+							<p:dialog styleClass="dialogProcedimentosTratamento"
+								header="Selecione um procedimento" widgetVar="procedimentoDialog"
+								modal="true">
+
 								<p:dataTable id="dataTable" styleClass="procedimentosTratamentoTable"
 									var="procedimentoTratamento"
 									value="#{procedimentoBean.listaProcedimentosTratamentos}" rows="5"
@@ -71,12 +71,11 @@
 									selection="#{tratamentoBean.procedimentosSelecionados}"
 									rowKey="#{procedimentoTratamento.procedimento.id}"
 									emptyMessage="Nenhum procedimento foi encontrado.">
-									
-									<p:ajax event="rowSelectCheckbox"
-										update=":formulario:validatorInput" />
-									
+
+									<p:ajax event="rowSelectCheckbox" update=":formulario:validatorInput" />
+
 									<p:column selectionMode="multiple" style="width:16px;text-align:center" />
-									
+
 									<p:column headerText="Posicao Dente"
 										style="text-align: center; width: 100px !important;">
 										<p:selectOneMenu style="width: 100px !important;" id="posicao"
@@ -89,7 +88,7 @@
 												itemValue="#{posicao.codigo}" />
 										</p:selectOneMenu>
 									</p:column>
-									
+
 									<p:column
 										filterBy="#{procedimentoTratamento.procedimento.codigoProcedimento}"
 										filterMatchMode="contains" headerText="Código"
@@ -97,14 +96,14 @@
 										<h:outputText
 											value="#{procedimentoTratamento.procedimento.codigoProcedimento}" />
 									</p:column>
-									
+
 									<p:column
 										filterBy="#{procedimentoTratamento.procedimento.nomeProcedimento}"
 										filterMatchMode="contains" headerText="Procedimento">
 										<h:outputText
 											value="#{procedimentoTratamento.procedimento.nomeProcedimento}" />
 									</p:column>
-									
+
 									<p:column headerText="Valor">
 										<h:outputText
 											value="#{procedimentoTratamento.procedimento.valorProcedimento}">
@@ -112,16 +111,18 @@
 										</h:outputText>
 									</p:column>
 									<f:facet name="footer">
-										<p:commandButton id="salvar" type="button" value="Salvar Procedimento(s)"
-											icon="ui-icon-disk" onclick="validarFormProcedimentosTratamento()" />
-										
+										<p:commandButton id="salvar" type="button"
+											value="Salvar Procedimento(s)" icon="ui-icon-disk"
+											onclick="validarFormProcedimentosTratamento()" />
+
 										<p:commandButton id="botaoSalvar" style="display: none;"
 											action="#{tratamentoBean.gravarProcedimentosTratamento('')}"
 											process="@all" update="@all">
 											<f:param name="tratamentoId" value="#{param['tratamento_id']}" />
 										</p:commandButton>
 
-										<o:commandScript name="campoProcedimentos" action="#{tratamentoBean.setarFacesMessageProcedimentosSelecionados}" />
+										<o:commandScript name="campoProcedimentos"
+											action="#{tratamentoBean.setarFacesMessageProcedimentosSelecionados}" />
 									</f:facet>
 									<p:growl id="growl" showDetail="true" globalOnly="true" life="6000"
 										autoUpdate="true" />
@@ -129,18 +130,18 @@
 								<h:inputHidden id="validatorInput"
 									value="#{tratamentoBean.numeroProcedimentosSelecionados}" />
 								<!-- Fim Form Selecionar Procedimentos -->
-								
+
 							</p:dialog>
 						</f:facet>
 					</p:toolbar>
-					
+
 					<p:dataTable id="procedimentosCadastradosTable" editable="true"
 						editMode="cell" widgetVar="cellProcedimento"
 						emptyMessage="Nenhum procedimento cadastrado para este tratamento."
 						value="#{tratamentoBean.tratamento.procedimentoTratamentos}"
 						var="procedimentoTratamento" paginator="true" rows="10"
 						paginatorPosition="bottom">
-						
+
 						<p:ajax event="cellEdit" listener="#{tratamentoBean.onCellEdit}"
 							process="@this" update="@all" />
 						<p:column headerText="# Procedimento" style="text-align:center;">
@@ -179,33 +180,34 @@
 						</p:columnGroup>
 						<p:growl id="growl" showDetail="true" autoUpdate="true" />
 					</p:dataTable>
-					
+
 					<!-- Fim Form Procedimentos -->
-					
+
 					<p:separator />
-					
+
 					<!-- Listagem Pagamentos -->
-					
+
 					<div style="width: 100%;">
 						<div class="tituloPagina">
 							<h3 class="tree">Pagamentos</h3>
 						</div>
 					</div>
-					<p:toolbar styleClass="barraBotoes" rendered="#{tratamentoBean.valorRestanteTratamento ne '0.00'}">
+					<p:toolbar styleClass="barraBotoes"
+						rendered="#{tratamentoBean.valorRestanteTratamento ne '0.00'}">
 						<f:facet name="left">
-							<p:commandButton value="Novo" icon="ui-icon-document" type="button" 
+							<p:commandButton value="Novo" icon="ui-icon-document" type="button"
 								onclick="PF('pagamentoDialog').show();resetFormPagamento()">
 								<p:ajax event="click" listener="#{pagamentoBean.limpar}" />
 							</p:commandButton>
 							<p:dialog header="Cadastro de Pagamento" widgetVar="pagamentoDialog"
 								modal="true" style="height: auto;">
-					
+
 								<!-- Form Pagamento -->
-								
+
 								<ui:include src="/pages/pagamento/formPagamento.xhtml" />
-								
+
 								<!-- Fim Form Pagamento -->
-					
+
 							</p:dialog>
 						</f:facet>
 					</p:toolbar>
@@ -213,17 +215,17 @@
 						value="#{tratamentoBean.tratamento.pagamentos}"
 						emptyMessage="Nenhum pagamento cadastrado para este tratamento."
 						rowStyleClass="#{pagamento.formaPagamento eq 'CARTAO' ? 'pgmt_cartao' : 'pgmt_dinheiro'}">
-						
+
 						<p:growl id="growl" showDetail="true" autoUpdate="true" />
-						
+
 						<p:column headerText="Id">
 							<h:outputText value="#{pagamento.id}" />
 						</p:column>
-						
+
 						<p:column headerText="Tratamento">
 							<h:outputText value="#{pagamento.tratamento.id}" />
 						</p:column>
-						
+
 						<p:column headerText="Valor">
 							<h:outputText value="#{pagamento.valor}">
 								<f:convertNumber type="currency" currencySymbol="R$" />
@@ -231,41 +233,69 @@
 						</p:column>
 
 						<p:column headerText="Soma">
-							<h:outputText value="#{pagamento.soma}" rendered="#{pagamento.soma ne null}" >
+							<h:outputText value="#{pagamento.soma}"
+								rendered="#{pagamento.soma ne null}">
 								<f:convertNumber type="currency" currencySymbol="R$" />
 							</h:outputText>
 							<h:outputText value="-" rendered="#{pagamento.soma eq null}" />
 						</p:column>
 
 						<p:column headerText="Restante">
-							<h:outputText value="#{pagamento.restante}" rendered="#{pagamento.restante.toString() ne '0.00'}">
+							<h:outputText value="#{pagamento.restante}"
+								rendered="#{pagamento.restante.toString() ne '0.00'}">
 								<f:convertNumber type="currency" currencySymbol="R$" />
 							</h:outputText>
-							<h:outputText value="-" rendered="#{pagamento.restante.toString() eq '0.00'}" />
+							<h:outputText value="-"
+								rendered="#{pagamento.restante.toString() eq '0.00'}" />
 						</p:column>
 
 						<p:column headerText="Ações" style="text-align: center; width: 120px;">
-							
-							<p:commandButton icon="ui-icon-seek-prev" style="float:right;" rendered="#{(pagamento.estornado eq false) and (pagamento.formaPagamento eq 'CARTAO')}"
-								value="Estornar" title="Estornar" process="@this" 
+
+							<p:commandButton icon="ui-icon-seek-prev" style="float:right;"
+								rendered="#{(pagamento.estornado eq false) and (pagamento.formaPagamento eq 'CARTAO')}"
+								value="Estornar" title="Estornar" process="@this"
 								action="#{pagamentoBean.estornarPagamento(pagamento)}">
 								<f:param name="tratamento_id" value="#{param['tratamento_id']}" />
 								<p:confirm header="Confirmação"
 									message="Você tem certeza que deseja estornar?" icon="ui-icon-alert" />
 							</p:commandButton>
-							
+
+							<p:commandButton icon="ui-icon-trash" style="float:right;" onclick="PF('dlgDeletarPagamento').show();" type="button"
+								title="Excluir" />
+
+								<p:dialog  
+								header="Informe o login para deletar o pagamento" widgetVar="dlgDeletarPagamento">
+									<h:panelGrid style="width: auto; border-color: transparent !important;" columns="2" cellpadding="5">
+										<h:outputLabel for="login" value="Login:" />
+										<p:inputText id="login" value="#{pagamentoBean.login}" required="true"
+											label="login" />
+
+										<h:outputLabel for="password" value="Password:" />
+										<p:password id="password" value="#{pagamentoBean.password}"
+											required="true" label="password" />
+
+										<f:facet name="footer">
+											<p:commandButton value="OK"
+												actionListener="#{pagamentoBean.deletarPagamento(pagamento.id)}" oncomplete="PF('dlgDeletarPagamento').hide();" >
+												<f:param name="tratamento_id" value="#{param['tratamento_id']}" />
+											</p:commandButton>
+
+										</f:facet>
+									</h:panelGrid>
+								</p:dialog>
+
 							<p:confirmDialog global="true">
 								<p:commandButton value="Sim" type="button"
 									styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
 								<p:commandButton value="Não" type="button"
 									styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 							</p:confirmDialog>
-							
+
 						</p:column>
 					</p:dataTable>
-					
+
 					<!-- Fim Listgem Pagamentos -->
-					
+
 				</p:panel>
 			</h:form>
 		</h:body>

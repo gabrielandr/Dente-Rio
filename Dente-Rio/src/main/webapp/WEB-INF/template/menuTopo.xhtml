@@ -12,8 +12,8 @@
 				<li class="#{sessionScope['MENU_ATIVO'] == 'menuHome' ? 'active' : ''}">
 					<h:link outcome="/home">Home</h:link>
 				</li>
-				<li
-					class="#{(sessionScope['MENU_ATIVO'] == 'menuPaciente') ? 'dropdown active' : 'dropdown'}">
+				<li id="liPaciente"
+					class="liPaciente #{(sessionScope['MENU_ATIVO'] == 'menuPaciente') ? 'dropdown active' : 'dropdown'}">
 					<a class="dropdown-toggle" data-toggle="dropdown" href="#">Paciente</a>
 					<ul class="dropdown-menu">
 						<li>
@@ -24,7 +24,7 @@
 						</li>
 					</ul>
 				</li>
-				<li
+				<li id="liMovimento"
 					class="#{(sessionScope['MENU_ATIVO'] == 'menuMovimento') ? 'dropdown active' : 'dropdown'}">
 					<a class="dropdown-toggle" data-toggle="dropdown" href="#">Movimento</a>
 					<ul class="dropdown-menu">
@@ -36,7 +36,7 @@
 						</li>
 					</ul>
 				</li>
-				<li
+				<li id="liCadastros"
 					class="#{(sessionScope['MENU_ATIVO'] == 'menuCadastros') ? 'dropdown active' : 'dropdown'}">
 					<a class="dropdown-toggle" data-toggle="dropdown" href="#">Cadastros</a>
 					<ul class="dropdown-menu">
@@ -54,7 +54,7 @@
 						</li>
 					</ul>
 				</li>
-				<li class="dropdown">
+				<li id="liRelatorios" class="dropdown">
 					<a class="dropdown-toggle" data-toggle="dropdown" href="#">Relatórios</a>
 					<ul class="dropdown-menu">
 						<li>
@@ -62,12 +62,49 @@
 						</li>
 					</ul>
 				</li>
-				<li>
-					<a href="http://byrushan.com/projects/medical-pro/contact-us.html">Contato</a>
+				<li id="liContato">
+					<a href="#">Contato</a>
 				</li>
 				<li
 					class="#{(sessionScope['MENU_ATIVO'] == 'menuSugestao') ? 'dropdown active' : 'dropdown'}">
 					<h:link outcome="/pages/sugestao/listarSugestoes">Sugestão</h:link>
+				</li>
+				<li
+					class="#{(sessionScope['MENU_ATIVO'] == 'menuLogin') ? 'dropdown active' : 'dropdown'}">
+				<h:outputLink value="javascript:void(0)" onclick="PF('dlg').show();" rendered="#{sessionScope['CURRENT_USER'] eq null}"
+						title="login">Login
+				</h:outputLink>
+					<h:form id="formLogin">
+						<p:dialog header="Login" widgetVar="dlg" resizable="false">
+							<p:messages id="msgs" />
+							<h:panelGrid columns="2" cellpadding="5">
+								<h:outputLabel for="login" value="Login:" />
+								<p:inputText id="login" value="#{loginBean.login}" required="true"
+									label="login" />
+
+								<h:outputLabel for="password" value="Password:" />
+								<p:password id="password" value="#{loginBean.password}" required="true"
+									label="password" />
+
+								<f:facet name="footer">
+									<p:commandButton value="Login" update="msgs"
+										actionListener="#{loginBean.login}" />
+								</f:facet>
+							</h:panelGrid>
+						</p:dialog>
+					</h:form>
+				</li>
+				<li class="dropdown">
+					<h:form id="formLogout">
+						<p:commandLink styleClass="botaoSair" actionListener="#{loginBean.logout}"
+							rendered="#{sessionScope['CURRENT_USER'] ne null}"
+							title="Lotout" oncomplete="showHideMenusTopo('hide')">Sair
+					</p:commandLink>
+					</h:form>
+				</li>
+
+				<li>
+					<h:outputLabel style="height: 40px;vertical-align: middle; line-height: 40px;" value=" Olá #{sessionScope['NAME_CURRENT_USER']}" rendered="#{sessionScope['CURRENT_USER'] ne null}" />
 				</li>
 			</ul>
 		</div>

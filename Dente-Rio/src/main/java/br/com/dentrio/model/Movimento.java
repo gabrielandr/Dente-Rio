@@ -14,7 +14,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "movimento")
+@Table(name = "MOVIMENTO")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "discriminator", discriminatorType = DiscriminatorType.STRING)
 public abstract class Movimento extends Timestampable implements Serializable {
@@ -23,9 +23,10 @@ public abstract class Movimento extends Timestampable implements Serializable {
 
 	@Id
 	@GeneratedValue
+	@Column(name = "MOVIMENTO_ID")
 	private Integer id;
 
-	@Column(name = "valor")
+	@Column(name = "VALOR")
 	private BigDecimal valor;
 
 	/**

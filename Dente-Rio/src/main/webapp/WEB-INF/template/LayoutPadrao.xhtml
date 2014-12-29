@@ -2,6 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+	
+	<f:view>
+	<f:metadata>
+		<f:event type="preRenderView" listener="#{loginBean.inicializar}" />
+	</f:metadata>
+</f:view>
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title><ui:insert name="titulo">DentRio</ui:insert></title>
@@ -42,6 +48,8 @@
 	<section id="top">
 		<div class="container">
 			<ui:include src="/WEB-INF/template/menuTopo.xhtml" />
+			<h:inputHidden id="hiddenCurrentUser" value="#{sessionScope['CURRENT_USER']}" />
+			<p:growl id="growl" showDetail="true" globalOnly="true" life="6000" />
 			<!-- Aqui abaixo vai o conteudo de cada pagina criada xhtml -->
 			<ui:insert name="corpo" />
 			<!-- ##### -->

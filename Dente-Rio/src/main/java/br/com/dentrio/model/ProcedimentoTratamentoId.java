@@ -9,11 +9,12 @@ import javax.persistence.ManyToOne;
 @Embeddable
 public class ProcedimentoTratamentoId implements Serializable {
 	private static final long serialVersionUID = 1L;
+
 	@ManyToOne
 	private Tratamento tratamento;
 	@ManyToOne
 	private Procedimento procedimento;
-	@Column(name = "posicao_dente", columnDefinition = "int DEFAULT '-1'")
+	@Column(name = "POSICAO_DENTE", columnDefinition = "int DEFAULT '-1'")
 	private Integer posicaoDente;
 
 	public ProcedimentoTratamentoId() {

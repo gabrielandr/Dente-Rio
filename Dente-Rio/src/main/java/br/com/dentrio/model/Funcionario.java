@@ -15,35 +15,48 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
+import br.com.dentrio.comum.RolesEnum;
 import br.com.dentrio.comum.TipoFuncionarioEnum;
 
 @Entity
-@Table(name = "funcionario")
+@Table(name = "FUNCIONARIO")
 public class Funcionario extends Pessoa implements Serializable {
 
 	private static final long serialVersionUID = -5988625296699742692L;
 
 	@Enumerated(EnumType.STRING)
+	@Column(name = "TIPO_FUNCIONARIO")
 	private TipoFuncionarioEnum tipoFuncionario;
 
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "area_especializada_id")
+	@OneToOne
+	@JoinColumn(name = "AREA_ESPECIALIZADA_ID")
 	private AreaEspecializada areaEspecializada;
 
 	@OneToMany(mappedBy = "funcionario", fetch = FetchType.LAZY)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private Set<Tratamento> tratamentos = new HashSet<Tratamento>();
 
+	@Column(name = "LOGIN")
 	private String login;
+	@Column(name = "SENHA")
 	private String senha;
+	@Column(name = "CRO")
 	private String cro;
 
-	@Column(columnDefinition = "boolean default false")
-	private Boolean socio;
+	@Enumerated(EnumType.STRING)
+	@Column(name = "ROLE")
+	private RolesEnum role;
 
-	@Column(name = "hora_entrada")
+	@Column(name = "SOCIO")
+	private Boolean socio = false;
+
+	@Column(name = "HORA_ENTRADA")
 	private Date horaEntrada;
 
-	@Column(name = "hora_saida")
+	@Column(name = "HORA_SAIDA")
 	private Date horaSaida;
 
 	public String getLogin() {
@@ -141,15 +154,15 @@ public class Funcionario extends Pessoa implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((areaEspecializada == null) ? 0 : areaEspecializada.hashCode());
-		result = prime * result + ((cro == null) ? 0 : cro.hashCode());
-		result = prime * result + ((horaEntrada == null) ? 0 : horaEntrada.hashCode());
-		result = prime * result + ((horaSaida == null) ? 0 : horaSaida.hashCode());
-		result = prime * result + ((login == null) ? 0 : login.hashCode());
-		result = prime * result + ((senha == null) ? 0 : senha.hashCode());
-		result = prime * result + ((socio == null) ? 0 : socio.hashCode());
-		result = prime * result + ((tipoFuncionario == null) ? 0 : tipoFuncionario.hashCode());
-		result = prime * result + ((tratamentos == null) ? 0 : tratamentos.hashCode());
+		result = prime * result + (areaEspecializada == null ? 0 : areaEspecializada.hashCode());
+		result = prime * result + (cro == null ? 0 : cro.hashCode());
+		result = prime * result + (horaEntrada == null ? 0 : horaEntrada.hashCode());
+		result = prime * result + (horaSaida == null ? 0 : horaSaida.hashCode());
+		result = prime * result + (login == null ? 0 : login.hashCode());
+		result = prime * result + (senha == null ? 0 : senha.hashCode());
+		result = prime * result + (socio == null ? 0 : socio.hashCode());
+		result = prime * result + (tipoFuncionario == null ? 0 : tipoFuncionario.hashCode());
+		result = prime * result + (tratamentos == null ? 0 : tratamentos.hashCode());
 		return result;
 	}
 
@@ -230,6 +243,21 @@ public class Funcionario extends Pessoa implements Serializable {
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * @return the role
+	 */
+	public RolesEnum getRole() {
+		return role;
+	}
+
+	/**
+	 * @param role
+	 *            the role to set
+	 */
+	public void setRole(RolesEnum role) {
+		this.role = role;
 	}
 
 }

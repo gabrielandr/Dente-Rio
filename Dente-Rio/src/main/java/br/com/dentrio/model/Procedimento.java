@@ -12,12 +12,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.cache.annotation.Cacheable;
 
 @Entity
+@Table(name = "PROCEDIMENTO")
 public class Procedimento extends Timestampable implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -26,11 +28,11 @@ public class Procedimento extends Timestampable implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Column(name = "codigo_procedimento")
+	@Column(name = "CODIGO_PROCEDIMENTO")
 	private Integer codigoProcedimento;
-	@Column(name = "nome_procedimento")
+	@Column(name = "NOME_PROCEDIMENTO")
 	private String nomeProcedimento;
-	@Column(name = "valor_procedimento")
+	@Column(name = "VALOR_PROCEDIMENTO")
 	private BigDecimal valorProcedimento;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.procedimento")
@@ -119,7 +121,7 @@ public class Procedimento extends Timestampable implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + (id == null ? 0 : id.hashCode());
 		return result;
 	}
 

@@ -20,10 +20,10 @@ import javax.persistence.Transient;
 import br.com.dentrio.comum.StatusProcedimentoEnum;
 
 @Entity
-@Table(name = "procedimento_tratamento")
+@Table(name = "PROCEDIMENTO_TRATAMENTO")
 @AssociationOverrides({
-		@AssociationOverride(name = "pk.tratamento", joinColumns = @JoinColumn(name = "tratamento_id")),
-		@AssociationOverride(name = "pk.procedimento", joinColumns = @JoinColumn(name = "procedimento_id")) })
+	@AssociationOverride(name = "pk.tratamento", joinColumns = @JoinColumn(name = "tratamento_id")),
+	@AssociationOverride(name = "pk.procedimento", joinColumns = @JoinColumn(name = "procedimento_id")) })
 public class ProcedimentoTratamento extends Timestampable implements Serializable, Comparable<ProcedimentoTratamento> {
 
 	private static final long serialVersionUID = 1L;
@@ -31,21 +31,22 @@ public class ProcedimentoTratamento extends Timestampable implements Serializabl
 	@EmbeddedId
 	private ProcedimentoTratamentoId pk = new ProcedimentoTratamentoId();
 
-	@Column(name = "valor_real")
+	@Column(name = "VALOR_REAL")
 	private BigDecimal valorReal;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name = "data_inicio")
+	@Column(name = "DATA_INICIO")
 	private Date dataInicio;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name = "data_fim")
+	@Column(name = "DATA_FIM")
 	private Date dataFim;
 
-	@Column(name = "status_procedimento", columnDefinition = "varchar(255) DEFAULT 'Não Iniciado'")
+	@Column(name = "STATUS_PROCEDIMENTO", columnDefinition = "varchar(255) DEFAULT 'Não Iniciado'")
 	@Enumerated(EnumType.STRING)
 	private StatusProcedimentoEnum statusProcedimento;
 
+	@Column(name = "DETALHES")
 	private String detalhes;
 
 	public ProcedimentoTratamento() {
@@ -162,11 +163,11 @@ public class ProcedimentoTratamento extends Timestampable implements Serializabl
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((dataFim == null) ? 0 : dataFim.hashCode());
-		result = prime * result + ((dataInicio == null) ? 0 : dataInicio.hashCode());
-		result = prime * result + ((detalhes == null) ? 0 : detalhes.hashCode());
-		result = prime * result + ((pk == null) ? 0 : pk.hashCode());
-		result = prime * result + ((valorReal == null) ? 0 : valorReal.hashCode());
+		result = prime * result + (dataFim == null ? 0 : dataFim.hashCode());
+		result = prime * result + (dataInicio == null ? 0 : dataInicio.hashCode());
+		result = prime * result + (detalhes == null ? 0 : detalhes.hashCode());
+		result = prime * result + (pk == null ? 0 : pk.hashCode());
+		result = prime * result + (valorReal == null ? 0 : valorReal.hashCode());
 		return result;
 	}
 

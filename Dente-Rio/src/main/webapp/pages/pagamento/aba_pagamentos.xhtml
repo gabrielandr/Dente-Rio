@@ -3,43 +3,63 @@
 	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
 <h:form>
-	
-		<div style="width: 100%;">
-			<div class="tituloPagina">
-				<h3 class="tree">Pagamentos</h3>
-			</div>
+
+	<div style="width: 100%;">
+		<div class="tituloPagina">
+			<h3 class="tree">Pagamentos</h3>
 		</div>
-		<p:toolbar styleClass="barraBotoes">
-			<f:facet name="left">
-				<p:commandButton value="Novo" icon="ui-icon-document"
-					onclick="PF('pagamentoDialog').show();">
-					<p:ajax event="click" listener="#{pagamentoBean.limpar}" />
-				</p:commandButton>
-				<p:dialog header="Cadastro de Pagamento" widgetVar="pagamentoDialog"
-					modal="true" height="150">
-					<ui:include src="/pages/pagamento/formPagamento.xhtml" />
-				</p:dialog>
-			</f:facet>
-		</p:toolbar>
+	</div>
+	<p:toolbar styleClass="barraBotoes">
+		<f:facet name="left">
+			<p:commandButton value="Novo" icon="ui-icon-document"
+				onclick="PF('pagamentoDialog').show();">
+				<p:ajax event="click" listener="#{pagamentoBean.limpar}" />
+			</p:commandButton>
+			<p:dialog header="Cadastro de Pagamento" widgetVar="pagamentoDialog"
+				modal="true" height="150">
+				<ui:include src="/pages/pagamento/formPagamento.xhtml" />
+			</p:dialog>
+		</f:facet>
+	</p:toolbar>
 
-		<p:dataTable id="pagamentosTableTratamento" var="pagamento"
-			value="#{tratamentoBean.tratamento.pagamentos}" 
-			emptyMessage="Nenhum pagamento cadastrado para este tratamento." rowStyleClass="#{pagamento.valor gt 100 ? 'pgmt_cartao' : 'pgmt_dinheiro'}" >
+	<p:dataTable id="pagamentosTableTratamento" var="pagamento"
+		value="#{tratamentoBean.tratamento.pagamentos}"
+		emptyMessage="Nenhum pagamento cadastrado para este tratamento."
+		rowStyleClass="#{pagamento.valor gt 100 ? 'pgmt_cartao' : 'pgmt_dinheiro'}">
 
-			<p:growl id="growl" showDetail="true" autoUpdate="true" />
+		<p:growl id="growl" showDetail="true" autoUpdate="true" />
 
-			<p:column headerText="Id">
-				<h:outputText value="#{pagamento.id}" />
-			</p:column>
-			<p:column headerText="Tratamento">
-				<h:outputText value="#{pagamento.tratamento.id}" />
-			</p:column>
+		<p:column headerText="ROLE">
+			<h:outputText value="ROLE : #{((Funcionario)sessionScope['CURRENT_USER']).getRole()}" />
+		</p:column>
+		<p:column headerText="Id">
+			<h:outputText value="#{pagamento.id}" />
+		</p:column>
+		<p:column headerText="Tratamento">
+			<h:outputText value="#{pagamento.tratamento.id}" />
+		</p:column>
 
-			<p:column headerText="Valor">
-				<h:outputText value="#{pagamento.valor}">
-					<f:convertNumber type="currency" currencySymbol="R$" />
-				</h:outputText>
-			</p:column>
-		</p:dataTable>
-		</h:form>
+		<p:column headerText="Valor">
+			<h:outputText value="#{pagamento.valor}">
+				<f:convertNumber type="currency" currencySymbol="R$" />
+			</h:outputText>
+		</p:column>
+		
+		<p:column style="text-align: center; width: 80px;" >
+			<p:commandButton icon="ui-icon-trash" style="float:right;" title="Excluir"
+				process="@this" update="pagamentosTableTratamento growl"
+				action="#{pagamentoBean.deletarPagamento(pagamento.id)}">
+				<p:confirm header="Confirmação"
+					message="Você tem certeza que deseja excluir?" icon="ui-icon-alert" />
+			</p:commandButton>
+			<p:confirmDialog global="true">
+				<p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes"
+					icon="ui-icon-check" />
+				<p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no"
+					icon="ui-icon-close" />
+			</p:confirmDialog>
+			<p:growl id="growl" showDetail="true" globalOnly="true" life="6000" />
+		</p:column>
+	</p:dataTable>
+</h:form>
 </html>

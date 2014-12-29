@@ -6,9 +6,10 @@
 	<f:metadata>
 		<f:viewAction action="#{tabbedView.onMenuSelect('linkFuncionario')}" />
 	</f:metadata>
-	
+
 	<ui:define name="corpo">
 		<h:body>
+			<f:event listener="#{loginBean.temPermissao}" type="preRenderView" />
 			<h:form styleClass="formulario">
 				<p:panel>
 					<div style="width: 100%;">
@@ -18,8 +19,8 @@
 					</div>
 					<p:toolbar styleClass="barraBotoes">
 						<f:facet name="left">
-							<p:commandButton value="Novo" icon="ui-icon-document"
-								id="botaoNovo" action="#{funcionarioBean.novoFuncionario()}">
+							<p:commandButton value="Novo" icon="ui-icon-document" id="botaoNovo"
+								action="#{funcionarioBean.novoFuncionario()}">
 							</p:commandButton>
 						</f:facet>
 					</p:toolbar>

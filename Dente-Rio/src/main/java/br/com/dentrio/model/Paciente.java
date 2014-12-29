@@ -16,19 +16,28 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
-@Table(name = "paciente")
+@Table(name = "PACIENTE")
 public class Paciente extends Pessoa implements Serializable {
 
 	private static final long serialVersionUID = -5988625296699742692L;
 
+	@Column(name = "PROFISSAO")
 	private String profissao;
+	@Column(name = "BAIRRO")
 	private String bairro;
+	@Column(name = "HEMORRAGIA")
 	private Boolean hemorragia;
+	@Column(name = "PRESSAO")
 	private Boolean pressao;
+	@Column(name = "CARDIACO")
 	private Boolean cardiaco;
+	@Column(name = "ALERGIA")
 	private Boolean alergia;
+	@Column(name = "DIABETES")
 	private Boolean diabetes;
+	@Column(name = "GESTANTE")
 	private Boolean gestante;
+	@Column(name = "MEDICO")
 	private Boolean medico;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "paciente")
@@ -37,7 +46,7 @@ public class Paciente extends Pessoa implements Serializable {
 	@BatchSize(size = 10)
 	private Set<Tratamento> tratamentos;
 
-	@Column(name = "obs_anamnese")
+	@Column(name = "OBS_ANAMNESE")
 	private String obsAnamnese;
 
 	public String getBairro() {
@@ -121,17 +130,17 @@ public class Paciente extends Pessoa implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = (prime * result) + ((alergia == null) ? 0 : alergia.hashCode());
-		result = (prime * result) + ((bairro == null) ? 0 : bairro.hashCode());
-		result = (prime * result) + ((cardiaco == null) ? 0 : cardiaco.hashCode());
-		result = (prime * result) + ((diabetes == null) ? 0 : diabetes.hashCode());
-		result = (prime * result) + ((gestante == null) ? 0 : gestante.hashCode());
-		result = (prime * result) + ((hemorragia == null) ? 0 : hemorragia.hashCode());
-		result = (prime * result) + ((medico == null) ? 0 : medico.hashCode());
-		result = (prime * result) + ((obsAnamnese == null) ? 0 : obsAnamnese.hashCode());
-		result = (prime * result) + ((pressao == null) ? 0 : pressao.hashCode());
-		result = (prime * result) + ((profissao == null) ? 0 : profissao.hashCode());
-		result = (prime * result) + ((tratamentos == null) ? 0 : tratamentos.hashCode());
+		result = prime * result + (alergia == null ? 0 : alergia.hashCode());
+		result = prime * result + (bairro == null ? 0 : bairro.hashCode());
+		result = prime * result + (cardiaco == null ? 0 : cardiaco.hashCode());
+		result = prime * result + (diabetes == null ? 0 : diabetes.hashCode());
+		result = prime * result + (gestante == null ? 0 : gestante.hashCode());
+		result = prime * result + (hemorragia == null ? 0 : hemorragia.hashCode());
+		result = prime * result + (medico == null ? 0 : medico.hashCode());
+		result = prime * result + (obsAnamnese == null ? 0 : obsAnamnese.hashCode());
+		result = prime * result + (pressao == null ? 0 : pressao.hashCode());
+		result = prime * result + (profissao == null ? 0 : profissao.hashCode());
+		result = prime * result + (tratamentos == null ? 0 : tratamentos.hashCode());
 		return result;
 	}
 

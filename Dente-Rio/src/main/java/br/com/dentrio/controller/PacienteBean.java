@@ -122,7 +122,7 @@ public class PacienteBean implements Serializable {
 	}
 
 	public List<Funcionario> getlistaFuncionarios() {
-		return funcionarioService.listFuncionarios();
+		return funcionarioService.getListaFuncionarios();
 	}
 
 	public FuncionarioService getFuncionarioService() {
@@ -134,7 +134,7 @@ public class PacienteBean implements Serializable {
 	}
 
 	public List<Funcionario> getListaFuncionarios() {
-		return funcionarioService.listFuncionarios();
+		return funcionarioService.getListaFuncionarios();
 	}
 
 	public void setarTimestamps() {

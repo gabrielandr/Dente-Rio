@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "sugestao")
+@Table(name = "SUGESTAO")
 public class Sugestao extends Timestampable implements Serializable {
 
 	private static final long serialVersionUID = -5988625296699742692L;
@@ -64,10 +64,10 @@ public class Sugestao extends Timestampable implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = (prime * result) + ((autor == null) ? 0 : autor.hashCode());
-		result = (prime * result) + ((id == null) ? 0 : id.hashCode());
-		result = (prime * result) + ((sugestao == null) ? 0 : sugestao.hashCode());
-		result = (prime * result) + ((titulo == null) ? 0 : titulo.hashCode());
+		result = prime * result + (autor == null ? 0 : autor.hashCode());
+		result = prime * result + (id == null ? 0 : id.hashCode());
+		result = prime * result + (sugestao == null ? 0 : sugestao.hashCode());
+		result = prime * result + (titulo == null ? 0 : titulo.hashCode());
 		return result;
 	}
 

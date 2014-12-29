@@ -14,5 +14,7 @@ public class Constantes {
 	public static final String SUCESSO = "Sucesso!";
 	public static final String ABA_ATIVA = "ABA_ATIVA";
 	public static final String MENU_ATIVO = "MENU_ATIVO";
+	public static final String CURRENT_USER = "CURRENT_USER";
+	public static final String NAME_CURRENT_USER = "NAME_CURRENT_USER";
 
 }

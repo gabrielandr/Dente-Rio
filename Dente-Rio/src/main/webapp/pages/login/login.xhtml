@@ -1,0 +1,35 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+	<ui:define name="corpo">
+		<h:head>
+			<script type="text/javascript">
+				
+			</script>
+		</h:head>
+		<h:body>
+			<h:form id="formLogin">
+
+						<p:dialog header="Login" widgetVar="dlg" resizable="false">
+							<p:messages id="msgs" />
+							<h:panelGrid columns="2" cellpadding="5">
+								<h:outputLabel for="login" value="Login:" />
+								<p:inputText id="login" value="#{loginBean.login}" required="true"
+									label="login" />
+
+								<h:outputLabel for="password" value="Password:" />
+								<p:password id="password" value="#{loginBean.password}" required="true"
+									label="password" />
+
+								<f:facet name="footer">
+									<p:commandButton value="Login" update="msgs"
+										actionListener="#{loginBean.login}"
+										rendered="#{sessionScope['CURRENT_USER'] eq null}" />
+								</f:facet>
+							</h:panelGrid>
+						</p:dialog>
+					</h:form>
+		</h:body>
+	</ui:define>
+</ui:composition>

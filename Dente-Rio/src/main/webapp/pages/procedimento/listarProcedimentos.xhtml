@@ -9,10 +9,11 @@
 
 	<ui:define name="corpo">
 		<h:body>
+			<f:event listener="#{loginBean.temPermissao}" type="preRenderView" />
 			<h:form styleClass="formulatio">
 				<p:panel>
-				
-				<div style="width: 100%;">
+
+					<div style="width: 100%;">
 						<div class="tituloPagina">
 							<h3 class="tree">Lista de Procedimentos</h3>
 						</div>
@@ -24,24 +25,26 @@
 							</p:commandButton>
 						</f:facet>
 					</p:toolbar>
-				
+
 					<p:dataTable id="procedimentosTable"
 						emptyMessage="Nenhum registro foi encontrado."
-						value="#{procedimentoBean.listaProcedimentos}" var="procedimento" paginator="true"
-						rows="10" paginatorPosition="bottom">
-						
-						<p:column filterBy="#{procedimento.codigoProcedimento}" headerText="Código" style="text-align: center;">
+						value="#{procedimentoBean.listaProcedimentos}" var="procedimento"
+						paginator="true" rows="10" paginatorPosition="bottom">
+
+						<p:column filterBy="#{procedimento.codigoProcedimento}"
+							headerText="Código" style="text-align: center;">
 							<h:outputText value="#{procedimento.codigoProcedimento}" />
 						</p:column>
-						<p:column filterBy="#{procedimento.nomeProcedimento}" headerText="Procedimento">
+						<p:column filterBy="#{procedimento.nomeProcedimento}"
+							headerText="Procedimento">
 							<h:outputText value="#{procedimento.nomeProcedimento}" />
 						</p:column>
 						<p:column headerText="Valor">
 							<h:outputText value="#{procedimento.valorProcedimento}">
-							<f:convertNumber type="currency" currencySymbol="R$" />
+								<f:convertNumber type="currency" currencySymbol="R$" />
 							</h:outputText>
 						</p:column>
-						
+
 						<p:column style="text-align: center; width: 80px;">
 							<p:commandButton icon="ui-icon-pencil" title="Editar" style="float:left;"
 								process="@this"

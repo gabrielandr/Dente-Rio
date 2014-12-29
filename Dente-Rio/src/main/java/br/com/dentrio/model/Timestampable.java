@@ -9,13 +9,14 @@ import javax.persistence.Version;
 @MappedSuperclass
 public class Timestampable {
 
-	@Column(name = "created_at")
+	@Column(name = "CREATED_AT")
 	public Date createdAt;
 
-	@Column(name = "updated_at")
+	@Column(name = "UPDATED_AT")
 	public Date updatedAt;
 
 	@Version
+	@Column(name = "VERSION")
 	public int version;
 
 	/**
@@ -72,8 +73,8 @@ public class Timestampable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((createdAt == null) ? 0 : createdAt.hashCode());
-		result = prime * result + ((updatedAt == null) ? 0 : updatedAt.hashCode());
+		result = prime * result + (createdAt == null ? 0 : createdAt.hashCode());
+		result = prime * result + (updatedAt == null ? 0 : updatedAt.hashCode());
 		result = prime * result + version;
 		return result;
 	}

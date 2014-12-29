@@ -171,7 +171,7 @@ public class ProcedimentoBean implements Serializable {
 	 * @return the listaProcedimentos
 	 */
 	public List<Procedimento> getListaProcedimentos() {
-		return procedimentoService.listProcedimentos();
+		return procedimentoService.getListaProcedimentos();
 	}
 
 	/**

@@ -367,7 +367,8 @@ footer .copyright {
 }
 
 .blog-cp .tag:hover {
-/* 	background-position: -62px -29px */
+	/* 	background-position: -62px -29px */
+	
 }
 
 .blog img {
@@ -985,7 +986,24 @@ span.box-icon {
 	width: 75% !important
 }
 
-.ui-spinner-input{
+.ui-spinner-input {
 	width: 50px !important;
 	height: 30px !important;
+}
+
+.botaoSair {
+	color: #007C69;
+	font-size: 16px;
+	padding: 0 0 0 15px;
+	vertical-align: middle;
+	height: 40px;
+	line-height: 40px;
+	font-weight: normal !important;
+	"
+}
+
+.botaoSair:HOVER {
+	background: none;
+	color: #D42915;
+	font-weight: bold;
 }

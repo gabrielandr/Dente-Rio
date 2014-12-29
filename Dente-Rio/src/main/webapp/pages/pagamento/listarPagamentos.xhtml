@@ -6,10 +6,11 @@
 	<f:metadata>
 		<f:viewAction action="#{tabbedView.onMenuSelect('linkPagamento')}" />
 	</f:metadata>
-	
+
 	<ui:define name="corpo">
 		<h:body>
 			<h:form styleClass="formulatio">
+				<f:event listener="#{loginBean.temPermissao}" type="preRenderView" />
 				<p:panel>
 					<div style="width: 100%;">
 						<div class="tituloPagina">
@@ -23,12 +24,12 @@
 							</p:commandButton>
 						</f:facet>
 					</p:toolbar>
-					
+
 					<p:dataTable id="pagamentosTable"
 						emptyMessage="Nenhum registro foi encontrado."
 						value="#{pagamentoBean.listaPagamentos}" var="pagamento" paginator="true"
 						rows="10" paginatorPosition="bottom">
-						
+
 						<p:column headerText="Data de criação">
 							<h:outputText value="#{pagamento.createdAt}">
 								<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />

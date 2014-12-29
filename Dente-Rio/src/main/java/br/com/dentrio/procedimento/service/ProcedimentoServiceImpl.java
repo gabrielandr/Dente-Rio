@@ -26,8 +26,8 @@ public class ProcedimentoServiceImpl implements ProcedimentoService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Procedimento> listProcedimentos() {
-		return procedimentoDao.listProcedimentos();
+	public List<Procedimento> getListaProcedimentos() {
+		return procedimentoDao.getListaProcedimentos();
 	}
 
 	/**

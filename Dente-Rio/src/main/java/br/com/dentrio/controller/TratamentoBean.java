@@ -130,7 +130,7 @@ public class TratamentoBean extends BaseBean implements Serializable {
 	public void mostrarDadosTratamento() {
 		try {
 			// redireciona para a pagina pages/paciente/dadosTratamento.xhtml
-			FacesUtil.redirect("dadosTratamento.xhtml?tratamento_id=" + getTratamentoSelecionado().getId());
+			FacesUtil.redirect("/pages/paciente/dadosTratamento.xhtml?tratamento_id=" + getTratamentoSelecionado().getId());
 		} catch (Exception e) {
 			e.printStackTrace();
 			FacesUtil.addErrorMessage(Constantes.ERRO, "Ocorreu um erro ao pesquisar o tratamento!");
@@ -168,18 +168,18 @@ public class TratamentoBean extends BaseBean implements Serializable {
 			if (duplicateEntry) {
 				setarMensagemDuplicidade();
 				setProcedimentosSelecionados(new ArrayList<ProcedimentoTratamento>());
-				FacesUtil.redirect("dadosTratamento.xhtml?tratamento_id=" + tratamento.getId());
+				FacesUtil.redirect("/pages/paciente/dadosTratamento.xhtml?tratamento_id=" + tratamento.getId());
 			} else {
 				Tratamento trata = tratamentoService.getTratamento(Integer.valueOf(codigo_tratamento));
 				salvarProcedimentosTratamento(trata);
 			}
 			FacesUtil.addSuccessMessage(Constantes.SUCESSO, "Procedimento adicionado com sucesso!");
-			FacesUtil.redirect("dadosTratamento.xhtml?tratamento_id=" + tratamento.getId());
+			FacesUtil.redirect("/pages/paciente/dadosTratamento.xhtml?tratamento_id=" + tratamento.getId());
 
 		} catch (DataAccessException e) {
 			e.printStackTrace();
 			FacesUtil.addErrorMessage(Constantes.ERRO, "Ocoreu um erro ao tentar salvar, por favor tente novamente!");
-			FacesUtil.redirect("dadosTratamento.xhtml?tratamento_id=" + tratamento.getId());
+			FacesUtil.redirect("/pages/paciente/dadosTratamento.xhtml?tratamento_id=" + tratamento.getId());
 		}
 	}
 
@@ -188,11 +188,11 @@ public class TratamentoBean extends BaseBean implements Serializable {
 			procedimentoTratamentoService.deletarProcedimentoTratamento(procTratamento);
 			atualizaValorTotalTratamento(tratamento.getId());
 			FacesUtil.addErrorMessage(Constantes.SUCESSO, "Procedimento deletado do Tratamento com sucesso!");
-			FacesUtil.redirect("dadosTratamento.xhtml?tratamento_id=" + tratamento.getId());
+			FacesUtil.redirect("/pages/paciente/dadosTratamento.xhtml?tratamento_id=" + tratamento.getId());
 		} catch (Exception e) {
 			e.printStackTrace();
 			FacesUtil.addErrorMessage(Constantes.ERRO, "Ocorreu um erro ao deletar!");
-			FacesUtil.redirect("dadosTratamento.xhtml?tratamento_id=" + tratamento.getId());
+			FacesUtil.redirect("/pages/paciente/dadosTratamento.xhtml?tratamento_id=" + tratamento.getId());
 		}
 	}
 
@@ -318,7 +318,7 @@ public class TratamentoBean extends BaseBean implements Serializable {
 			FacesUtil.addSuccessMessage(Constantes.SUCESSO,
 					"Status do tratamento alterado de " + anteriorStatusProcedimentoEnum.getDescricao() + " para "
 							+ novoStatusProcedimentoEnum.getDescricao());
-			FacesUtil.redirect("dadosTratamento.xhtml?tratamento_id=" + tratamento.getId());
+			FacesUtil.redirect("/pages/paciente/dadosTratamento.xhtml?tratamento_id=" + tratamento.getId());
 		}
 	}
 
@@ -330,7 +330,7 @@ public class TratamentoBean extends BaseBean implements Serializable {
 			atualizaValorTotalTratamento(procedimentoTrat.getTratamento().getId());
 			FacesUtil.addSuccessMessage(Constantes.SUCESSO, "Valor do tratamento alterado de R$" + valorAnterior
 					+ " para R$" + valorNovo);
-			FacesUtil.redirect("dadosTratamento.xhtml?tratamento_id=" + tratamento.getId());
+			FacesUtil.redirect("/pages/paciente/dadosTratamento.xhtml?tratamento_id=" + tratamento.getId());
 		}
 	}
 
@@ -421,7 +421,7 @@ public class TratamentoBean extends BaseBean implements Serializable {
 	 * @return the listaFuncionarios
 	 */
 	public List<Funcionario> getListaFuncionarios() {
-		return funcionarioService.listFuncionarios();
+		return funcionarioService.getListaFuncionarios();
 	}
 
 	/**

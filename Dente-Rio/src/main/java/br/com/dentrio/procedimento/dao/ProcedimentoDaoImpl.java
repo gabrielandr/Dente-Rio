@@ -29,7 +29,7 @@ public class ProcedimentoDaoImpl implements ProcedimentoDao, Serializable {
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional(readOnly = true)
-	public List<Procedimento> listProcedimentos() {
+	public List<Procedimento> getListaProcedimentos() {
 		return sessionFactory.getCurrentSession().createCriteria(Procedimento.class).list();
 	}
 

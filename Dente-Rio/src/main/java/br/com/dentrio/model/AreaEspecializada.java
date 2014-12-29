@@ -18,16 +18,16 @@ import org.hibernate.bytecode.internal.javassist.FieldHandled;
 import org.hibernate.bytecode.internal.javassist.FieldHandler;
 
 @Entity
-@Table(name = "area_especializada", uniqueConstraints = { @UniqueConstraint(columnNames = "nome_area_especializada") })
+@Table(name = "AREA_ESPECIALIZADA", uniqueConstraints = { @UniqueConstraint(columnNames = "NM_AREA_ESPECIALIZADA") })
 public class AreaEspecializada extends Timestampable implements Serializable, FieldHandled {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "area_id")
+	@Column(name = "AREA_ESPECIALIZADA_ID")
 	private Integer id;
-	@Column(name = "nome_area_especializada", unique = true)
+	@Column(name = "NM_AREA_ESPECIALIZADA", unique = true)
 	private String nomeAreaEspecializada;
 
 	private FieldHandler handler;
@@ -53,9 +53,9 @@ public class AreaEspecializada extends Timestampable implements Serializable, Fi
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((funcionario == null) ? 0 : funcionario.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((nomeAreaEspecializada == null) ? 0 : nomeAreaEspecializada.hashCode());
+		result = prime * result + (funcionario == null ? 0 : funcionario.hashCode());
+		result = prime * result + (id == null ? 0 : id.hashCode());
+		result = prime * result + (nomeAreaEspecializada == null ? 0 : nomeAreaEspecializada.hashCode());
 		return result;
 	}
 

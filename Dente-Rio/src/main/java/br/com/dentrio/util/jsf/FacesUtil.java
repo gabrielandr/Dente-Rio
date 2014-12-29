@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Map;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.context.RequestContext;
@@ -40,7 +41,12 @@ public class FacesUtil {
 	 */
 	public static void redirect(String url) {
 		try {
-			FacesContext.getCurrentInstance().getExternalContext().redirect(url);
+			ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+			if (url == null) {
+				ec.redirect(ec.getRequestContextPath());
+			} else {
+				ec.redirect(ec.getRequestContextPath() + url);
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 			FacesUtil.addErrorMessage(Constantes.ERRO, "Erro ao redirecionar a pagina!");

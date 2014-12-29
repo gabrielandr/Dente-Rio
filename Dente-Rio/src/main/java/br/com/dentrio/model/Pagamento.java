@@ -16,36 +16,37 @@ import javax.persistence.Table;
 import br.com.dentrio.comum.FormaPagamentoEnum;
 
 @Entity
-@Table(name = "movimento")
+@Table(name = "MOVIMENTO")
 @DiscriminatorValue("P")
 public class Pagamento extends Movimento implements Serializable {
 
 	private static final long serialVersionUID = -5988625296699742692L;
 
 	@Enumerated(EnumType.STRING)
+	@Column(name = "FORMA_PAGAMENTO")
 	private FormaPagamentoEnum formaPagamento;
 
-	@Column(name = "numero_parcela", nullable = true, columnDefinition = "int DEFAULT null")
+	@Column(name = "NUMERO_PARCELA", nullable = true, columnDefinition = "int DEFAULT null")
 	private Integer numeroParcela;
 
-	@Column(name = "codigo_estorno")
+	@Column(name = "CODIGO_ESTORNO")
 	private Integer codigoEstorno;
 
 	@ManyToOne
-	@JoinColumn(name = "tratamento_id")
+	@JoinColumn(name = "TRATAMENTO_ID")
 	private Tratamento tratamento;
 
-	@Column(name = "estornado", nullable = false, columnDefinition = "bit default 0")
+	@Column(name = "ESTORNADO", nullable = false, columnDefinition = "tinyint(1) default 0")
 	private Boolean estornado = false;
 
 	@OneToOne
-	@JoinColumn(name = "pagamento_estornado")
+	@JoinColumn(name = "PAGAMENTO_ESTORNADO")
 	private Pagamento pagamentoEstornado;
 
-	@Column(name = "soma")
+	@Column(name = "SOMA")
 	private BigDecimal soma;
 
-	@Column(name = "restante")
+	@Column(name = "RESTANTE")
 	private BigDecimal restante;
 
 	/**

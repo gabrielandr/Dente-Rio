@@ -1,6 +1,24 @@
 $(document).ready(function() {
 	escDialog();
+	
+	showHideMenusTopo('hide')
 });
+
+function showHideMenusTopo(acao){
+	if($("#hiddenCurrentUser").val() == ''){
+		$("#liPaciente").hide();
+		$("#liMovimento").hide();
+		$("#liCadastros").hide();
+		$("#liRelatorios").hide();
+		$("#liContato").hide();
+	} else {
+		$("#liPaciente").show();
+		$("#liMovimento").show();
+		$("#liCadastros").show();
+		$("#liRelatorios").show();
+		$("#liContato").show();
+	}
+}
 
 function validarFormTratamento() {
 	var comboFuncionarios = $(".comboFuncionarios option:selected").val();

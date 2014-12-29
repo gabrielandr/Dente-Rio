@@ -7,8 +7,10 @@ import javax.el.ELContext;
 import javax.faces.FacesException;
 import javax.faces.context.FacesContext;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import br.com.dentrio.model.Funcionario;
 import br.com.dentrio.model.Pagamento;
 import br.com.dentrio.model.Tratamento;
 import br.com.dentrio.tratamento.service.TratamentoService;
@@ -119,9 +121,13 @@ public class BaseBean implements Serializable {
 		this.tratamentoService = tratamentoService;
 	}
 
-	// public BigDecimal retornaValorRestanteTratamento(Tratamento tratamento) {
-	// BigDecimal valorTotPago = retornaValorTotalPago(tratamento);
-	// return retornaValorRestanteTratamento(tratamento, valorTotPago);
-	// }
+	public void efetuarLogin(Funcionario funcionario) {
+		getSessionMap().put(Constantes.CURRENT_USER, funcionario);
+		getSessionMap().put(Constantes.NAME_CURRENT_USER, StringUtils.split(funcionario.getNomePessoa())[0]);
+	}
+
+	public void efetuarLogout() {
+		getSessionMap().remove(Constantes.CURRENT_USER);
+	}
 
 }

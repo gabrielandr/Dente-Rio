@@ -16,26 +16,33 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "pessoa")
+@Table(name = "PESSOA")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Pessoa extends Timestampable implements Serializable {
 
 	private static final long serialVersionUID = 3481659331370664341L;
 
 	@Id
+	@Column(name = "ID")
 	@GeneratedValue(strategy = GenerationType.TABLE, generator = "pessoa_generator")
 	@TableGenerator(name = "pessoa_generator", initialValue = 1, allocationSize = 1)
 	private Integer id;
+	@Column(name = "NM_PESSOA")
 	private String nomePessoa;
+	@Column(name = "CPF")
 	private Long cpf;
+	@Column(name = "RG")
 	private Long rg;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name = "data_nascimento")
+	@Column(name = "DATA_NASCIMENTO")
 	private Date dataNascimento;
 
+	@Column(name = "ENDERECO")
 	private String endereco;
+	@Column(name = "TELEFONE")
 	private String telefone;
+	@Column(name = "CELULAR")
 	private String celular;
 
 	public String getNomePessoa() {
@@ -111,9 +118,9 @@ public class Pessoa extends Timestampable implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((cpf == null) ? 0 : cpf.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((rg == null) ? 0 : rg.hashCode());
+		result = prime * result + (cpf == null ? 0 : cpf.hashCode());
+		result = prime * result + (id == null ? 0 : id.hashCode());
+		result = prime * result + (rg == null ? 0 : rg.hashCode());
 		return result;
 	}
 

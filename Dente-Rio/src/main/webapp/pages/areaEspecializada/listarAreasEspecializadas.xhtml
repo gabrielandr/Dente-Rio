@@ -9,6 +9,7 @@
 
 	<ui:define name="corpo">
 		<h:body>
+			<f:event listener="#{loginBean.temPermissao}" type="preRenderView" />
 			<h:form styleClass="formulatio">
 				<p:panel>
 				
@@ -51,7 +52,7 @@
 								<p:commandButton value="Não" type="button"
 									styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 							</p:confirmDialog>
-							<p:growl id="growl" showDetail="true" globalOnly="true" life="40000" />
+							<p:growl id="growl" showDetail="true" globalOnly="true" life="6000" />
 						</p:column>
 					</p:dataTable>
 				</p:panel>

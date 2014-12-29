@@ -11,57 +11,61 @@ import br.com.dentrio.model.Funcionario;
 @Service
 public class FuncionarioServiceImpl implements FuncionarioService {
 
-    @Autowired
-    public FuncionarioDao funcionarioDao;
+	@Autowired
+	public FuncionarioDao funcionarioDao;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void addFuncionario(Funcionario funcionario) {
-	funcionarioDao.addFuncionario(funcionario);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void addFuncionario(Funcionario funcionario) {
+		funcionarioDao.addFuncionario(funcionario);
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void editarFuncionario(Funcionario funcionario) {
-	funcionarioDao.editarFuncionario(funcionario);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void editarFuncionario(Funcionario funcionario) {
+		funcionarioDao.editarFuncionario(funcionario);
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public List<Funcionario> listFuncionarios() {
-	return funcionarioDao.listFuncionarios();
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Funcionario> getListaFuncionarios() {
+		return funcionarioDao.getListaFuncionarios();
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Funcionario getFuncionario(Integer funcionarioId) {
-	return funcionarioDao.getFuncionario(funcionarioId);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Funcionario getFuncionario(Integer funcionarioId) {
+		return funcionarioDao.getFuncionario(funcionarioId);
+	}
 
-    //
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void deletarFuncionario(Funcionario funcionario) {
-	funcionarioDao.deletarFuncionario(funcionario);
+	//
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void deletarFuncionario(Funcionario funcionario) {
+		funcionarioDao.deletarFuncionario(funcionario);
 
-    }
+	}
 
-    public FuncionarioDao getFuncionarioDao() {
-	return funcionarioDao;
-    }
+	public FuncionarioDao getFuncionarioDao() {
+		return funcionarioDao;
+	}
 
-    public void setFuncionarioDao(FuncionarioDao funcionarioDao) {
-	this.funcionarioDao = funcionarioDao;
-    }
+	public void setFuncionarioDao(FuncionarioDao funcionarioDao) {
+		this.funcionarioDao = funcionarioDao;
+	}
 
+	@Override
+	public Funcionario retornaUsuarioPeloLogin(String login) {
+		return this.funcionarioDao.retornaUsuarioPeloLogin(login);
+	}
 }

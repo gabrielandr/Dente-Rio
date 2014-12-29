@@ -41,7 +41,7 @@ public class FuncionarioBean implements Serializable {
 	private void inicializar() {
 		limpar();
 		this.listFuncionarios = null;
-		this.listFuncionarios = funcionarioService.listFuncionarios();
+		this.listFuncionarios = funcionarioService.getListaFuncionarios();
 		carregarCombos();
 	}
 

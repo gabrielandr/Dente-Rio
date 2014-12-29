@@ -8,7 +8,7 @@ public interface ProcedimentoService {
 
 	public void salvarProcedimento(Procedimento area);
 
-	public List<Procedimento> listProcedimentos();
+	public List<Procedimento> getListaProcedimentos();
 
 	public Procedimento getProcedimento(Integer areaId);
 

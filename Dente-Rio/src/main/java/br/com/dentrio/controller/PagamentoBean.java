@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -14,6 +16,9 @@ import org.springframework.stereotype.Component;
 import br.com.dentrio.comum.BaseBean;
 import br.com.dentrio.comum.Constantes;
 import br.com.dentrio.comum.FormaPagamentoEnum;
+import br.com.dentrio.comum.RolesEnum;
+import br.com.dentrio.funcionario.service.FuncionarioService;
+import br.com.dentrio.model.Funcionario;
 import br.com.dentrio.model.Pagamento;
 import br.com.dentrio.model.Tratamento;
 import br.com.dentrio.movimento.service.MovimentoService;
@@ -32,9 +37,14 @@ public class PagamentoBean extends BaseBean implements Serializable {
 	private MovimentoService movimentoService;
 	@Autowired
 	private TratamentoService tratamentoService;
+	@Autowired
+	FuncionarioService funcionarioService;
 
 	private Pagamento pagamento;
 	private String tratamentoId;
+
+	private String login;
+	private String password;
 
 	@PostConstruct
 	private void inicializar() {
@@ -96,8 +106,7 @@ public class PagamentoBean extends BaseBean implements Serializable {
 	 * @param valorTotalPago
 	 */
 	private void setarValorRestantePagamento(Tratamento tratamento, BigDecimal valorTotalPago) {
-		BigDecimal restante = retornaValorRestanteTratamento(tratamento, valorTotalPago).subtract(
-				pagamento.getValor());
+		BigDecimal restante = retornaValorRestanteTratamento(tratamento, valorTotalPago).subtract(pagamento.getValor());
 		pagamento.setRestante(restante);
 	}
 
@@ -163,17 +172,32 @@ public class PagamentoBean extends BaseBean implements Serializable {
 		return null;
 	}
 
-	public String deletarPagamento(Integer pagamentoId) {
+	public void deletarPagamento(Integer pagamentoId) {
 		try {
-			Pagamento pagamento = pagamentoService.getPagamento(pagamentoId);
-			pagamentoService.deletarPagamento(pagamento);
-			FacesUtil.addSuccessMessage(Constantes.SUCESSO, "Pagamento deletado com Sucesso!");
-			inicializar();
-			return "listarPagamentos?faces-redirect=true";
+			Funcionario funcionario = funcionarioService.retornaUsuarioPeloLogin(login);
+			if (null != funcionario) {
+				if (password.equalsIgnoreCase(funcionario.getSenha()) && funcionario.getRole() == RolesEnum.SOCIO) {
+					Tratamento tratamento = recuperarTratamento();
+					Pagamento pagamento = pagamentoService.getPagamento(pagamentoId);
+					pagamentoService.deletarPagamento(pagamento);
+					FacesUtil.addSuccessMessage(Constantes.SUCESSO, "Pagamento deletado com Sucesso!");
+					inicializar();
+					FacesUtil.redirect("/pages/paciente/dadosTratamento.xhtml?tratamento_id=" + tratamento.getId());
+				} else if (funcionario.getRole() != RolesEnum.SOCIO) {
+					setLogin("");
+					setPassword("");
+					FacesUtil.addErrorMessage(Constantes.ERRO, "Você não tem permissão para deletar pagamentos!");
+				}
+			} else {
+				login = "";
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "O login não existe ou foi digitado errado.",
+								null));
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			FacesUtil.addErrorMessage(Constantes.ERRO, "Ocorreu um erro ao deletar!");
-			return null;
 		}
 	}
 
@@ -255,5 +279,34 @@ public class PagamentoBean extends BaseBean implements Serializable {
 		this.movimentoService = movimentoService;
 	}
 
+	/**
+	 * @return the login
+	 */
+	public String getLogin() {
+		return login;
+	}
+
+	/**
+	 * @param login
+	 *            the login to set
+	 */
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+	/**
+	 * @return the password
+	 */
+	public String getPassword() {
+		return password;
+	}
+
+	/**
+	 * @param password
+	 *            the password to set
+	 */
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
 }

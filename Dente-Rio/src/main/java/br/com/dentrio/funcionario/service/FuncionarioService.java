@@ -6,14 +6,15 @@ import br.com.dentrio.model.Funcionario;
 
 public interface FuncionarioService {
 
-    public void addFuncionario(Funcionario funcionario);
+	public void addFuncionario(Funcionario funcionario);
 
-    public void editarFuncionario(Funcionario funcionario);
+	public void editarFuncionario(Funcionario funcionario);
 
-    public List<Funcionario> listFuncionarios();
+	public List<Funcionario> getListaFuncionarios();
 
-    public Funcionario getFuncionario(Integer funcionarioId);
+	public Funcionario getFuncionario(Integer funcionarioId);
 
-    public void deletarFuncionario(Funcionario funcionario);
+	public void deletarFuncionario(Funcionario funcionario);
 
+	public Funcionario retornaUsuarioPeloLogin(String login);
 }

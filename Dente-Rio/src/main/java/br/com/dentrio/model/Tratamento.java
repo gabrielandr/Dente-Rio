@@ -30,7 +30,7 @@ import org.springframework.cache.annotation.Cacheable;
 import br.com.dentrio.comum.TiposOrcamentoEnum;
 
 @Entity
-@Table(name = "tratamento")
+@Table(name = "TRATAMENTO")
 public class Tratamento extends Timestampable implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -40,25 +40,25 @@ public class Tratamento extends Timestampable implements Serializable {
 	private Integer id;
 
 	@ManyToOne
-	@JoinColumn(name = "funcionario_id")
+	@JoinColumn(name = "FUNCIONARIO_ID")
 	private Funcionario funcionario;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name = "data_inicio")
+	@Column(name = "DATA_INICIO")
 	private Date dataInicio;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name = "data_alta")
+	@Column(name = "DATA_ALTA")
 	private Date dataAlta;
 
-	@Column(name = "valor_total")
+	@Column(name = "VALOR_TOTAL")
 	private BigDecimal valorTotal;
 
-	@Column(name = "status_tratamento")
+	@Column(name = "STATUS_TRATAMENTO")
 	@Enumerated(EnumType.STRING)
 	private TiposOrcamentoEnum statusTratamento;
 
-	@Column(name = "obs_alta")
+	@Column(name = "OBS_ALTA")
 	private String obsAlta;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tratamento")
@@ -71,7 +71,7 @@ public class Tratamento extends Timestampable implements Serializable {
 	private Set<ProcedimentoTratamento> procedimentoTratamentos = new HashSet<ProcedimentoTratamento>();
 
 	@ManyToOne
-	@JoinColumn(name = "paciente_id")
+	@JoinColumn(name = "PACIENTE_ID")
 	private Paciente paciente;
 
 	public Tratamento() {
