@@ -1,0 +1,91 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:o="http://omnifaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+
+	<f:metadata>
+		<f:viewAction action="#{tabbedView.onMenuSelect('linkRelatorioPagamentoCartao')}" />
+	</f:metadata>
+
+	<ui:define name="corpo">
+		<h:body>
+			<h:form id="formRelatorioPagamentosCartao"
+				styleClass="formRelatorioPagamentosCartao">
+				<p:panel id="relatorioPagamentosCartaoPanel">
+					<div style="width: 100%;">
+						<div class="tituloPagina">
+							<h3 class="tree">Relatório de Pagamentos em Cartão</h3>
+						</div>
+					</div>
+
+					<p:messages autoUpdate="true" />
+					<table id="formRelatorios">
+						<tr>
+							<td>
+								<h:outputLabel value="Data Inicial:" />
+							</td>
+							<td>
+								<p:calendar id="dataInicio" widgetVar="dataInicio" label="Data Inicial"
+									mask="true" pattern="dd/MM/yyyy" navigator="true" locale="pt_BR"
+									yearRange="c-100:c+1" value="#{relatorioBean.dataInicio}"
+									showOn="button" />
+							</td>
+							<td>
+								<h:outputLabel value="Data Final:" />
+							</td>
+							<td>
+								<p:calendar id="dataFim" widgetVar="dataFim" label="Data Final"
+									mask="true" pattern="dd/MM/yyyy" navigator="true" locale="pt_BR"
+									yearRange="c-100:c+1" value="#{relatorioBean.dataFim}" showOn="button" />
+							</td>
+							<td>
+								<p:commandButton value="OK" process="@this" ajax="false"
+									update="formRelatorioPagamentosCartao:pagamentosCartaoTable"
+									action="#{relatorioBean.filtrarRelatorioPagamentoCartao}">
+								</p:commandButton>
+							</td>
+						</tr>
+
+						<o:validateOneOrMore id="oneOrMore" components="dataInicio dataFim"
+							message="Por favor preencha pelo menos uma das datas para filtrar." />
+					</table>
+
+					<p:dataTable id="pagamentosCartaoTable"
+						emptyMessage="Nenhum registro foi encontrado."
+						value="#{relatorioBean.listaPagamentosCartao}" var="pagamento"
+						paginatorTemplate="{Exporters}" paginator="true">
+                 
+						<f:facet name="{Exporters}">
+							<h:commandLink>
+								<p:graphicImage library="imagens" name="excel_logo.png" width="50" />
+								<p:dataExporter type="xls" target="pagamentosCartaoTable" fileName="pagamentosCartao" />
+							</h:commandLink>
+
+							<h:commandLink>
+								<p:graphicImage library="imagens" name="pdf_logo.png" width="24" />
+								<p:dataExporter type="pdf" target="pagamentosCartaoTable" fileName="pagamentosCartao" preProcessor="#{relatorioBean.preProcessarRelatorioPdf}"
+								/>
+							</h:commandLink>
+
+						</f:facet>
+
+						<p:column headerText="Paciente">
+							<h:outputText value="#{pagamento.tratamento.paciente.nomePessoa}" />
+						</p:column>
+						<p:column headerText="Data de criação">
+							<h:outputText value="#{pagamento.createdAt}">
+								<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Valor">
+							<h:outputText value="#{pagamento.valor}">
+								<f:convertNumber type="currency" currencySymbol="R$" />
+							</h:outputText>
+						</p:column>
+
+					</p:dataTable>
+				</p:panel>
+			</h:form>
+		</h:body>
+	</ui:define>
+</ui:composition>
