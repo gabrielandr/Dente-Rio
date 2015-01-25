@@ -72,6 +72,7 @@ public class TratamentoBean extends BaseBean implements Serializable {
 	public void reset() {
 		FacesUtil.resetForm("formTratamento:cadastroTabView:cadastroPanel");
 		FacesUtil.resetForm("formTratamento:cadastroTabView:dataTable");
+		setProcedimentosSelecionados(new ArrayList<ProcedimentoTratamento>());
 
 	}
 
@@ -102,7 +103,7 @@ public class TratamentoBean extends BaseBean implements Serializable {
 
 	public String setarFacesMessageComboFuncionario() {
 		FacesUtil
-				.throwErroValidacao("Para o cadastro de um tratamento, é necessário selecionar o dentista responsável!");
+		.throwErroValidacao("Para o cadastro de um tratamento, é necessário selecionar o dentista responsável!");
 		return null;
 	}
 
@@ -113,7 +114,7 @@ public class TratamentoBean extends BaseBean implements Serializable {
 
 	public String setarFacesMessageProcedimentosSelecionados() {
 		FacesUtil
-				.throwErroValidacao("Para o cadastro de um tratamento, é necessário marcar pelo menos um procedimento!");
+		.throwErroValidacao("Para o cadastro de um tratamento, é necessário marcar pelo menos um procedimento!");
 		return null;
 	}
 

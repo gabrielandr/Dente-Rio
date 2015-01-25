@@ -54,24 +54,25 @@
 						</li>
 					</ul>
 				</li>
-				<li id="liRelatorios" class="dropdown">
+				<li id="liRelatorios"
+					class="#{(sessionScope['MENU_ATIVO'] == 'menuRelatorio') ? 'dropdown active' : 'dropdown'}">
 					<a class="dropdown-toggle" data-toggle="dropdown" href="#">Relatórios</a>
 					<ul class="dropdown-menu">
 						<li>
-							<!-- 							<h:link outcome="#">Relatorio</h:link> -->
+							<h:link outcome="/pages/relatorio/relatorioPagamentosCartao">Relatorio Pagamentos Cartão</h:link>
+						</li>
+						<li>
+							<h:link outcome="/pages/relatorio/relatorioPagamentosDinheiro">Relatorio Pagamentos Dinheiro</h:link>
 						</li>
 					</ul>
 				</li>
-				<li id="liContato">
-					<a href="#">Contato</a>
-				</li>
-				<li
-					class="#{(sessionScope['MENU_ATIVO'] == 'menuSugestao') ? 'dropdown active' : 'dropdown'}">
-					<h:link outcome="/pages/sugestao/listarSugestoes">Sugestão</h:link>
-				</li>
+<!-- 				<li -->
+<!-- 					class="#{(sessionScope['MENU_ATIVO'] == 'menuSugestao') ? 'dropdown active' : 'dropdown'}"> -->
+<!-- 					<h:link outcome="/pages/sugestao/listarSugestoes">Sugestão</h:link> -->
+<!-- 				</li> -->
 				<li
 					class="#{(sessionScope['MENU_ATIVO'] == 'menuLogin') ? 'dropdown active' : 'dropdown'}">
-				<h:outputLink value="javascript:void(0)" onclick="PF('dlg').show();" rendered="#{sessionScope['CURRENT_USER'] eq null}"
+				<h:outputLink value="javascript:void(0)" onclick="PF('dlg').show();limparFormLogin();" rendered="#{sessionScope['CURRENT_USER'] eq null}"
 						title="login">Login
 				</h:outputLink>
 					<h:form id="formLogin">

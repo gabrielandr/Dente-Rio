@@ -20,4 +20,8 @@ public interface PagamentoDao {
 
 	public List<Pagamento> listarPagamentosCartao();
 
+	public List<Pagamento> filtrarPagamentosCartao(String danaInicio, String dataFim);
+
+	public List<Pagamento> filtrarPagamentosDinheiro(String dataIni, String dataFinal);
+
 }

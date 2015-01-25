@@ -10,26 +10,25 @@
 		</h:head>
 		<h:body>
 			<h:form id="formLogin">
+				<p:panel header="Login" widgetVar="dlg" resizable="false">
+					<p:messages id="msgs" />
+					<h:panelGrid columns="2" cellpadding="5">
+						<h:outputLabel for="login" value="Login:" />
+						<p:inputText id="login" value="#{loginBean.login}" required="true"
+							label="login" />
 
-						<p:dialog header="Login" widgetVar="dlg" resizable="false">
-							<p:messages id="msgs" />
-							<h:panelGrid columns="2" cellpadding="5">
-								<h:outputLabel for="login" value="Login:" />
-								<p:inputText id="login" value="#{loginBean.login}" required="true"
-									label="login" />
+						<h:outputLabel for="password" value="Password:" />
+						<p:password id="password" value="#{loginBean.password}" required="true"
+							label="password" />
 
-								<h:outputLabel for="password" value="Password:" />
-								<p:password id="password" value="#{loginBean.password}" required="true"
-									label="password" />
-
-								<f:facet name="footer">
-									<p:commandButton value="Login" update="msgs"
-										actionListener="#{loginBean.login}"
-										rendered="#{sessionScope['CURRENT_USER'] eq null}" />
-								</f:facet>
-							</h:panelGrid>
-						</p:dialog>
-					</h:form>
+						<f:facet name="footer">
+							<p:commandButton value="Login" update="msgs"
+								actionListener="#{loginBean.login}"
+								rendered="#{sessionScope['CURRENT_USER'] eq null}" />
+						</f:facet>
+					</h:panelGrid>
+				</p:panel>
+			</h:form>
 		</h:body>
 	</ui:define>
 </ui:composition>

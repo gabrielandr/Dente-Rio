@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Component;
 
+import br.com.dentrio.comum.BaseBean;
 import br.com.dentrio.comum.Constantes;
 import br.com.dentrio.model.Paciente;
 import br.com.dentrio.model.Procedimento;
@@ -15,7 +16,7 @@ import br.com.dentrio.procedimentotratamento.service.ProcedimentoTratamentoServi
 import br.com.dentrio.util.jsf.FacesUtil;
 
 @Component("procedimentoTratamentoBean")
-public class ProcedimentoTratamentoBean implements Serializable {
+public class ProcedimentoTratamentoBean extends BaseBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

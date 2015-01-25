@@ -3,8 +3,8 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
 	<f:metadata>
-		<f:viewAction
-			action="#{procedimentoBean.carregarListaProcedimentosTratamentos(param['tratamento_id'])}" />
+		<f:viewAction action="#{procedimentoBean.carregarListaProcedimentosTratamentos(param['tratamento_id'])}" />
+		
 	</f:metadata>
 	<ui:define name="corpo">
 		<h:head>
@@ -30,10 +30,12 @@
 						<ui:include src="/pages/paciente/abaTratamento.xhtml" />
 					</p:tab>
 				</p:tabView>
-				
-				<p:commandButton id="botaoBack" type="button" value="Voltar" rendered="#{sessionScope['NOME_ABA_ATIVA'] != 'abaTratamento'}"
+
+				<p:commandButton id="botaoBack" type="button" value="Voltar"
+					rendered="#{sessionScope['NOME_ABA_ATIVA'] != 'abaTratamento'}"
 					onclick="window.history.back();" icon="ui-icon-arrowreturn-1-w" />
-				<p:commandButton id="botaoSalvar" value="Salvar" icon="ui-icon-disk" rendered="#{sessionScope['NOME_ABA_ATIVA'] != 'abaTratamento'}"
+				<p:commandButton id="botaoSalvar" value="Salvar" icon="ui-icon-disk"
+					rendered="#{sessionScope['NOME_ABA_ATIVA'] != 'abaTratamento'}"
 					action="#{pacienteBean.salvarPaciente}" ajax="true" />
 			</h:form>
 		</h:body>

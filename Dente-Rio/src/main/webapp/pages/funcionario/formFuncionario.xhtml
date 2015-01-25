@@ -11,7 +11,7 @@
 			</script>
 		</h:head>
 		<h:body>
-			<h:form>
+			<h:form id="formFuncionario">
 				<p:panel header="Dados do Funcionário" id="cadastroPanel">
 					<p:messages autoUpdate="true" />
 					<table id="formFuncionario">
@@ -53,12 +53,30 @@
 								<p:outputLabel for="senha" value="Senha:" />
 							</td>
 							<td>
-								<p:password id="senha" label="Senha" feedback="true"
+								<p:password id="senha" label="Senha" feedback="true" redisplay="true" 
+								disabled="#{funcionarioBean.funcionario.senha ne null and sessionScope['CURRENT_USER'].getRole() ne 'ADMIN'}"
 									value="#{funcionarioBean.funcionario.senha}" required="true">
 								</p:password>
 							</td>
 						
 						</tr>
+						
+						<tr>
+							<td class="labelInput">
+								<p:outputLabel for="roles" value="Tipo de Acesso:" />
+							</td>
+							<td>
+								<p:selectOneMenu id="roles" styleClass="tiposFuncionario" label="Roles"
+									value="#{funcionarioBean.funcionario.role}" required="true"
+									converter="omnifaces.SelectItemsConverter">
+									<f:selectItem itemLabel="Selecione" itemValue=""
+										noSelectionOption="true" />
+									<f:selectItems value="#{funcionarioBean.listaRoles}"
+										var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
+								</p:selectOneMenu>
+							</td>
+						</tr>
+						
 						<tr>
 							<td class="labelInput">
 								<p:outputLabel for="rg" value="RG:" />

@@ -2,6 +2,8 @@ package br.com.dentrio.comum;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.el.ELContext;
 import javax.faces.FacesException;
@@ -96,9 +98,10 @@ public class BaseBean implements Serializable {
 		int retornoValorPago = retornaComparacaoBigDecimal(pagamento.getValor(), tratamento.getValorTotal());
 		BigDecimal valorTotalPago = retornaValorTotalPago(tratamento);
 		int retornoValorTotalTratamentoPago = retornaComparacaoBigDecimal(valorTotalPago, tratamento.getValorTotal());
+		//Se o tratamento só tem um pagamento e o valor pago for igual o valor total do tratamento
 		if (tratamento.getPagamentos().size() == 1 && retornoValorPago == 0) {
 			tratamento.setStatusTratamento(TiposOrcamentoEnum.ORCAMENTO_CONTRATADO_FICHA_LIQUIDADA);
-		} else if (retornoValorTotalTratamentoPago == 0) {
+		} else if (retornoValorTotalTratamentoPago == 0) { //Se o tratamento tem mais de um pagamento e o tratamento foi todo pago.
 			tratamento.setStatusTratamento(TiposOrcamentoEnum.FICHA_LIQUIDADA);
 		} else {
 			tratamento.setStatusTratamento(TiposOrcamentoEnum.ORCAMENTO_CONTRATADO);
@@ -128,6 +131,15 @@ public class BaseBean implements Serializable {
 
 	public void efetuarLogout() {
 		getSessionMap().remove(Constantes.CURRENT_USER);
+	}
+
+	public String formataData(Date data) {
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		String dataFormatada = "";
+		if (data != null) {
+			dataFormatada = df.format(data);
+		}
+		return dataFormatada;
 	}
 
 }

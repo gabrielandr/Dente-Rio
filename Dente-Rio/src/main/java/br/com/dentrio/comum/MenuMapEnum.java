@@ -21,7 +21,11 @@ public enum MenuMapEnum {
 			"../areaEspecializada/listarAreasEspecializadas.xhtml"),
 			LINK_PROCEDIMENTO("linkProcedimento", "menuCadastros", "../procedimento/listarProcedimentos.xhtml"),
 			/* Fim Menu de Cadastros */
-			LINK_SUGESTAO("linkSugestao", "menuSugestao", "../sugestao/listarSugestoes.xhtml");
+	LINK_SUGESTAO("linkSugestao", "menuSugestao", "../sugestao/listarSugestoes.xhtml"),
+			LINK_RELATORIO_PAGAMENTO_CARTAO("linkRelatorioPagamentoCartao", "menuRelatorio",
+			"../relatorio/relatorioPagamentoCartao.xhtml"),
+			LINK_RELATORIO_PAGAMENTO_DINHEIRO("linkRelatorioPagamentoDinheiro", "menuRelatorio",
+			"../relatorio/relatorioPagamentoDinheiro.xhtml");
 
 	private String link;
 	private String nomeMenuAtivo;

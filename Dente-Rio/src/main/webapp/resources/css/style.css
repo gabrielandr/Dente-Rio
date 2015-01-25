@@ -1007,3 +1007,9 @@ span.box-icon {
 	color: #D42915;
 	font-weight: bold;
 }
+
+#formRelatorios {
+	text-align: center;
+	width: 60%;
+	margin: auto;
+}

@@ -7,13 +7,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import br.com.dentrio.comum.BaseBean;
 import br.com.dentrio.despesa.service.DespesaService;
 import br.com.dentrio.model.Despesa;
 import br.com.dentrio.model.Pagamento;
 import br.com.dentrio.pagamento.service.PagamentoService;
 
 @Component("caixaBean")
-public class CaixaBean implements Serializable {
+public class CaixaBean extends BaseBean implements Serializable {
 
 	private static final long serialVersionUID = -8355672474994291811L;
 

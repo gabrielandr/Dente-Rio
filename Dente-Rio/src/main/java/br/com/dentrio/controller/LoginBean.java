@@ -109,6 +109,7 @@ public class LoginBean extends BaseBean implements Serializable {
 		if (!isLogado()) {
 			FacesUtil.addErrorMessage(Constantes.ERRO, "Você deve fazer o login para acessar esta página!");
 			FacesUtil.redirect("/home.xhtml");
+
 		}
 	}
 

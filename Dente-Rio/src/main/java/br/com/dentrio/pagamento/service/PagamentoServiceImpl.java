@@ -78,4 +78,14 @@ public class PagamentoServiceImpl implements PagamentoService {
 		return pagamentoDao.listarPagamentosCartao();
 	}
 
+	@Override
+	public List<Pagamento> filtrarPagamentosCartao(String dataInicio, String dataFim) {
+		return pagamentoDao.filtrarPagamentosCartao(dataInicio, dataFim);
+	}
+
+	@Override
+	public List<Pagamento> filtrarPagamentosDinheiro(String dataIni, String dataFinal) {
+		return pagamentoDao.filtrarPagamentosDinheiro(dataIni, dataFinal);
+	}
+
 }

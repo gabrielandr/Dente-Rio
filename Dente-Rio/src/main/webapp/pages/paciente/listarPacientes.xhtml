@@ -51,25 +51,10 @@
 						</p:column>
 						<p:column headerText="Ações" style="text-align: center; width: 80px;">
 						
-							<p:commandButton icon="ui-icon-pencil" title="Editar" style="float:left;"
+							<p:commandButton icon="ui-icon-pencil" title="Editar" 
 								process="@this" action="#{pacienteBean.editarPaciente(paciente.id)}">
 							</p:commandButton>
 						
-							<p:commandButton icon="ui-icon-trash" style="float:right;"
-								title="Excluir" process="@this" update="pacientesTable growl"
-								action="#{pacienteBean.deletarPaciente(paciente.id)}">
-								<p:confirm header="Confirmação"
-									message="Você tem certeza que deseja excluir?" icon="ui-icon-alert" />
-							</p:commandButton>
-							
-							
-							
-							<p:confirmDialog global="true">
-								<p:commandButton value="Sim" type="button"
-									styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-								<p:commandButton value="Não" type="button"
-									styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-							</p:confirmDialog>
 							
 							<p:growl id="growl" showDetail="true" globalOnly="true" life="6000" />
 						

@@ -12,12 +12,13 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Component;
 
 import br.com.dentrio.areaespecializada.service.AreaEspecializadaService;
+import br.com.dentrio.comum.BaseBean;
 import br.com.dentrio.comum.Constantes;
 import br.com.dentrio.model.AreaEspecializada;
 import br.com.dentrio.util.jsf.FacesUtil;
 
 @Component("areaEspecializadaBean")
-public class AreaEspecializadaBean implements Serializable {
+public class AreaEspecializadaBean extends BaseBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private static final String ERROR = "error";

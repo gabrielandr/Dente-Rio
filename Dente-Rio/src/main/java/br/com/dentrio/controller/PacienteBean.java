@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 
+import br.com.dentrio.comum.BaseBean;
 import br.com.dentrio.comum.Constantes;
 import br.com.dentrio.funcionario.service.FuncionarioService;
 import br.com.dentrio.model.Funcionario;
@@ -21,7 +22,7 @@ import br.com.dentrio.util.jsf.FacesUtil;
 
 @Controller("pacienteBean")
 @ViewScoped
-public class PacienteBean implements Serializable {
+public class PacienteBean extends BaseBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

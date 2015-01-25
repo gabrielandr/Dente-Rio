@@ -76,4 +76,30 @@ public class PagamentoDaoImpl implements PagamentoDao, Serializable {
 						"SELECT pag from Pagamento pag WHERE pag.formaPagamento = :formaPagamento and DATE(pag.createdAt) = CURDATE() AND estornado = false AND pagamento_estornado IS NULL")
 						.setParameter("formaPagamento", FormaPagamentoEnum.CARTAO).list();
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Pagamento> filtrarPagamentosCartao(String danaInicio, String dataFim) {
+		List<Pagamento> pagamentosCartao = getSessionFactory()
+				.getCurrentSession()
+				.createSQLQuery(
+						"SELECT * from MOVIMENTO mov WHERE mov.discriminator = 'P' AND mov.FORMA_PAGAMENTO = '"
+								+ FormaPagamentoEnum.CARTAO + "' and DATE(mov.CREATED_AT) " + "BETWEEN '" + danaInicio
+								+ "' AND '" + dataFim + "' AND mov.ESTORNADO = false").addEntity(Pagamento.class)
+				.list();
+		return pagamentosCartao;
+
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Pagamento> filtrarPagamentosDinheiro(String dataIni, String dataFinal) {
+		List<Pagamento> pagamentosDinheiro = getSessionFactory()
+				.getCurrentSession()
+				.createSQLQuery(
+						"SELECT * from MOVIMENTO mov WHERE mov.discriminator = 'P' AND mov.FORMA_PAGAMENTO = '"
+								+ FormaPagamentoEnum.DINHEIRO + "' and DATE(mov.CREATED_AT) " + "BETWEEN '" + dataIni
+								+ "' AND '" + dataFinal + "'").addEntity(Pagamento.class).list();
+		return pagamentosDinheiro;
+	}
 }

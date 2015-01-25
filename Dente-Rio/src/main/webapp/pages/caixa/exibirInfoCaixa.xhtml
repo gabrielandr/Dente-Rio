@@ -1,7 +1,8 @@
 <ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
 	xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core" xmlns:o="http://omnifaces.org/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions" >
 	<f:metadata>
 		<f:viewAction action="#{tabbedView.onMenuSelect('linkCaixa')}" />
 	</f:metadata>
@@ -118,7 +119,7 @@
 
 				<p:separator />
 
-				<p:panelGrid columns="2" style="margin: 0 auto;">
+				<p:panelGrid id="panelResumoCaixa" columns="2" style="margin: 0 auto;">
 
 					<h:outputText value="Total Pagamento Dinheiro:" />
 					<h:outputText value="#{caixaBean.totalPagamentoDinheiro}">
@@ -126,7 +127,8 @@
 					</h:outputText>
 
 					<h:outputText value="Total Pagamento Cartao:" />
-					<h:outputText styleClass="pgmt_cartao" value="#{caixaBean.totalPagamentoCartao.negate()}">
+					<h:outputText styleClass="pgmt_cartao"
+						value="#{caixaBean.totalPagamentoCartao.negate()}">
 						<f:convertNumber type="currency" currencySymbol="R$" />
 					</h:outputText>
 
@@ -137,12 +139,14 @@
 					</h:outputText>
 
 					<h:outputText value="Total Despesas Outros:" />
-					<h:outputText styleClass="pgmt_cartao" value="#{caixaBean.totalDespesasOutros.negate()}">
+					<h:outputText styleClass="pgmt_cartao"
+						value="#{caixaBean.totalDespesasOutros.negate()}">
 						<f:convertNumber type="currency" currencySymbol="R$" />
 					</h:outputText>
 
 					<h:outputText value="Total Despesas Orto:" />
-					<h:outputText styleClass="pgmt_cartao" value="#{caixaBean.totalDespesasOrto.negate()}">
+					<h:outputText styleClass="pgmt_cartao"
+						value="#{caixaBean.totalDespesasOrto.negate()}">
 						<f:convertNumber type="currency" currencySymbol="R$" />
 					</h:outputText>
 
@@ -154,6 +158,21 @@
 
 				</p:panelGrid>
 
+				<p:panel header="Exportar PDF ou Excel">
+						<p:commandLink ajax="false">
+							<p:graphicImage library="imagens" name="excel_logo.png" width="50" />
+							<pe:exporter type="xlsx" target="pagamentosCartaoTable,pagamentosDinheiroTable"
+								fileName="pagamentosDinheiroTable" />
+						</p:commandLink>
+
+						<p:commandLink ajax="false">
+							<p:graphicImage library="imagens" name="pdf_logo.png" width="24" />
+							<pe:exporter type="pdf" target="pagamentosCartaoTable,pagamentosDinheiroTable"
+								fileName="pagamentosDinheiroTable"
+								preProcessor="#{relatorioBean.preProcessarRelatorioPdf}" />
+						</p:commandLink>
+
+				</p:panel>
 			</h:form>
 		</h:body>
 	</ui:define>

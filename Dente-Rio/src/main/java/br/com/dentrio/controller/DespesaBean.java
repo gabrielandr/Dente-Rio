@@ -10,13 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Component;
 
+import br.com.dentrio.comum.BaseBean;
 import br.com.dentrio.comum.TipoDespesaEnum;
 import br.com.dentrio.despesa.service.DespesaService;
 import br.com.dentrio.model.Despesa;
 import br.com.dentrio.util.jsf.FacesUtil;
 
 @Component("despesaBean")
-public class DespesaBean implements Serializable {
+public class DespesaBean extends BaseBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Autowired
 	DespesaService despesaService;
@@ -45,7 +46,7 @@ public class DespesaBean implements Serializable {
 		try {
 			setarTimestamps();
 			this.despesaService.addDespesa(this.despesa);
-			FacesUtil.addSuccessMessage("Sucesso!", "Despesa adicionada com Sucesso!");
+			FacesUtil.addSuccessMessage("Sucesso!", "Despesa alterada com Sucesso!");
 			inicializar();
 			return "listarDespesas?faces-redirect=true";
 		} catch (DataAccessException e) {

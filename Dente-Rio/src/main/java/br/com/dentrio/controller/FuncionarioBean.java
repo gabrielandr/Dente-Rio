@@ -12,7 +12,9 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 
 import br.com.dentrio.areaespecializada.service.AreaEspecializadaService;
+import br.com.dentrio.comum.BaseBean;
 import br.com.dentrio.comum.Constantes;
+import br.com.dentrio.comum.RolesEnum;
 import br.com.dentrio.comum.TipoFuncionarioEnum;
 import br.com.dentrio.funcionario.service.FuncionarioService;
 import br.com.dentrio.model.AreaEspecializada;
@@ -21,7 +23,7 @@ import br.com.dentrio.paciente.service.PacienteService;
 import br.com.dentrio.util.jsf.FacesUtil;
 
 @Controller("funcionarioBean")
-public class FuncionarioBean implements Serializable {
+public class FuncionarioBean extends BaseBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -35,6 +37,7 @@ public class FuncionarioBean implements Serializable {
 	private Funcionario funcionario;
 	private AreaEspecializada areaEspecializada;
 	private List<TipoFuncionarioEnum> listaTiposFuncionario;
+	private List<RolesEnum> listaRoles;
 	private List<Funcionario> listFuncionarios;
 
 	@PostConstruct
@@ -219,5 +222,12 @@ public class FuncionarioBean implements Serializable {
 			funcionario.setUpdatedAt(new Date());
 		}
 		funcionario.setUpdatedAt(new Date());
+	}
+
+	/**
+	 * @return the listaRoles
+	 */
+	public List<RolesEnum> getListaRoles() {
+		return RolesEnum.listaTodos();
 	}
 }

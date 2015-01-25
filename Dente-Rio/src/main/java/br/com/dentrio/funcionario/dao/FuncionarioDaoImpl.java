@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.dentrio.comum.TipoFuncionarioEnum;
 import br.com.dentrio.model.Funcionario;
 
 @Repository
@@ -38,8 +39,9 @@ public class FuncionarioDaoImpl implements FuncionarioDao, Serializable {
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<Funcionario> getListaFuncionarios() {
-		return getSessionFactory().getCurrentSession().createCriteria(Funcionario.class)
-				.list();
+		return getSessionFactory().getCurrentSession()
+				.createQuery("SELECT func FROM Funcionario func WHERE func.tipoFuncionario = :tipoFuncionario")
+				.setParameter("tipoFuncionario", TipoFuncionarioEnum.DENTISTA).list();
 	}
 
 	@Override

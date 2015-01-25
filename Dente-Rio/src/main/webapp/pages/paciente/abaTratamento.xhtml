@@ -17,6 +17,8 @@
 				onclick="PF('tratamentoDialog').show();">
 				<p:ajax event="click" listener="#{tratamentoBean.reset}" process="@this"
 					update="cadastroPanel" />
+				<p:ajax event="click" listener="#{tratamentoBean.limpar}" process="@this"
+					update="cadastroPanel" />
 			</p:commandButton>
 			<p:dialog header="Cadastro de Tratamento" widgetVar="tratamentoDialog"
 				style="position: absolute;" modal="true">
@@ -88,7 +90,7 @@
 				</h:outputText>
 			</p:column>
 			<p:column headerText="Status">
-				<h:outputText value="#{tratamentoBean.retornaStatusTratamento(tratamento)}" />
+				<h:outputText value="#{tratamento.statusTratamento.descricao}" />
 			</p:column>
 			<p:column headerText="Valor">
 				<h:outputText value="#{tratamento.valorTotal}">

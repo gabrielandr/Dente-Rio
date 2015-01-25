@@ -1,7 +1,35 @@
 $(document).ready(function() {
 	escDialog();
 	
-	showHideMenusTopo('hide')
+	showHideMenusTopo('hide');
+	
+	PrimeFaces.locales['pt_BR'] = {  
+            closeText: 'Fechar',  
+            prevText: 'Anterior',  
+            nextText: 'Próximo',  
+            currentText: 'Começo',  
+            monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],  
+            monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun', 'Jul','Ago','Set','Out','Nov','Dez'],  
+            dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],  
+            dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'],  
+            dayNamesMin: ['D','S','T','Q','Q','S','S'],  
+            weekHeader: 'Semana',  
+            firstDay: 1,  
+            isRTL: false,  
+            showMonthAfterYear: false,  
+            yearSuffix: '',  
+            timeOnlyTitle: 'Só Horas',  
+            timeText: 'Tempo',  
+            hourText: 'Hora',  
+            minuteText: 'Minuto',  
+            secondText: 'Segundo',  
+            currentText: 'Data Atual',  
+            ampm: false,  
+            month: 'Mês',  
+            week: 'Semana',  
+            day: 'Dia',  
+            allDayText : 'Todo Dia'  
+        };  
 });
 
 function showHideMenusTopo(acao){
@@ -10,13 +38,13 @@ function showHideMenusTopo(acao){
 		$("#liMovimento").hide();
 		$("#liCadastros").hide();
 		$("#liRelatorios").hide();
-		$("#liContato").hide();
+//		$("#liContato").hide();
 	} else {
 		$("#liPaciente").show();
 		$("#liMovimento").show();
 		$("#liCadastros").show();
 		$("#liRelatorios").show();
-		$("#liContato").show();
+//		$("#liContato").show();
 	}
 }
 
@@ -78,7 +106,7 @@ function resetFormPagamento() {
 }
 
 function trataCampoSocio() {
-	if ($('.tiposFuncionario option:selected').val() == 'DENTISTA') {
+	if ($('#formFuncionario\\:tiposFuncionario option:selected').val() == 'DENTISTA') {
 		$('.trDentista').show();
 	} else {
 		$('.trDentista').hide();
@@ -110,4 +138,13 @@ function closeAllDialog() {
 			PrimeFaces.widgets[propertyName].hide();
 		}
 	}
+}
+
+function limparFormLoginPagamento(){
+	$("#formulario\\:pagamentosTableTratamento\\:0\\:login").val("");
+	$("#formulario\\:pagamentosTableTratamento\\:0\\:password").val("");
+}
+function limparFormLogin(){
+	$("#formLogin\\:login").val("");
+	$("#formLogin\\:password").val("");
 }

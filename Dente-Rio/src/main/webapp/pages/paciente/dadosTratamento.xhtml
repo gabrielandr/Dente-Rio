@@ -57,8 +57,9 @@
 								class="ui-icon ui-icon-grip-dotted-vertical" />
 							</span>
 
-							<p:commandButton type="button" value="Voltar"
-								onclick="window.history.back();" icon="ui-icon-arrowreturn-1-w" />
+							<p:commandButton value="Voltar"
+								action="#{pacienteBean.editarPaciente(pacienteBean.paciente.id)}"
+								icon="ui-icon-arrowreturn-1-w" />
 
 							<p:dialog styleClass="dialogProcedimentosTratamento"
 								header="Selecione um procedimento" widgetVar="procedimentoDialog"
@@ -144,6 +145,11 @@
 
 						<p:ajax event="cellEdit" listener="#{tratamentoBean.onCellEdit}"
 							process="@this" update="@all" />
+
+						<p:column headerText="# Dente" style="text-align:center;">
+							<h:outputText
+								value="#{procedimentoTratamento.posicaoDente == -1 ? '-' : procedimentoTratamento.posicaoDente}" />
+						</p:column>
 						<p:column headerText="# Procedimento" style="text-align:center;">
 							<h:outputText
 								value="#{procedimentoTratamento.procedimento.codigoProcedimento}" />
@@ -162,7 +168,7 @@
 									</h:outputText>
 								</f:facet>
 								<f:facet name="input">
-									<p:inputText styleClass="valorReal" id="valorReal" label="Valor Real"
+									<p:inputText styleClass="valorReal" id="valorReal" label="Valor Real" rendered="#{procedimentoTratamento.statusProcedimento ne 'FINALIZADO'}"
 										style="width: 99%;text-align:center;"
 										value="#{procedimentoTratamento.valorReal}" required="true"
 										onblur="limpaValor();">
@@ -172,9 +178,33 @@
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
+						
+						<p:column headerText="Status" style="text-align:center;">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText
+										value="#{procedimentoTratamento.statusProcedimento.descricao}"
+										style="text-align:center;" />
+								</f:facet>
+								<f:facet name="input">
+									<p:selectOneMenu id="statusProcedimento"
+										styleClass="statusProcedimento" label="Status Procedimento"
+										value="#{procedimentoTratamento.statusProcedimento}"
+										converter="omnifaces.SelectItemsConverter">
+										<f:selectItems value="#{tratamentoBean.listaStatusProcedimento}"
+											var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
+									</p:selectOneMenu>
+									<!-- 				<p:inputText styleClass="statusProcedimento" id="statusProcedimento" -->
+									<!-- 					label="Status do Procedimento" style="width: 99%;text-align:center;" -->
+									<!-- 					value="#{procedimentoTratamento.statusProcedimento}"> -->
+									<!-- 				</p:inputText> -->
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						
 						<p:columnGroup type="footer" id="footerTotal">
 							<p:row>
-								<p:column colspan="2" style="text-align:right" footerText="Total:" />
+								<p:column colspan="4" style="text-align:right" footerText="Total:" />
 								<p:column footerText="R$#{tratamentoBean.tratamento.valorTotal}"></p:column>
 							</p:row>
 						</p:columnGroup>
@@ -218,14 +248,6 @@
 
 						<p:growl id="growl" showDetail="true" autoUpdate="true" />
 
-						<p:column headerText="Id">
-							<h:outputText value="#{pagamento.id}" />
-						</p:column>
-
-						<p:column headerText="Tratamento">
-							<h:outputText value="#{pagamento.tratamento.id}" />
-						</p:column>
-
 						<p:column headerText="Valor">
 							<h:outputText value="#{pagamento.valor}">
 								<f:convertNumber type="currency" currencySymbol="R$" />
@@ -249,8 +271,11 @@
 								rendered="#{pagamento.restante.toString() eq '0.00'}" />
 						</p:column>
 
-						<p:column headerText="Ações" style="text-align: center; width: 120px;">
+						<p:column headerText="Ações" style="text-align: center; width: 160px;">
 
+							<p:commandButton icon="ui-icon-trash" style="float:right;"
+								onclick="PF('dlgDeletarPagamento').show();limparFormLoginPagamento();" type="button"
+								title="Excluir" />
 							<p:commandButton icon="ui-icon-seek-prev" style="float:right;"
 								rendered="#{(pagamento.estornado eq false) and (pagamento.formaPagamento eq 'CARTAO')}"
 								value="Estornar" title="Estornar" process="@this"
@@ -260,29 +285,28 @@
 									message="Você tem certeza que deseja estornar?" icon="ui-icon-alert" />
 							</p:commandButton>
 
-							<p:commandButton icon="ui-icon-trash" style="float:right;" onclick="PF('dlgDeletarPagamento').show();" type="button"
-								title="Excluir" />
+							<p:dialog header="Informe o login para deletar o pagamento"
+								widgetVar="dlgDeletarPagamento">
+								<h:panelGrid style="width: auto; border-color: transparent !important;"
+									columns="2" cellpadding="5">
+									<h:outputLabel for="login" value="Login:" />
+									<p:inputText id="login" value="#{pagamentoBean.login}"
+										required="PF('dlgDeletarPagamento').dialog('isOpen')" label="login" />
 
-								<p:dialog  
-								header="Informe o login para deletar o pagamento" widgetVar="dlgDeletarPagamento">
-									<h:panelGrid style="width: auto; border-color: transparent !important;" columns="2" cellpadding="5">
-										<h:outputLabel for="login" value="Login:" />
-										<p:inputText id="login" value="#{pagamentoBean.login}" required="true"
-											label="login" />
+									<h:outputLabel for="password" value="Password:" />
+									<p:password id="password" value="#{pagamentoBean.password}"
+										required="PF('dlgDeletarPagamento').dialog('isOpen')" label="password" />
 
-										<h:outputLabel for="password" value="Password:" />
-										<p:password id="password" value="#{pagamentoBean.password}"
-											required="true" label="password" />
+									<f:facet name="footer">
+										<p:commandButton value="OK"
+											actionListener="#{pagamentoBean.deletarPagamento(pagamento.id)}"
+											oncomplete="PF('dlgDeletarPagamento').hide();">
+											<f:param name="tratamento_id" value="#{param['tratamento_id']}" />
+										</p:commandButton>
 
-										<f:facet name="footer">
-											<p:commandButton value="OK"
-												actionListener="#{pagamentoBean.deletarPagamento(pagamento.id)}" oncomplete="PF('dlgDeletarPagamento').hide();" >
-												<f:param name="tratamento_id" value="#{param['tratamento_id']}" />
-											</p:commandButton>
-
-										</f:facet>
-									</h:panelGrid>
-								</p:dialog>
+									</f:facet>
+								</h:panelGrid>
+							</p:dialog>
 
 							<p:confirmDialog global="true">
 								<p:commandButton value="Sim" type="button"

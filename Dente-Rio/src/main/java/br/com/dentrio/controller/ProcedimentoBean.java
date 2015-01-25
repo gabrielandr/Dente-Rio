@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Component;
 
+import br.com.dentrio.comum.BaseBean;
 import br.com.dentrio.comum.Constantes;
 import br.com.dentrio.comum.PosicaoDenteEnum;
 import br.com.dentrio.model.Procedimento;
@@ -20,7 +21,7 @@ import br.com.dentrio.tratamento.service.TratamentoService;
 import br.com.dentrio.util.jsf.FacesUtil;
 
 @Component("procedimentoBean")
-public class ProcedimentoBean implements Serializable {
+public class ProcedimentoBean extends BaseBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private static final String ERROR = "error";
@@ -177,6 +178,7 @@ public class ProcedimentoBean implements Serializable {
 	/**
 	 * @return the tratamentoService
 	 */
+	@Override
 	public TratamentoService getTratamentoService() {
 		return tratamentoService;
 	}
@@ -185,6 +187,7 @@ public class ProcedimentoBean implements Serializable {
 	 * @param tratamentoService
 	 *            the tratamentoService to set
 	 */
+	@Override
 	public void setTratamentoService(TratamentoService tratamentoService) {
 		this.tratamentoService = tratamentoService;
 	}
