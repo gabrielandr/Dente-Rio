@@ -20,8 +20,8 @@
 						value="#{tratamentoBean.func_id}"
 						converter="omnifaces.SelectItemsConverter">
 						<f:selectItem itemLabel="Selecione" itemValue="" />
-						<f:selectItems value="#{tratamentoBean.listaFuncionarios}" var="func"
-							itemLabel="#{func.nomePessoa}" itemValue="#{func.id}" />
+						<f:selectItems value="#{tratamentoBean.listaDentistas}" var="dentista"
+							itemLabel="#{dentista.nomePessoa}" itemValue="#{dentista.id}" />
 					</p:selectOneMenu>
 				</td>
 				<td class="labelInput">

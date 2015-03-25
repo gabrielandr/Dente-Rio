@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -22,7 +23,8 @@ import br.com.dentrio.comum.RolesEnum;
 import br.com.dentrio.comum.TipoFuncionarioEnum;
 
 @Entity
-@Table(name = "FUNCIONARIO")
+@Table(name = "FUNCIONARIO", uniqueConstraints = {
+@UniqueConstraint(columnNames = {"LOGIN"})})
 public class Funcionario extends Pessoa implements Serializable {
 
 	private static final long serialVersionUID = -5988625296699742692L;

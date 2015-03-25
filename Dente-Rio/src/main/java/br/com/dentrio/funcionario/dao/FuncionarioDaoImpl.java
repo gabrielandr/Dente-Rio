@@ -40,8 +40,7 @@ public class FuncionarioDaoImpl implements FuncionarioDao, Serializable {
 	@SuppressWarnings("unchecked")
 	public List<Funcionario> getListaFuncionarios() {
 		return getSessionFactory().getCurrentSession()
-				.createQuery("SELECT func FROM Funcionario func WHERE func.tipoFuncionario = :tipoFuncionario")
-				.setParameter("tipoFuncionario", TipoFuncionarioEnum.DENTISTA).list();
+				.createQuery("SELECT func FROM Funcionario func").list();
 	}
 
 	@Override
@@ -71,6 +70,14 @@ public class FuncionarioDaoImpl implements FuncionarioDao, Serializable {
 		return (Funcionario) getSessionFactory().getCurrentSession()
 				.createQuery("SELECT func FROM Funcionario func WHERE func.login = :login")
 				.setParameter("login", login).uniqueResult();
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<Funcionario> retornaListaDentistas() {
+		return getSessionFactory().getCurrentSession()
+				.createQuery("SELECT func FROM Funcionario func WHERE func.tipoFuncionario = :tipoFuncionario")
+				.setParameter("tipoFuncionario", TipoFuncionarioEnum.DENTISTA).list();
 	}
 
 }

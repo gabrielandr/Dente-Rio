@@ -9,6 +9,7 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 
 import br.com.dentrio.areaespecializada.service.AreaEspecializadaService;
@@ -37,7 +38,6 @@ public class FuncionarioBean extends BaseBean implements Serializable {
 	private Funcionario funcionario;
 	private AreaEspecializada areaEspecializada;
 	private List<TipoFuncionarioEnum> listaTiposFuncionario;
-	private List<RolesEnum> listaRoles;
 	private List<Funcionario> listFuncionarios;
 
 	@PostConstruct
@@ -49,7 +49,8 @@ public class FuncionarioBean extends BaseBean implements Serializable {
 	}
 
 	private void carregarCombos() {
-		this.listaTiposFuncionario = Arrays.asList(TipoFuncionarioEnum.values());
+		this.listaTiposFuncionario = Arrays
+				.asList(TipoFuncionarioEnum.values());
 		// this.listaAreasEspecializadas =
 		// areaEspecializadaService.listAreaEspecializadas();
 	}
@@ -73,13 +74,15 @@ public class FuncionarioBean extends BaseBean implements Serializable {
 				funcionario.setSocio(false);
 			}
 			funcionarioService.addFuncionario(funcionario);
-			FacesUtil.addSuccessMessage("Sucesso", "Funcionario adicionado com Sucesso!");
+			FacesUtil.addSuccessMessage("Sucesso",
+					"Funcionario adicionado com Sucesso!");
 			inicializar();
 			return "listarFuncionarios?faces-redirect=true";
 
 		} catch (DataAccessException e) {
 			e.printStackTrace();
-			FacesUtil.addErrorMessage("Erro!", "Ocorreu um problema ao acessar o banco de dados!");
+			FacesUtil.addErrorMessage("Erro!",
+					"Ocorreu um problema ao acessar o banco de dados!");
 			return null;
 		}
 	}
@@ -88,10 +91,13 @@ public class FuncionarioBean extends BaseBean implements Serializable {
 		try {
 			funcionario = funcionarioService.getFuncionario(funcionarioId);
 			// carregarCombos();
-			return "formFuncionario?faces-redirect=true&funcionarioId=" + funcionarioId;
+			return "formFuncionario?faces-redirect=true&funcionarioId="
+					+ funcionarioId;
 		} catch (Exception e) {
 			e.printStackTrace();
-			FacesUtil.addErrorMessage("Erro!", "Erro ao tentar buscar o funcionario selecionado, tente novamente.");
+			FacesUtil
+					.addErrorMessage("Erro!",
+							"Erro ao tentar buscar o funcionario selecionado, tente novamente.");
 			return null;
 		}
 	}
@@ -99,14 +105,17 @@ public class FuncionarioBean extends BaseBean implements Serializable {
 	public String deletarFuncionario(Integer funcionarioId) {
 		try {
 			// deletarDependenciasPaciente(funcionarioId);
-			Funcionario funcionario = funcionarioService.getFuncionario(funcionarioId);
+			Funcionario funcionario = funcionarioService
+					.getFuncionario(funcionarioId);
 			funcionarioService.deletarFuncionario(funcionario);
-			FacesUtil.addSuccessMessage("Sucesso", "Funcionario deletado com Sucesso!");
+			FacesUtil.addSuccessMessage("Sucesso",
+					"Funcionario deletado com Sucesso!");
 			inicializar();
 			return "listarFuncionarios?faces-redirect=true";
 		} catch (Exception e) {
 			e.printStackTrace();
-			FacesUtil.addErrorMessage(Constantes.ERRO, "Ocorreu um erro ao deletar, tente novamente!");
+			FacesUtil.addErrorMessage(Constantes.ERRO,
+					"Ocorreu um erro ao deletar, tente novamente!");
 			return null;
 		}
 	}
@@ -132,7 +141,8 @@ public class FuncionarioBean extends BaseBean implements Serializable {
 	// }
 
 	public String retornaTipoFuncionario() {
-		return funcionario.getSocio() == true ? "Sócio" : funcionario.getTipoFuncionario().getDescricao();
+		return funcionario.getSocio() == true ? "Sócio" : funcionario
+				.getTipoFuncionario().getDescricao();
 	}
 
 	public void resetForm() {
@@ -167,7 +177,8 @@ public class FuncionarioBean extends BaseBean implements Serializable {
 		return listaTiposFuncionario;
 	}
 
-	public void setListaTiposFuncionario(List<TipoFuncionarioEnum> listaTiposFuncionario) {
+	public void setListaTiposFuncionario(
+			List<TipoFuncionarioEnum> listaTiposFuncionario) {
 		this.listaTiposFuncionario = listaTiposFuncionario;
 	}
 
@@ -197,7 +208,8 @@ public class FuncionarioBean extends BaseBean implements Serializable {
 	 * @param areaEspecializadaService
 	 *            the areaEspecializadaService to set
 	 */
-	public void setAreaEspecializadaService(AreaEspecializadaService areaEspecializadaService) {
+	public void setAreaEspecializadaService(
+			AreaEspecializadaService areaEspecializadaService) {
 		this.areaEspecializadaService = areaEspecializadaService;
 	}
 

@@ -114,7 +114,7 @@ public class TratamentoBean extends BaseBean implements Serializable {
 
 	public String setarFacesMessageProcedimentosSelecionados() {
 		FacesUtil
-		.throwErroValidacao("Para o cadastro de um tratamento, é necessário marcar pelo menos um procedimento!");
+		.throwErroValidacao("Para o cadastro de um tratamento, é necessário selecionar pelo menos um procedimento!");
 		return null;
 	}
 
@@ -421,8 +421,8 @@ public class TratamentoBean extends BaseBean implements Serializable {
 	/**
 	 * @return the listaFuncionarios
 	 */
-	public List<Funcionario> getListaFuncionarios() {
-		return funcionarioService.getListaFuncionarios();
+	public List<Funcionario> getListaDentistas() {
+		return funcionarioService.retornaListaDentistas();
 	}
 
 	/**

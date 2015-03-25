@@ -17,4 +17,6 @@ public interface FuncionarioService {
 	public void deletarFuncionario(Funcionario funcionario);
 
 	public Funcionario retornaUsuarioPeloLogin(String login);
+
+	public List<Funcionario> retornaListaDentistas();
 }

@@ -3,6 +3,7 @@ package br.com.dentrio.funcionario.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import br.com.dentrio.funcionario.dao.FuncionarioDao;
@@ -19,7 +20,11 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 	 */
 	@Override
 	public void addFuncionario(Funcionario funcionario) {
+		try{
 		funcionarioDao.addFuncionario(funcionario);
+		} catch(DataIntegrityViolationException e){
+			throw new DataIntegrityViolationException("dupl login");
+		}
 	}
 
 	/**
@@ -67,5 +72,10 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 	@Override
 	public Funcionario retornaUsuarioPeloLogin(String login) {
 		return this.funcionarioDao.retornaUsuarioPeloLogin(login);
+	}
+
+	@Override
+	public List<Funcionario> retornaListaDentistas() {
+		return this.funcionarioDao.retornaListaDentistas();
 	}
 }
